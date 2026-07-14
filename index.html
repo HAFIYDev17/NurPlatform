@@ -1,0 +1,1479 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nûr Platform</title>
+    <meta
+      name="description"
+      content="Un socle. Plusieurs outils. Nûr Platform, édité par HAFIYDev à Mayotte."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ══════════════════════════════════════════════════════════════════════
+   * NÛR PLATFORM
+   * ──────────────────────────────────────────────────────────────────────
+   * L'IDÉE, ET ELLE TIENT EN UN DESSIN
+   *   Nûr veut dire la lumière. Un noeud, c'est ce qui relie.
+   *   Les applications ne sont pas trois produits posés côte à côte : elles
+   *   sont RELIÉES AU MÊME POINT. C'est ce que dit le dessin, et c'est ce
+   *   qui est vrai dans le code (un seul socle : organisations, comptes,
+   *   droits, abonnements).
+   *
+   * CE QUE J'AI ÉVITÉ, VOLONTAIREMENT
+   *   Pas de dégradé violet, pas de verre dépoli, pas de carte qui flotte,
+   *   pas d'icône ronde, pas de promesse creuse. Ce sont les tics d'une page
+   *   générique, et ils sentent le gabarit.
+   *   À la place : de la nuit, une seule source de lumière, des filets fins,
+   *   beaucoup d'air, et une typographie qui respire. La sobriété se
+   *   remarque plus qu'un effet.
+   * ══════════════════════════════════════════════════════════════════════ */
+
+      /* ══════════════════════════════════════════════════════════════════════
+   * ✎ LES RÉGLAGES. Tout se change ici, et nulle part ailleurs.
+   *   --lumiere : la seule couleur chaude de la page. C'est elle qui donne
+   *               le ton. Un bleu ou un vert changerait toute l'identité.
+   *   --nuit    : le fond. Plus clair = moins solennel.
+   * ══════════════════════════════════════════════════════════════════════ */
+      :root {
+        --nuit: #0a1628; /* le fond : une nuit, pas un noir */
+        --nuit-2: #0e1e36;
+        --trait: rgba(232, 216, 186, 0.14);
+        --ivoire: #f2ede3;
+        --ivoire-2: rgba(242, 237, 227, 0.62);
+        --ivoire-3: rgba(242, 237, 227, 0.38);
+        --lumiere: #e9b96b; /* la seule couleur chaude de la page */
+        --lumiere-f: rgba(233, 185, 107, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--nuit);
+        color: var(--ivoire);
+        font-family: "Montserrat", system-ui, sans-serif;
+        font-size: 15px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      .cadre {
+        width: 100%;
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 32px;
+      }
+
+      /* ── L'en-tête : un filet, un nom, une porte ─────────────────────────── */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(10, 22, 40, 0.72);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--trait);
+      }
+      .barre {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 68px;
+      }
+      .marque {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        font-weight: 700;
+        font-size: 16px;
+        letter-spacing: 0.02em;
+      }
+      .marque svg {
+        display: block;
+      }
+
+      .porte {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 18px;
+        border: 1px solid var(--trait);
+        border-radius: 2px; /* presque droit : moins « produit SaaS » */
+        color: var(--ivoire);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        transition:
+          border-color 0.35s,
+          background 0.35s,
+          color 0.35s;
+      }
+      .porte:hover {
+        border-color: var(--lumiere);
+        background: var(--lumiere-f);
+        color: var(--lumiere);
+      }
+
+      /* ── Le hero ─────────────────────────────────────────────────────────── */
+      .hero {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 64px;
+        align-items: center;
+        padding: 112px 0 96px;
+      }
+
+      .surtitre {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--lumiere);
+        margin-bottom: 26px;
+      }
+
+      h1 {
+        font-family:
+          "Fraunces", Georgia, serif; /* une serif : ça ne fait pas « template » */
+        font-weight: 300;
+        font-size: clamp(38px, 5vw, 60px);
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+        margin-bottom: 26px;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--lumiere);
+      }
+
+      .chapo {
+        font-size: 16px;
+        color: var(--ivoire-2);
+        max-width: 40ch;
+        margin-bottom: 38px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .btn-plein {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 13px 26px;
+        background: var(--lumiere);
+        color: var(--nuit);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+        border-radius: 2px;
+        transition:
+          transform 0.25s,
+          box-shadow 0.35s;
+      }
+      .btn-plein:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 34px -12px rgba(233, 185, 107, 0.55);
+      }
+      .btn-vide {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 13px 22px;
+        /* appearance:none + background:transparent : un <button> arrive avec un
+       fond gris natif. Sans cela, on écrit en ivoire sur du gris clair. */
+        appearance: none;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid transparent;
+        color: var(--ivoire-2);
+        text-decoration: none;
+        font-family: "Montserrat", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          color 0.3s,
+          border-color 0.3s;
+      }
+      .btn-vide:hover {
+        color: var(--ivoire);
+        border-color: var(--trait);
+      }
+
+      /* ── LE NOEUD : le coeur de la page ──────────────────────────────────── */
+      .noeud {
+        position: relative;
+      }
+      .noeud svg {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      .lien {
+        stroke: var(--trait);
+        stroke-width: 1;
+        fill: none;
+      }
+      /* Le trait de lumière parcourt le lien : la connexion est VIVANTE, mais
+     lentement. Une animation rapide fait « gadget ». */
+      .flux {
+        stroke: var(--lumiere);
+        stroke-width: 1.2;
+        fill: none;
+        stroke-dasharray: 3 190;
+        opacity: 0.85;
+        animation: parcours 7s linear infinite;
+      }
+      .flux.b {
+        animation-delay: -2.3s;
+      }
+      .flux.c {
+        animation-delay: -4.6s;
+      }
+      @keyframes parcours {
+        to {
+          stroke-dashoffset: -193;
+        }
+      }
+
+      /* UNE BRANCHE = un lien + son flux + son application.
+     Survoler l'application allume TOUTE la branche, jusqu'au socle. C'est le
+     geste qui dit ce que la page raconte : une application ne brille pas
+     seule, elle est BRANCHÉE. Sans cela, le survol ne raconte rien.
+     Les traits ignorent la souris (pointer-events:none) : seul le rond
+     déclenche, sinon on allumerait la branche en passant à côté. */
+      .branche .lien,
+      .branche .flux {
+        pointer-events: none;
+      }
+
+      /* SUR MOBILE, IL N'Y A PAS DE SURVOL.
+     Le geste qui fait tout comprendre (une application s'allume, et le lien
+     jusqu'au socle avec elle) n'existait donc que sur ordinateur. Sur un
+     téléphone, le dessin restait muet : c'est la moitié des visiteurs, et
+     probablement le maire qui ouvre le lien depuis son portable.
+     On ajoute donc l'état « active », posé au doigt (et au clavier, par
+     focus-visible : une page qu'on ne peut pas parcourir au clavier exclut
+     ceux qui n'utilisent pas de souris). */
+      .branche:hover .lien,
+      .branche.active .lien,
+      .branche:focus-visible .lien {
+        stroke: rgba(233, 185, 107, 0.42);
+      }
+      .branche:hover .flux,
+      .branche.active .flux,
+      .branche:focus-visible .flux {
+        stroke-width: 1.9;
+        opacity: 1;
+        stroke-dasharray: 5 60;
+        animation-duration: 2.4s; /* le flux s'accélère : le circuit s'active */
+      }
+      .branche {
+        cursor: pointer;
+        outline: none;
+      }
+
+      .satellite circle {
+        fill: var(--nuit-2);
+        stroke: var(--trait);
+        stroke-width: 1;
+        transition:
+          stroke 0.4s,
+          filter 0.4s;
+      }
+      .branche:hover .satellite circle,
+      .branche.active .satellite circle,
+      .branche:focus-visible .satellite circle {
+        stroke: var(--lumiere);
+        filter: drop-shadow(0 0 9px rgba(233, 185, 107, 0.45));
+      }
+      .satellite text {
+        fill: var(--ivoire-2);
+        font-family: "Montserrat", sans-serif;
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-anchor: middle;
+        transition: fill 0.4s;
+      }
+      .branche:hover .satellite text,
+      .branche.active .satellite text,
+      .branche:focus-visible .satellite text {
+        fill: var(--ivoire);
+      }
+
+      /* Le coeur bat plus fort quand une branche est active. */
+      .noeud:hover .coeur {
+        stroke-width: 1.8;
+      }
+      .coeur {
+        transition: stroke-width 0.4s;
+      }
+
+      .halo {
+        animation: souffle 5s ease-in-out infinite;
+        transform-origin: center;
+      }
+      @keyframes souffle {
+        0%,
+        100% {
+          opacity: 0.35;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.6;
+          transform: scale(1.05);
+        }
+      }
+
+      /* ── Les applications : des LIGNES, pas des cartes ───────────────────── */
+      section {
+        padding: 96px 0;
+        border-top: 1px solid var(--trait);
+      }
+
+      .titre-section {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--ivoire-3);
+        margin-bottom: 48px;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 150px 1fr 130px;
+        gap: 32px;
+        align-items: baseline;
+        padding: 30px 0;
+        border-bottom: 1px solid var(--trait);
+        text-decoration: none;
+        color: inherit;
+        transition: padding-left 0.4s;
+      }
+      .app:hover {
+        padding-left: 10px;
+      }
+      .app:first-of-type {
+        border-top: 1px solid var(--trait);
+      }
+
+      .app-nom {
+        font-family: "Fraunces", Georgia, serif;
+        font-size: 24px;
+        font-weight: 400;
+        transition: color 0.35s;
+      }
+      .app:hover .app-nom {
+        color: var(--lumiere);
+      }
+
+      .app-desc {
+        font-size: 14px;
+        color: var(--ivoire-2);
+      }
+      .app-desc b {
+        color: var(--ivoire);
+        font-weight: 600;
+      }
+
+      .etat {
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-align: right;
+        white-space: nowrap;
+      }
+      .etat.prod {
+        color: var(--lumiere);
+      }
+      .etat.pilote {
+        color: var(--ivoire-2);
+      }
+      .etat.attente {
+        color: var(--ivoire-3);
+      }
+
+      /* ── Le socle : ce qui n'existe qu'une fois ──────────────────────────── */
+      .socle {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--trait);
+        border: 1px solid var(--trait);
+      }
+      .brique {
+        background: var(--nuit);
+        padding: 30px 26px;
+      }
+      .brique h3 {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .brique p {
+        font-size: 13px;
+        color: var(--ivoire-2);
+      }
+
+      /* ── Les deux échelles : deux colonnes, un filet entre elles ─────────── */
+      .echelles {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 56px;
+      }
+      .echelle {
+        position: relative;
+      }
+      .echelle:last-child::before {
+        content: "";
+        position: absolute;
+        left: -28px;
+        top: 4px;
+        bottom: 4px;
+        width: 1px;
+        background: var(--trait);
+      }
+      .echelle-type {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ivoire-3);
+        margin-bottom: 10px;
+      }
+      .echelle-nb {
+        font-family: "Fraunces", Georgia, serif;
+        font-size: 26px;
+        font-weight: 300;
+        color: var(--lumiere);
+        margin-bottom: 12px;
+      }
+      .echelle-txt {
+        font-size: 14px;
+        color: var(--ivoire-2);
+      }
+
+      /* ── La preuve ───────────────────────────────────────────────────────── */
+      .preuve {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+      }
+      .chiffre {
+        font-family: "Fraunces", Georgia, serif;
+        font-size: 40px;
+        font-weight: 300;
+        color: var(--lumiere);
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+      .chiffre-txt {
+        font-size: 13px;
+        color: var(--ivoire-2);
+      }
+
+      .note {
+        margin-top: 44px;
+        padding-left: 20px;
+        border-left: 1px solid var(--lumiere);
+        font-size: 14px;
+        color: var(--ivoire-2);
+        max-width: 62ch;
+      }
+
+      /* ── Le tiroir de demande ────────────────────────────────────────────── */
+      .voile {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        background: rgba(4, 10, 20, 0.72);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s;
+      }
+      .voile.ouvert {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .tiroir {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 50;
+        width: min(460px, 100vw);
+        background: var(--nuit);
+        border-left: 1px solid var(--trait);
+        transform: translateX(100%);
+        transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+      }
+      .tiroir.ouvert {
+        transform: translateX(0);
+      }
+
+      .tiroir-tete {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 26px 30px 20px;
+        border-bottom: 1px solid var(--trait);
+      }
+      .tiroir-sur {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--lumiere);
+        margin-bottom: 8px;
+      }
+      .tiroir-titre {
+        font-family: "Fraunces", Georgia, serif;
+        font-size: 22px;
+        font-weight: 300;
+      }
+      .fermer {
+        appearance: none;
+        background: transparent;
+        border: none;
+        color: var(--ivoire-3);
+        font-size: 26px;
+        line-height: 1;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+      .fermer:hover {
+        color: var(--lumiere);
+      }
+
+      .tiroir-corps {
+        padding: 24px 30px 40px;
+        overflow-y: auto;
+      }
+
+      .duo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .porte-demo {
+        appearance: none;
+        background: transparent;
+        font-family: "Montserrat", sans-serif;
+        cursor: pointer;
+      }
+
+      /* ── La demande ──────────────────────────────────────────────────────── */
+      .demo-grille {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 56px;
+      }
+      .demo-intro {
+        font-size: 15px;
+        color: var(--ivoire-2);
+        margin-bottom: 20px;
+      }
+      .demo-intro b {
+        color: var(--ivoire);
+        font-weight: 600;
+      }
+      .demo-liste {
+        list-style: none;
+      }
+      .demo-liste li {
+        font-size: 13px;
+        color: var(--ivoire-3);
+        padding: 9px 0 9px 18px;
+        border-top: 1px solid var(--trait);
+        position: relative;
+      }
+      .demo-liste li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 17px;
+        width: 5px;
+        height: 1px;
+        background: var(--lumiere);
+      }
+
+      .etiq {
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ivoire-3);
+        margin: 18px 0 7px;
+      }
+      .champ {
+        width: 100%;
+        padding: 11px 13px;
+        background: var(--nuit-2);
+        border: 1px solid var(--trait);
+        border-radius: 2px;
+        color: var(--ivoire);
+        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+      .champ:focus {
+        border-color: var(--lumiere);
+      }
+      .champ::placeholder {
+        color: rgba(242, 237, 227, 0.28);
+      }
+
+      .ligne-siret {
+        display: flex;
+        gap: 8px;
+      }
+      .btn-verif {
+        padding: 11px 18px;
+        appearance: none;
+        background: transparent;
+        border: 1px solid var(--trait);
+        border-radius: 2px;
+        color: var(--ivoire-2);
+        font-family: "Montserrat", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+        transition:
+          border-color 0.3s,
+          color 0.3s;
+      }
+      .btn-verif:hover {
+        border-color: var(--lumiere);
+        color: var(--lumiere);
+      }
+
+      .retour {
+        font-size: 13px;
+        margin-top: 10px;
+        min-height: 18px;
+      }
+      .retour.ok {
+        color: var(--lumiere);
+      }
+      .retour.non {
+        color: #e88a6b;
+      }
+
+      .coche {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin: 20px 0 4px;
+        font-size: 13px;
+        color: var(--ivoire-2);
+        cursor: pointer;
+      }
+      .coche input {
+        margin-top: 3px;
+        accent-color: var(--lumiere);
+      }
+
+      .btn-envoi {
+        margin-top: 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        justify-content: center;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      /* ── Pied ────────────────────────────────────────────────────────────── */
+      footer {
+        border-top: 1px solid var(--trait);
+        padding: 40px 0 56px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 12px;
+        color: var(--ivoire-3);
+      }
+      footer a {
+        color: var(--ivoire-2);
+        text-decoration: none;
+      }
+      footer a:hover {
+        color: var(--lumiere);
+      }
+
+      /* ── Mobile ──────────────────────────────────────────────────────────── */
+      @media (max-width: 860px) {
+        .cadre {
+          padding: 0 22px;
+        }
+        .tiroir {
+          width: 100vw;
+        }
+        .porte-demo {
+          display: none;
+        } /* le bouton du hero suffit sur mobile */
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 52px;
+          padding: 68px 0 72px;
+        }
+        .noeud {
+          order: -1;
+          max-width: 320px;
+          margin: 0 auto;
+        }
+        .app {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+        .etat {
+          text-align: left;
+        }
+        .socle,
+        .preuve,
+        .echelles,
+        .demo-grille {
+          grid-template-columns: 1fr;
+        }
+        .echelles {
+          gap: 36px;
+        }
+        .echelle:last-child::before {
+          display: none;
+        }
+        .preuve {
+          gap: 30px;
+        }
+      }
+
+      /* On respecte ceux qui ne veulent pas d'animation. */
+      @media (prefers-reduced-motion: reduce) {
+        .flux,
+        .halo {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="cadre barre">
+        <span class="marque">
+          <!-- Le noeud, en petit : la marque EST le dessin. -->
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="3" fill="#E9B96B" />
+            <circle cx="10" cy="10" r="6.2" stroke="rgba(232,216,186,0.3)" />
+            <circle cx="10" cy="2.6" r="1.5" fill="rgba(242,237,227,0.75)" />
+            <circle cx="16.4" cy="13.7" r="1.5" fill="rgba(242,237,227,0.75)" />
+            <circle cx="3.6" cy="13.7" r="1.5" fill="rgba(242,237,227,0.75)" />
+          </svg>
+          Nûr
+        </span>
+
+        <span style="display: flex; align-items: center; gap: 10px">
+          <button class="porte porte-demo" type="button" id="ouvrir-demo-2">
+            Demander une démo
+          </button>
+          <a class="porte" href="https://aecs-black.vercel.app/login">
+            Se connecter
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path
+                d="M2 6h8M6.5 2.5L10 6l-3.5 3.5"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        </span>
+      </div>
+    </header>
+
+    <!-- ══ LE PANNEAU DE DEMANDE ══════════════════════════════════════════════
+     Un panneau plutôt qu'une section : la page reste une VITRINE, et la
+     demande est une PARENTHÈSE. On ne mélange pas le discours et le
+     formulaire ; on ouvre un tiroir, on le referme. ═══════════════════════ -->
+    <div class="voile" id="voile"></div>
+
+    <aside class="tiroir" id="tiroir" aria-hidden="true">
+      <div class="tiroir-tete">
+        <span>
+          <p class="tiroir-sur">Nûr Platform</p>
+          <h2 class="tiroir-titre">Demander une démonstration</h2>
+        </span>
+        <button
+          class="fermer"
+          type="button"
+          id="fermer-demo"
+          aria-label="Fermer"
+        >
+          &times;
+        </button>
+      </div>
+
+      <div class="tiroir-corps">
+        <p class="demo-intro">
+          La démonstration ouvre un espace <b>isolé</b>, avec des données
+          fictives, pour <b>quatorze jours</b>. Il se referme tout seul.
+        </p>
+        <ul class="demo-liste">
+          <li>
+            Réservée aux collectivités, associations et établissements
+            d'enseignement.
+          </li>
+          <li>Aucune donnée réelle d'élève ne doit y être saisie.</li>
+          <li>Chaque demande est validée sous 48 heures.</li>
+        </ul>
+
+        <form id="form-demo" onsubmit="return false;">
+          <label class="etiq" for="siret"
+            >SIRET ou SIREN de l'organisation</label
+          >
+          <div class="ligne-siret">
+            <input
+              id="siret"
+              class="champ"
+              inputmode="numeric"
+              placeholder="14 chiffres"
+              autocomplete="off"
+            />
+            <button type="button" class="btn-verif" id="btn-verif">
+              Vérifier
+            </button>
+          </div>
+          <p id="retour-siret" class="retour"></p>
+
+          <div id="suite" hidden>
+            <div class="duo">
+              <span>
+                <label class="etiq" for="prenom">Prénom</label>
+                <input id="prenom" class="champ" autocomplete="given-name" />
+              </span>
+              <span>
+                <label class="etiq" for="nom">Nom</label>
+                <input id="nom" class="champ" autocomplete="family-name" />
+              </span>
+            </div>
+
+            <label class="etiq" for="fonction">Fonction</label>
+            <input
+              id="fonction"
+              class="champ"
+              placeholder="Responsable de l'éducation, directeur, DGS..."
+            />
+
+            <label class="etiq" for="email"
+              >Adresse électronique professionnelle</label
+            >
+            <input
+              id="email"
+              class="champ"
+              type="email"
+              autocomplete="email"
+              placeholder="prenom.nom@organisation.fr"
+            />
+
+            <label class="etiq" for="tel">Téléphone</label>
+            <input
+              id="tel"
+              class="champ"
+              type="tel"
+              autocomplete="tel"
+              placeholder="0639 00 00 00"
+            />
+
+            <label class="etiq" for="message"
+              >Ce que vous souhaitez voir (facultatif)</label
+            >
+            <textarea id="message" class="champ" rows="2"></textarea>
+
+            <label class="coche">
+              <input type="checkbox" id="donnees" checked />
+              <span
+                >Générer un jeu de données de démonstration (élèves, classes,
+                incidents). Sinon, l'espace sera vide.</span
+              >
+            </label>
+
+            <button type="button" class="btn-plein btn-envoi" id="btn-envoi">
+              Envoyer la demande
+            </button>
+            <p id="retour-envoi" class="retour"></p>
+          </div>
+        </form>
+      </div>
+    </aside>
+
+    <main class="cadre">
+      <!-- ══ HERO ══════════════════════════════════════════════════════════ -->
+      <div class="hero">
+        <div>
+          <!-- ✎✎✎ TEXTES MODIFIABLES : tout ce qui suit se change librement ✎✎✎ -->
+
+          <p class="surtitre">Nûr Platform</p>
+
+          <h1>Un socle.<br />Vos outils.<br /><em>Une seule lumière.</em></h1>
+
+          <p class="chapo">
+            Les organisations, les comptes et les droits n'existent qu'une fois.
+            Chaque application vient s'y relier. C'est ce qui permet d'ajouter
+            un outil sans reconstruire les mêmes fondations.
+          </p>
+
+          <div class="actions">
+            <!-- Ce bouton disait « Accéder à NûrGest ». Sur la vitrine d'une
+             PLATEFORME, c'était un aveu : tout se résumerait donc à une seule
+             application. « Ouvrir mon espace » est vrai aujourd'hui, et le
+             restera quand la connexion routera chacun vers SES outils. -->
+            <a class="btn-plein" href="https://aecs-black.vercel.app/login">
+              Ouvrir mon espace
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path
+                  d="M2 6h8M6.5 2.5L10 6l-3.5 3.5"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+            <button class="btn-vide" type="button" id="ouvrir-demo">
+              Demander une démonstration
+            </button>
+          </div>
+        </div>
+
+        <!-- ══ LE NOEUD ══════════════════════════════════════════════════════
+         Trois applications, un seul point. Le trait de lumière parcourt
+         chaque lien : le socle est vivant, il circule. ══════════════════ -->
+        <div class="noeud">
+          <svg
+            viewBox="0 0 400 380"
+            role="img"
+            aria-label="Trois applications reliées à un socle commun"
+          >
+            <defs>
+              <radialGradient id="halo" cx="50%" cy="50%">
+                <stop offset="0%" stop-color="#E9B96B" stop-opacity="0.5" />
+                <stop offset="55%" stop-color="#E9B96B" stop-opacity="0.10" />
+                <stop offset="100%" stop-color="#E9B96B" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+
+            <!-- La lumière, au centre. C'est le seul effet de la page. -->
+            <circle class="halo" cx="200" cy="190" r="120" fill="url(#halo)" />
+
+            <!-- Les orbites : deux filets, rien de plus. -->
+            <circle
+              cx="200"
+              cy="190"
+              r="62"
+              stroke="rgba(232,216,186,0.10)"
+              fill="none"
+            />
+            <circle
+              cx="200"
+              cy="190"
+              r="128"
+              stroke="rgba(232,216,186,0.07)"
+              fill="none"
+            />
+
+            <!-- Le coeur : le socle. Dessiné AVANT les branches pour que les
+             traits partent de dessous, et non par-dessus. -->
+            <circle
+              class="coeur"
+              cx="200"
+              cy="190"
+              r="17"
+              fill="#0E1E36"
+              stroke="#E9B96B"
+              stroke-width="1.2"
+            />
+            <circle cx="200" cy="190" r="5.5" fill="#E9B96B" />
+
+            <!-- ✎ LES TROIS BRANCHES. Pour renommer une application, change le
+             texte ci-dessous (et rien d'autre). -->
+            <g class="branche" tabindex="0" role="button">
+              <path class="lien" d="M200 190 L200 62" />
+              <path class="flux" d="M200 190 L200 62" />
+              <g class="satellite">
+                <circle cx="200" cy="62" r="27" />
+                <text x="200" y="66">NûrGest</text>
+              </g>
+            </g>
+
+            <g class="branche" tabindex="0" role="button">
+              <path class="lien" d="M200 190 L311 254" />
+              <path class="flux b" d="M200 190 L311 254" />
+              <g class="satellite">
+                <circle cx="311" cy="254" r="27" />
+                <text x="311" y="258">NûrOps</text>
+              </g>
+            </g>
+
+            <g class="branche" tabindex="0" role="button">
+              <path class="lien" d="M200 190 L89 254" />
+              <path class="flux c" d="M200 190 L89 254" />
+              <g class="satellite">
+                <circle cx="89" cy="254" r="27" />
+                <text x="89" y="258">NûrPay</text>
+              </g>
+            </g>
+
+            <text
+              x="200"
+              y="352"
+              text-anchor="middle"
+              fill="rgba(242,237,227,0.35)"
+              font-family="Montserrat"
+              font-size="10"
+              letter-spacing="0.18em"
+            >
+              SOCLE COMMUN
+            </text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ══ LES APPLICATIONS ══════════════════════════════════════════════ -->
+      <!-- ✎ LES APPLICATIONS. Pour en ajouter une, copie un bloc <a class="app">
+       entier. Pour changer un état : classe "prod" (ambre), "pilote" (clair)
+       ou "attente" (gris). -->
+      <section id="applications">
+        <p class="titre-section">Les applications</p>
+
+        <a class="app" href="https://aecs-black.vercel.app/login">
+          <span class="app-nom">NûrGest</span>
+          <span class="app-desc">
+            <b>La gestion.</b> Établissement indépendant, réseau d'écoles,
+            collectivité : la même plateforme, avec un périmètre qui suit la
+            structure de l'organisation. Élèves, classes, présences,
+            inscriptions, paiements, patrimoine.
+          </span>
+          <span class="etat prod">En production</span>
+        </a>
+
+        <a class="app" href="#contact">
+          <span class="app-nom">NûrOps</span>
+          <span class="app-desc">
+            <b>Les opérations.</b> Le suivi d'une affaire, de la consultation
+            jusqu'au solde. Bureaux d'études, entreprises de travaux, énergie :
+            offres, marchés, phases, situations, réception, archivage. Un
+            dossier qui se clôt n'est pas un dossier qu'on oublie.
+          </span>
+          <span class="etat pilote">Pilote</span>
+        </a>
+
+        <a class="app" href="#contact">
+          <span class="app-nom">NûrPay</span>
+          <span class="app-desc">
+            <b>La paie.</b> Ressources humaines et rémunérations. Chantier
+            réglementaire en cours : il sortira quand il sera juste, pas avant.
+          </span>
+          <span class="etat attente">En préparation</span>
+        </a>
+      </section>
+
+      <!-- ══ LE SOCLE ══════════════════════════════════════════════════════ -->
+      <!-- ✎ LE SOCLE : trois briques. -->
+      <section>
+        <p class="titre-section">Ce qui n'existe qu'une fois</p>
+
+        <div class="socle">
+          <div class="brique">
+            <h3>Organisations</h3>
+            <p>
+              Une commune, une association, un établissement privé. Le même
+              modèle, jamais de code sur mesure.
+            </p>
+          </div>
+          <div class="brique">
+            <h3>Comptes et droits</h3>
+            <p>
+              Un compte, plusieurs rôles. Chacun ne voit que son périmètre, et
+              la règle vit dans la base, pas dans un menu.
+            </p>
+          </div>
+          <div class="brique">
+            <h3>Abonnements</h3>
+            <p>
+              Une application, une offre, des options. C'est l'offre qui ouvre
+              le droit, pas une case à cocher.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ LA PREUVE ═════════════════════════════════════════════════════ -->
+      <!-- ✎ LE PÉRIMÈTRE. La réserve la plus juste qu'on m'ait faite : NûrGest
+       n'est pas « un logiciel pour les écoles ». C'est le MÊME logiciel, dont
+       le périmètre s'élargit avec l'organisation. Le dire est une chose ; le
+       MONTRER en est une autre. -->
+      <section>
+        <p class="titre-section">Le même logiciel, deux échelles</p>
+
+        <div class="echelles">
+          <div class="echelle">
+            <p class="echelle-type">Association</p>
+            <p class="echelle-nb">1 établissement</p>
+            <p class="echelle-txt">
+              Élèves, classes, inscriptions, paiements. La gestion complète
+              d'une école, par ceux qui la font tourner.
+            </p>
+          </div>
+
+          <div class="echelle">
+            <p class="echelle-type">Municipalité</p>
+            <p class="echelle-nb">N établissements</p>
+            <p class="echelle-txt">
+              Chaque école garde son autonomie. La commune ajoute un niveau
+              au-dessus : vue consolidée, patrimoine, arbitrages budgétaires.
+            </p>
+          </div>
+        </div>
+
+        <p class="note">
+          Passer de l'une à l'autre n'est pas un autre produit, ni un autre
+          contrat de développement. C'est un paramétrage.
+        </p>
+      </section>
+
+      <!-- ✎ LA PREUVE : trois chiffres, et la phrase de conclusion. -->
+      <section>
+        <p class="titre-section">Ce n'est pas une maquette</p>
+
+        <div class="preuve">
+          <div>
+            <p class="chiffre">1</p>
+            <p class="chiffre-txt">
+              établissement en production, avec de vrais élèves, de vraies
+              familles, de vrais paiements.
+            </p>
+          </div>
+          <div>
+            <p class="chiffre">2</p>
+            <p class="chiffre-txt">
+              types d'organisation, une association et une commune, sur le même
+              logiciel. Sans une ligne de code spécifique.
+            </p>
+          </div>
+          <div>
+            <p class="chiffre">UE</p>
+            <p class="chiffre-txt">
+              hébergement dans l'Union européenne. Données d'élèves mineurs
+              traitées selon le RGPD.
+            </p>
+          </div>
+        </div>
+
+        <p class="note">
+          Une école garde son autonomie. Une commune obtient sa vue d'ensemble
+          sans se substituer aux directions. Le cloisonnement n'est pas une
+          option que l'on active : il est inscrit dans la structure des droits.
+        </p>
+      </section>
+    </main>
+
+    <!-- ✎ LE PIED DE PAGE : ton nom, ton adresse. -->
+    <footer class="cadre" id="contact">
+      <span>Nûr Platform, édité par HAFIYDev. Mayotte.</span>
+      <span>
+        <a href="mailto:contact@hafiydev.com">contact@hafiydev.com</a>
+      </span>
+    </footer>
+
+    <script>
+      /* ══════════════════════════════════════════════════════════════════════════
+       * LA VÉRIFICATION DU SIRET
+       * ──────────────────────────────────────────────────────────────────────────
+       * Elle interroge l'Annuaire des Entreprises (recherche-entreprises.api.gouv.fr),
+       * une API publique, gratuite, sans clé.
+       *
+       * ⚠️ CE QU'ELLE FAIT, ET CE QU'ELLE NE FAIT PAS
+       *   Elle QUALIFIE : elle écarte automatiquement une organisation qui n'est ni
+       *   une commune, ni une association, ni un établissement d'enseignement. Les
+       *   curieux du dimanche s'arrêtent là.
+       *
+       *   Elle N'AUTHENTIFIE PAS. Le SIRET d'une mairie est PUBLIC : n'importe qui
+       *   peut le saisir. Confondre les deux serait une faute de raisonnement.
+       *   La vraie porte reste humaine : l'éditeur approuve, ou non.
+       *
+       * ✎ À CONFIGURER : mets ici l'URL et la clé publique (anon) de ton projet
+       *    Supabase. La clé « anon » est PRÉVUE pour être publique : elle ne donne
+       *    accès qu'à ce que la RLS autorise, c'est-à-dire ici une seule fonction.
+       * ══════════════════════════════════════════════════════════════════════════ */
+      const SUPABASE_URL = "https://eurjhseysppbrfvduzry.supabase.co";
+      const SUPABASE_ANON =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1cmpoc2V5c3BwYnJmdmR1enJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NjY1OTEsImV4cCI6MjA5NzE0MjU5MX0.HSI5deeu7V8mxiJZ53wAAPyIIkyYvm7oow1xmoVgqNk";
+
+      let organisation = null;
+
+      const $ = (id) => document.getElementById(id);
+
+      /* ── LE DESSIN AU DOIGT ───────────────────────────────────────────────────
+   Sur un téléphone, on ne survole rien : on touche. Un tap allume la branche
+   et éteint les autres, exactement comme le curseur sur un ordinateur.
+   Un second tap sur NûrGest ouvre l'application : le premier sert à
+   comprendre, le second à entrer. */
+      document.querySelectorAll(".branche").forEach((branche) => {
+        const activer = (e) => {
+          const dejaActive = branche.classList.contains("active");
+          document
+            .querySelectorAll(".branche")
+            .forEach((b) => b.classList.remove("active"));
+          if (!dejaActive) {
+            branche.classList.add("active");
+          }
+          e.preventDefault();
+        };
+        branche.addEventListener("click", activer);
+        branche.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") activer(e);
+        });
+      });
+
+      /* Toucher ailleurs éteint tout : une branche qui reste allumée sans raison
+   fait croire à un état, alors qu'il n'y en a pas. */
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".branche")) {
+          document
+            .querySelectorAll(".branche")
+            .forEach((b) => b.classList.remove("active"));
+        }
+      });
+
+      /* ── Le tiroir ────────────────────────────────────────────────────────────
+   On ferme à l'échappement et au clic sur le voile : un panneau dont on ne
+   sait pas sortir est un piège, pas une commodité. */
+      const tiroir = $("tiroir");
+      const voile = $("voile");
+
+      function ouvrirTiroir() {
+        tiroir.classList.add("ouvert");
+        voile.classList.add("ouvert");
+        tiroir.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        setTimeout(() => $("siret").focus(), 420);
+      }
+      function fermerTiroir() {
+        tiroir.classList.remove("ouvert");
+        voile.classList.remove("ouvert");
+        tiroir.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      }
+
+      ["ouvrir-demo", "ouvrir-demo-2"].forEach((id) => {
+        const b = $(id);
+        if (b) b.addEventListener("click", ouvrirTiroir);
+      });
+      $("fermer-demo").addEventListener("click", fermerTiroir);
+      voile.addEventListener("click", fermerTiroir);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") fermerTiroir();
+      });
+      const dire = (el, texte, ok) => {
+        el.textContent = texte;
+        el.className =
+          "retour " + (ok === true ? "ok" : ok === false ? "non" : "");
+      };
+
+      /* Le type d'organisation, déduit de la nature juridique (INSEE) et de
+   l'activité (code NAF). C'est ce qui décide si NûrGest la concerne. */
+      function typeOrganisation(nature, naf) {
+        const n = String(nature || "");
+        const a = String(naf || "");
+        if (n.startsWith("71") || n.startsWith("72") || n.startsWith("73"))
+          return "municipalite";
+        if (n.startsWith("92")) return "association";
+        if (a.startsWith("85")) return "ecole_privee";
+        return "autre";
+      }
+
+      const LIBELLES = {
+        municipalite: "Collectivité territoriale",
+        association: "Association",
+        ecole_privee: "Établissement d'enseignement",
+        autre: "Hors périmètre",
+      };
+
+      $("btn-verif").addEventListener("click", async () => {
+        const brut = $("siret").value.replace(/\D/g, "");
+        const retour = $("retour-siret");
+
+        if (brut.length !== 9 && brut.length !== 14) {
+          dire(retour, "Un SIRET compte 14 chiffres, un SIREN 9.", false);
+          return;
+        }
+
+        dire(retour, "Vérification auprès de l'Annuaire des Entreprises...");
+        $("suite").hidden = true;
+
+        try {
+          const siren = brut.slice(0, 9);
+          const r = await fetch(
+            "https://recherche-entreprises.api.gouv.fr/search?q=" +
+              siren +
+              "&per_page=1",
+          );
+          const data = await r.json();
+          const e = (data.results || [])[0];
+
+          if (!e) {
+            dire(retour, "Aucune organisation trouvée pour ce numéro.", false);
+            return;
+          }
+
+          const type = typeOrganisation(
+            e.nature_juridique,
+            e.activite_principale,
+          );
+
+          if (type === "autre") {
+            dire(
+              retour,
+              e.nom_complet +
+                " : cette organisation n'entre pas dans le champ de NûrGest " +
+                "(communes, associations et établissements d'enseignement). Écrivez-nous, " +
+                "nous en discuterons.",
+              false,
+            );
+            return;
+          }
+
+          organisation = {
+            siret:
+              brut.length === 14 ? brut : (e.siege && e.siege.siret) || brut,
+            raison_sociale: e.nom_complet,
+            categorie_juridique: e.nature_juridique,
+            code_ape: e.activite_principale,
+            commune: (e.siege && e.siege.libelle_commune) || null,
+            type_detecte: type,
+          };
+
+          dire(
+            retour,
+            e.nom_complet +
+              " - " +
+              LIBELLES[type] +
+              (organisation.commune ? " (" + organisation.commune + ")" : ""),
+            true,
+          );
+          $("suite").hidden = false;
+        } catch (err) {
+          dire(
+            retour,
+            "L'annuaire est momentanément indisponible. Réessayez, ou écrivez-nous.",
+            false,
+          );
+        }
+      });
+
+      $("btn-envoi").addEventListener("click", async () => {
+        const retour = $("retour-envoi");
+        if (!organisation) return;
+
+        const prenom = $("prenom").value.trim();
+        const nom = $("nom").value.trim();
+        const email = $("email").value.trim();
+        const tel = $("tel").value.trim();
+
+        /* Le minimum utile : de quoi RAPPELER quelqu'un. Un courriel sans nom ni
+     téléphone, c'est une demande qu'on ne peut ni qualifier ni relancer. */
+        if (!prenom || !nom || !email || !tel) {
+          dire(
+            retour,
+            "Nom, prénom, adresse professionnelle et téléphone sont nécessaires.",
+            false,
+          );
+          return;
+        }
+
+        dire(retour, "Envoi...");
+
+        try {
+          const r = await fetch(
+            SUPABASE_URL + "/rest/v1/rpc/deposer_demande_demo",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                apikey: SUPABASE_ANON,
+                Authorization: "Bearer " + SUPABASE_ANON,
+              },
+              body: JSON.stringify({
+                p_siret: organisation.siret,
+                p_raison_sociale: organisation.raison_sociale,
+                p_categorie_juridique: organisation.categorie_juridique,
+                p_code_ape: organisation.code_ape,
+                p_commune: organisation.commune,
+                p_type_detecte: organisation.type_detecte,
+                p_contact_nom: prenom + " " + nom,
+                p_contact_fonction: $("fonction").value.trim() || null,
+                p_contact_email: email,
+                p_contact_tel: tel,
+                p_message: $("message").value.trim() || null,
+                p_avec_donnees: $("donnees").checked,
+              }),
+            },
+          );
+
+          const texte = await r.text();
+          if (!r.ok) {
+            let msg = "Envoi impossible.";
+            try {
+              msg = JSON.parse(texte).message || msg;
+            } catch (e) {}
+            dire(retour, msg, false);
+            return;
+          }
+
+          dire(
+            retour,
+            "Demande enregistrée. Vous recevrez votre accès sous 48 heures.",
+            true,
+          );
+          $("form-demo")
+            .querySelectorAll("input, textarea, button")
+            .forEach((c) => (c.disabled = true));
+        } catch (err) {
+          dire(retour, "Envoi impossible. Écrivez-nous directement.", false);
+        }
+      });
+    </script>
+  </body>
+</html>
