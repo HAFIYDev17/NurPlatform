@@ -256,6 +256,30 @@
         }
       }
 
+      /* ── L'ANNEAU ─────────────────────────────────────────────────────────
+     NûrProgress. Il tourne plus lentement que les flux : un flux est une
+     impulsion, un suivi est une patience. Assez visible pour qu'on le
+     remarque, assez discret pour qu'il ne dispute pas la vedette aux trois
+     applications : il les relie, il ne les remplace pas. */
+      .anneau {
+        stroke: rgba(233, 185, 107, 0.24);
+        stroke-width: 1;
+        stroke-dasharray: 2 13;
+        animation: tourne 38s linear infinite;
+      }
+      @keyframes tourne {
+        to {
+          stroke-dashoffset: -150;
+        }
+      }
+      .anneau-nom {
+        fill: rgba(233, 185, 107, 0.5);
+        font-family: "Montserrat", sans-serif;
+        font-size: 9.5px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+      }
+
       /* UNE BRANCHE = un lien + son flux + son application.
      Survoler l'application allume TOUTE la branche, jusqu'au socle. C'est le
      geste qui dit ce que la page raconte : une application ne brille pas
@@ -781,7 +805,8 @@
       /* On respecte ceux qui ne veulent pas d'animation. */
       @media (prefers-reduced-motion: reduce) {
         .flux,
-        .halo {
+        .halo,
+        .anneau {
           animation: none;
         }
       }
@@ -946,12 +971,15 @@
 
           <p class="surtitre">Nûr Platform</p>
 
-          <h1>Un socle.<br />Vos outils.<br /><em>Une seule lumière.</em></h1>
+          <h1>
+            Un socle.<br />Vos outils.<br /><em>Ce qui doit avancer.</em>
+          </h1>
 
           <p class="chapo">
-            Les organisations, les comptes et les droits n'existent qu'une fois.
-            Chaque application vient s'y relier. C'est ce qui permet d'ajouter
-            un outil sans reconstruire les mêmes fondations.
+            Les organisations, les personnes, les droits et les flux n'existent
+            qu'une fois. Chaque application vient s'y relier. C'est ce qui
+            permet d'ajouter un outil sans reconstruire les mêmes fondations,
+            et de savoir depuis un seul endroit ce qui avance et ce qui attend.
           </p>
 
           <div class="actions">
@@ -1005,13 +1033,13 @@
               stroke="rgba(232,216,186,0.10)"
               fill="none"
             />
-            <circle
-              cx="200"
-              cy="190"
-              r="128"
-              stroke="rgba(232,216,186,0.07)"
-              fill="none"
-            />
+            <!-- ✎ L'ANNEAU : NûrProgress.
+             Il ne s'ajoute pas en quatrième satellite : il PASSE par les
+             trois. Ce cercle était déjà là, muet, et les trois applications
+             s'y trouvent exactement (128 du centre, chacune). Il ne restait
+             qu'à le nommer. Une capacité transversale ne se dessine pas à
+             côté de ce qu'elle traverse. -->
+            <circle class="anneau" cx="200" cy="190" r="128" fill="none" />
 
             <!-- Le coeur : le socle. Dessiné AVANT les branches pour que les
              traits partent de dessous, et non par-dessus. -->
@@ -1055,9 +1083,14 @@
               </g>
             </g>
 
+            <!-- Le nom de l'anneau, posé sur son point bas. -->
+            <text class="anneau-nom" x="200" y="334" text-anchor="middle">
+              NûrProgress
+            </text>
+
             <text
               x="200"
-              y="352"
+              y="360"
               text-anchor="middle"
               fill="rgba(242,237,227,0.35)"
               font-family="Montserrat"
@@ -1091,10 +1124,12 @@
         <a class="app" href="#contact">
           <span class="app-nom">NûrOps</span>
           <span class="app-desc">
-            <b>Les opérations.</b> Le suivi d'une affaire, de la consultation
-            jusqu'au solde. Bureaux d'études, entreprises de travaux, énergie :
-            offres, marchés, phases, situations, réception, archivage. Un
-            dossier qui se clôt n'est pas un dossier qu'on oublie.
+            <b>Les opérations.</b> L'activité réelle, de la première demande
+            jusqu'à la clôture du dossier. Bureaux d'études, entreprises de
+            travaux, collectivités : consultations, études, devis, marchés,
+            chantiers, équipes, matériel, situations, réception, archivage.
+            Chaque organisation y retrouve ses métiers et son vocabulaire, pas
+            ceux de la précédente.
           </span>
           <span class="etat pilote">Pilote</span>
         </a>
@@ -1106,6 +1141,28 @@
             réglementaire en cours : il sortira quand il sera juste, pas avant.
           </span>
           <span class="etat attente">En préparation</span>
+        </a>
+      </section>
+
+      <!-- ══ CE QUI LES TRAVERSE ═══════════════════════════════════════════
+       ✎ NûrProgress n'est pas une quatrième application, et l'annoncer comme
+       telle serait un contresens : on ne l'ouvre pas, on le rencontre. Il vit
+       DANS les autres. D'où une section à part, après la liste, et non une
+       quatrième ligne dedans, qui l'aurait mis au même rang que ce qu'il
+       traverse. -->
+      <section>
+        <p class="titre-section">Ce qui les traverse</p>
+
+        <a class="app" href="#contact">
+          <span class="app-nom">NûrProgress</span>
+          <span class="app-desc">
+            <b>Ce qui doit avancer.</b> Étapes, validations, demandes envoyées,
+            retours attendus, blocages. Une organisation ne se demande pas
+            seulement ce qu'elle possède, mais ce qu'elle attend, et de qui.
+            Vous savez ce que vous avez envoyé, à qui, ce qui devait revenir,
+            et depuis combien de temps ça ne revient pas.
+          </span>
+          <span class="etat pilote">Transversal</span>
         </a>
       </section>
 
