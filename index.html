@@ -679,12 +679,27 @@
         font-size: 12px;
         color: var(--ivoire-3);
       }
-      footer a {
+      /* Un lien posé dans une phrase. Sans style, il arrive en bleu souligné
+     du navigateur, ce qui n'a rien à faire ici. La règle du pied de page
+     disait déjà exactement cela : on l'élargit au lieu de la recopier. */
+      footer a,
+      .lien-mot {
         color: var(--ivoire-2);
         text-decoration: none;
+        border-bottom: 1px solid var(--trait);
+        transition:
+          color 0.3s,
+          border-color 0.3s;
       }
-      footer a:hover {
+      footer a:hover,
+      .lien-mot:hover {
         color: var(--lumiere);
+        border-color: var(--lumiere);
+      }
+      /* Le pied de page n'a pas besoin du soulignement : l'adresse y est déjà
+     seule sur sa ligne, rien ne la confond avec du texte courant. */
+      footer a {
+        border-bottom-color: transparent;
       }
 
       /* ── Mobile ──────────────────────────────────────────────────────────── */
@@ -817,9 +832,14 @@
           </li>
           <li>Aucune donnée réelle d'élève ne doit y être saisie.</li>
           <li>Chaque demande est validée sous 48 heures.</li>
+          <!-- ✎ L'adresse n'est PAS recopiée ici. Le script pose le mailto sur
+           tout lien marqué data-courriel, en le lisant sur le pied de page.
+           Le repli pointe vers le pied de page, qui porte l'adresse en
+           clair : sans JavaScript le lien mène quand même quelque part. -->
           <li>
             Pour NûrOps, bureaux d'études, entreprises de travaux et groupes, la
-            démonstration se fait avec nous : écrivez-nous.
+            démonstration se fait avec nous :
+            <a class="lien-mot" data-courriel href="#contact">écrivez-nous</a>.
           </li>
         </ul>
 
@@ -1252,11 +1272,23 @@
       </section>
     </main>
 
-    <!-- ✎ LE PIED DE PAGE : ton nom, ton adresse. -->
+    <!-- ✎ LE PIED DE PAGE : ton nom, ton adresse.
+
+     ⚠ ADRESSE PROVISOIRE. Elle disait contact@hafiydev.com, et le domaine
+     hafiydev.com n'était pas enregistré : ni serveur de noms, ni MX, et le
+     registre du .com répondait qu'il n'existait pas. Tout ce qui invitait à
+     écrire sur cette page tombait donc dans le vide, y compris le dernier
+     recours affiché quand l'envoi du formulaire échoue.
+
+     ✎ C'EST ICI, ET NULLE PART AILLEURS, QU'ON CHANGE L'ADRESSE. Le script
+        la relit sur ce lien pour la glisser dans les messages d'erreur : une
+        seule modification suffit, le jour où le nom de domaine sera pris. -->
     <footer class="cadre" id="contact">
       <span>Nûr Platform, édité par HAFIYDev. Mayotte.</span>
       <span>
-        <a href="mailto:contact@hafiydev.com">contact@hafiydev.com</a>
+        <a id="courriel" href="mailto:ambdoul.ridjali@gmail.com">
+          ambdoul.ridjali@gmail.com
+        </a>
       </span>
     </footer>
 
@@ -1718,6 +1750,28 @@
         if (lieu) lieu.textContent = new URL(porte.href).host;
       });
 
+      /* ── L'ADRESSE OÙ L'ON PEUT ÉCRIRE ────────────────────────────────────
+   Même règle que pour les portes : une seule source. C'est le lien du pied
+   de page qui fait foi, et le href plutôt que le texte affiché, parce que
+   c'est lui qui décide où part le courrier.
+   Les messages d'échec la citent. Dire « écrivez-nous » à quelqu'un dont
+   l'envoi vient de rater, sans lui donner l'adresse, c'est le renvoyer
+   chercher en bas de page ce qu'on aurait pu lui tendre. */
+      const lienCourriel = $("courriel");
+      const COURRIEL = lienCourriel
+        ? lienCourriel.href.replace(/^mailto:/, "")
+        : "";
+      const ecrivezNous = COURRIEL ? " Écrivez-nous : " + COURRIEL : "";
+
+      /* Tout lien marqué data-courriel ouvre le courrier. Son href écrit dans
+     le HTML mène au pied de page : c'est le repli si le script ne tourne
+     pas, et il reste juste puisque l'adresse y est affichée. */
+      if (COURRIEL) {
+        document.querySelectorAll("[data-courriel]").forEach((a) => {
+          a.href = "mailto:" + COURRIEL;
+        });
+      }
+
       const dire = (el, texte, ok) => {
         el.textContent = texte;
         el.className =
@@ -1789,8 +1843,9 @@
                 " : la démonstration automatique est réservée aux communes, " +
                 "associations et établissements d'enseignement, qui relèvent de " +
                 "NûrGest. Si vos métiers sont les affaires, les études ou les " +
-                "chantiers, c'est NûrOps qu'il vous faut : écrivez-nous et nous " +
-                "vous la montrons.",
+                "chantiers, c'est NûrOps qu'il vous faut, et nous vous la " +
+                "montrons." +
+                ecrivezNous,
               false,
             );
             return;
@@ -1818,7 +1873,8 @@
         } catch (err) {
           dire(
             retour,
-            "L'annuaire est momentanément indisponible. Réessayez, ou écrivez-nous.",
+            "L'annuaire est momentanément indisponible. Réessayez." +
+              ecrivezNous,
             false,
           );
         }
@@ -1892,7 +1948,17 @@
             .querySelectorAll("input, textarea, button")
             .forEach((c) => (c.disabled = true));
         } catch (err) {
-          dire(retour, "Envoi impossible. Écrivez-nous directement.", false);
+          /* Le vrai cul-de-sac : quelqu'un a rempli le formulaire en entier et
+         l'envoi a raté. C'est le seul moment où l'adresse doit être sous
+         les yeux, pas en bas de page. */
+          dire(
+            retour,
+            "Envoi impossible, et votre demande n'est pas partie." +
+              (COURRIEL
+                ? " Écrivez-nous directement : " + COURRIEL
+                : " Réessayez dans un instant."),
+            false,
+          );
         }
       });
     </script>
