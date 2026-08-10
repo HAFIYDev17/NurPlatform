@@ -219,155 +219,24 @@
         border-color: var(--trait);
       }
 
-      /* ── LE NOEUD : le coeur de la page ──────────────────────────────────── */
+      /* ── LE NOEUD : le coeur de la page ────────────────────────────────────
+     Tout le dessin est rendu au trait par le script en bas de page. Il n'y a
+     donc rien à styler ici que le cadre : une surface carrée, et un curseur
+     qui annonce qu'on peut agir dessus. Le reste (couleurs, épaisseurs,
+     profondeur) est décidé image par image, ce qu'aucune feuille de style ne
+     sait faire. */
       .noeud {
         position: relative;
-      }
-      .noeud svg {
         width: 100%;
-        height: auto;
-        overflow: visible;
-      }
-
-      .lien {
-        stroke: var(--trait);
-        stroke-width: 1;
-        fill: none;
-      }
-      /* Le trait de lumière parcourt le lien : la connexion est VIVANTE, mais
-     lentement. Une animation rapide fait « gadget ». */
-      .flux {
-        stroke: var(--lumiere);
-        stroke-width: 1.2;
-        fill: none;
-        stroke-dasharray: 3 190;
-        opacity: 0.85;
-        animation: parcours 7s linear infinite;
-      }
-      .flux.b {
-        animation-delay: -2.3s;
-      }
-      .flux.c {
-        animation-delay: -4.6s;
-      }
-      @keyframes parcours {
-        to {
-          stroke-dashoffset: -193;
-        }
-      }
-
-      /* ── L'ANNEAU ─────────────────────────────────────────────────────────
-     NûrProgress. Il tourne plus lentement que les flux : un flux est une
-     impulsion, un suivi est une patience. Assez visible pour qu'on le
-     remarque, assez discret pour qu'il ne dispute pas la vedette aux trois
-     applications : il les relie, il ne les remplace pas. */
-      .anneau {
-        stroke: rgba(233, 185, 107, 0.24);
-        stroke-width: 1;
-        stroke-dasharray: 2 13;
-        animation: tourne 38s linear infinite;
-      }
-      @keyframes tourne {
-        to {
-          stroke-dashoffset: -150;
-        }
-      }
-      .anneau-nom {
-        fill: rgba(233, 185, 107, 0.5);
-        font-family: "Montserrat", sans-serif;
-        font-size: 9.5px;
-        font-weight: 600;
-        letter-spacing: 0.16em;
-      }
-
-      /* UNE BRANCHE = un lien + son flux + son application.
-     Survoler l'application allume TOUTE la branche, jusqu'au socle. C'est le
-     geste qui dit ce que la page raconte : une application ne brille pas
-     seule, elle est BRANCHÉE. Sans cela, le survol ne raconte rien.
-     Les traits ignorent la souris (pointer-events:none) : seul le rond
-     déclenche, sinon on allumerait la branche en passant à côté. */
-      .branche .lien,
-      .branche .flux {
-        pointer-events: none;
-      }
-
-      /* SUR MOBILE, IL N'Y A PAS DE SURVOL.
-     Le geste qui fait tout comprendre (une application s'allume, et le lien
-     jusqu'au socle avec elle) n'existait donc que sur ordinateur. Sur un
-     téléphone, le dessin restait muet : c'est la moitié des visiteurs, et
-     probablement le maire qui ouvre le lien depuis son portable.
-     On ajoute donc l'état « active », posé au doigt (et au clavier, par
-     focus-visible : une page qu'on ne peut pas parcourir au clavier exclut
-     ceux qui n'utilisent pas de souris). */
-      .branche:hover .lien,
-      .branche.active .lien,
-      .branche:focus-visible .lien {
-        stroke: rgba(233, 185, 107, 0.42);
-      }
-      .branche:hover .flux,
-      .branche.active .flux,
-      .branche:focus-visible .flux {
-        stroke-width: 1.9;
-        opacity: 1;
-        stroke-dasharray: 5 60;
-        animation-duration: 2.4s; /* le flux s'accélère : le circuit s'active */
-      }
-      .branche {
+        aspect-ratio: 1 / 1;
         cursor: pointer;
-        outline: none;
       }
-
-      .satellite circle {
-        fill: var(--nuit-2);
-        stroke: var(--trait);
-        stroke-width: 1;
-        transition:
-          stroke 0.4s,
-          filter 0.4s;
-      }
-      .branche:hover .satellite circle,
-      .branche.active .satellite circle,
-      .branche:focus-visible .satellite circle {
-        stroke: var(--lumiere);
-        filter: drop-shadow(0 0 9px rgba(233, 185, 107, 0.45));
-      }
-      .satellite text {
-        fill: var(--ivoire-2);
-        font-family: "Montserrat", sans-serif;
-        font-size: 10.5px;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        text-anchor: middle;
-        transition: fill 0.4s;
-      }
-      .branche:hover .satellite text,
-      .branche.active .satellite text,
-      .branche:focus-visible .satellite text {
-        fill: var(--ivoire);
-      }
-
-      /* Le coeur bat plus fort quand une branche est active. */
-      .noeud:hover .coeur {
-        stroke-width: 1.8;
-      }
-      .coeur {
-        transition: stroke-width 0.4s;
-      }
-
-      .halo {
-        animation: souffle 5s ease-in-out infinite;
-        transform-origin: center;
-      }
-      @keyframes souffle {
-        0%,
-        100% {
-          opacity: 0.35;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 0.6;
-          transform: scale(1.05);
-        }
+      .noeud canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
       }
 
       /* ── Les applications : des LIGNES, pas des cartes ───────────────────── */
@@ -462,16 +331,18 @@
         color: var(--ivoire-2);
       }
 
-      /* ── Les deux échelles : deux colonnes, un filet entre elles ─────────── */
+      /* ── Les échelles : une colonne par forme d'organisation, un filet entre
+     elles. Le filet se pose sur toute colonne qui en suit une autre, et non
+     sur la dernière : en ajouter une quatrième ne demandera rien ici. */
       .echelles {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 56px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 48px;
       }
       .echelle {
         position: relative;
       }
-      .echelle:last-child::before {
+      .echelle + .echelle::before {
         content: "";
         position: absolute;
         left: -28px;
@@ -794,7 +665,7 @@
         .echelles {
           gap: 36px;
         }
-        .echelle:last-child::before {
+        .echelle + .echelle::before {
           display: none;
         }
         .preuve {
@@ -802,14 +673,8 @@
         }
       }
 
-      /* On respecte ceux qui ne veulent pas d'animation. */
-      @media (prefers-reduced-motion: reduce) {
-        .flux,
-        .halo,
-        .anneau {
-          animation: none;
-        }
-      }
+      /* On respecte ceux qui ne veulent pas d'animation. Le socle lit lui-même
+     ce réglage et rend alors une image fixe : rien à neutraliser ici. */
     </style>
   </head>
 
@@ -977,9 +842,11 @@
 
           <p class="chapo">
             Les organisations, les personnes, les droits et les flux n'existent
-            qu'une fois. Chaque application vient s'y relier. C'est ce qui
-            permet d'ajouter un outil sans reconstruire les mêmes fondations,
-            et de savoir depuis un seul endroit ce qui avance et ce qui attend.
+            qu'une fois. Chaque application vient s'y relier, et sert toutes
+            ses organisations depuis un même déploiement : la vôtre en est
+            cliente, elle n'est pas une copie installée pour elle seule. On
+            ajoute un outil sans refaire les mêmes fondations, et on sait
+            depuis un seul endroit ce qui avance et ce qui attend.
           </p>
 
           <div class="actions">
@@ -1006,100 +873,24 @@
         </div>
 
         <!-- ══ LE NOEUD ══════════════════════════════════════════════════════
-         Trois applications, un seul point. Le trait de lumière parcourt
-         chaque lien : le socle est vivant, il circule. ══════════════════ -->
-        <div class="noeud">
-          <svg
-            viewBox="0 0 400 380"
-            role="img"
-            aria-label="Trois applications reliées à un socle commun"
-          >
-            <defs>
-              <radialGradient id="halo" cx="50%" cy="50%">
-                <stop offset="0%" stop-color="#E9B96B" stop-opacity="0.5" />
-                <stop offset="55%" stop-color="#E9B96B" stop-opacity="0.10" />
-                <stop offset="100%" stop-color="#E9B96B" stop-opacity="0" />
-              </radialGradient>
-            </defs>
+         Trois applications, un seul point. Une lumière au centre alimente
+         chaque application, et reçoit en retour la leur : les grains dorés
+         descendent du socle, les grains ivoire y remontent. C'est la thèse
+         de la plateforme, et elle se lit dans le mouvement.
 
-            <!-- La lumière, au centre. C'est le seul effet de la page. -->
-            <circle class="halo" cx="200" cy="190" r="120" fill="url(#halo)" />
-
-            <!-- Les orbites : deux filets, rien de plus. -->
-            <circle
-              cx="200"
-              cy="190"
-              r="62"
-              stroke="rgba(232,216,186,0.10)"
-              fill="none"
-            />
-            <!-- ✎ L'ANNEAU : NûrProgress.
-             Il ne s'ajoute pas en quatrième satellite : il PASSE par les
-             trois. Ce cercle était déjà là, muet, et les trois applications
-             s'y trouvent exactement (128 du centre, chacune). Il ne restait
-             qu'à le nommer. Une capacité transversale ne se dessine pas à
-             côté de ce qu'elle traverse. -->
-            <circle class="anneau" cx="200" cy="190" r="128" fill="none" />
-
-            <!-- Le coeur : le socle. Dessiné AVANT les branches pour que les
-             traits partent de dessous, et non par-dessus. -->
-            <circle
-              class="coeur"
-              cx="200"
-              cy="190"
-              r="17"
-              fill="#0E1E36"
-              stroke="#E9B96B"
-              stroke-width="1.2"
-            />
-            <circle cx="200" cy="190" r="5.5" fill="#E9B96B" />
-
-            <!-- ✎ LES TROIS BRANCHES. Pour renommer une application, change le
-             texte ci-dessous (et rien d'autre). -->
-            <g class="branche" tabindex="0" role="button">
-              <path class="lien" d="M200 190 L200 62" />
-              <path class="flux" d="M200 190 L200 62" />
-              <g class="satellite">
-                <circle cx="200" cy="62" r="27" />
-                <text x="200" y="66">NûrGest</text>
-              </g>
-            </g>
-
-            <g class="branche" tabindex="0" role="button">
-              <path class="lien" d="M200 190 L311 254" />
-              <path class="flux b" d="M200 190 L311 254" />
-              <g class="satellite">
-                <circle cx="311" cy="254" r="27" />
-                <text x="311" y="258">NûrOps</text>
-              </g>
-            </g>
-
-            <g class="branche" tabindex="0" role="button">
-              <path class="lien" d="M200 190 L89 254" />
-              <path class="flux c" d="M200 190 L89 254" />
-              <g class="satellite">
-                <circle cx="89" cy="254" r="27" />
-                <text x="89" y="258">NûrPay</text>
-              </g>
-            </g>
-
-            <!-- Le nom de l'anneau, posé sur son point bas. -->
-            <text class="anneau-nom" x="200" y="334" text-anchor="middle">
-              NûrProgress
-            </text>
-
-            <text
-              x="200"
-              y="360"
-              text-anchor="middle"
-              fill="rgba(242,237,227,0.35)"
-              font-family="Montserrat"
-              font-size="10"
-              letter-spacing="0.18em"
-            >
-              SOCLE COMMUN
-            </text>
-          </svg>
+         Le dessin est rendu au trait sur un canevas, en perspective, sans
+         aucune bibliothèque : trois cents lignes lisibles valent mieux
+         qu'un moteur 3D de six cents kilo-octets pour trois ronds et un
+         anneau. Au repos il respire à peine ; il s'anime quand on s'y
+         intéresse, et il s'arrête tout seul dès qu'il sort de l'écran.
+         ══════════════════════════════════════════════════════════════════ -->
+        <div
+          class="noeud"
+          id="noeud"
+          role="img"
+          aria-label="Le socle Nûr et les trois applications qui s'y relient, traversées par l'anneau NûrProgress"
+        >
+          <canvas id="coeur-canvas"></canvas>
         </div>
       </div>
 
@@ -1127,9 +918,11 @@
             <b>Les opérations.</b> L'activité réelle, de la première demande
             jusqu'à la clôture du dossier. Bureaux d'études, entreprises de
             travaux, collectivités : consultations, études, devis, marchés,
-            chantiers, équipes, matériel, situations, réception, archivage.
-            Chaque organisation y retrouve ses métiers et son vocabulaire, pas
-            ceux de la précédente.
+            chantiers, équipes, matériel, situations, réception, archivage. Un
+            groupe qui porte plusieurs sociétés les tient côte à côte, chacune
+            cloisonnée, sans changer d'outil ni de compte. Chaque organisation
+            y retrouve ses métiers et son vocabulaire, pas ceux de la
+            précédente.
           </span>
           <span class="etat pilote">Pilote</span>
         </a>
@@ -1175,15 +968,18 @@
           <div class="brique">
             <h3>Organisations</h3>
             <p>
-              Une commune, une association, un établissement privé. Le même
-              modèle, jamais de code sur mesure.
+              Une commune, une association, un établissement privé, un groupe
+              de sociétés. Une organisation peut en contenir d'autres : c'est
+              la même relation, pas un cas particulier à développer.
             </p>
           </div>
           <div class="brique">
             <h3>Comptes et droits</h3>
             <p>
-              Un compte, plusieurs rôles. Chacun ne voit que son périmètre, et
-              la règle vit dans la base, pas dans un menu.
+              Une adresse, une personne. Elle appartient à plusieurs
+              organisations et y tient des rôles différents sans jamais avoir à
+              s'y recréer un compte. Chacun ne voit que son périmètre, et la
+              règle vit dans la base, pas dans un menu.
             </p>
           </div>
           <div class="brique">
@@ -1200,9 +996,12 @@
       <!-- ✎ LE PÉRIMÈTRE. La réserve la plus juste qu'on m'ait faite : NûrGest
        n'est pas « un logiciel pour les écoles ». C'est le MÊME logiciel, dont
        le périmètre s'élargit avec l'organisation. Le dire est une chose ; le
-       MONTRER en est une autre. -->
+       MONTRER en est une autre.
+       La troisième colonne, le groupe, a été ajoutée quand elle est devenue
+       vraie et pas avant : un groupe qui porte plusieurs sociétés est entré
+       sur le socle sans qu'une ligne soit écrite pour lui. -->
       <section>
-        <p class="titre-section">Le même logiciel, deux échelles</p>
+        <p class="titre-section">Le même socle, trois formes</p>
 
         <div class="echelles">
           <div class="echelle">
@@ -1220,6 +1019,17 @@
             <p class="echelle-txt">
               Chaque école garde son autonomie. La commune ajoute un niveau
               au-dessus : vue consolidée, patrimoine, arbitrages budgétaires.
+            </p>
+          </div>
+
+          <div class="echelle">
+            <p class="echelle-type">Groupe</p>
+            <p class="echelle-nb">N sociétés</p>
+            <p class="echelle-txt">
+              Une même maison porte souvent plusieurs personnes morales.
+              Chacune reste cloisonnée, les personnes ne se ressaisissent pas
+              d'une société à l'autre, et la tête de groupe voit l'ensemble
+              lorsqu'elle en a le droit.
             </p>
           </div>
         </div>
@@ -1243,10 +1053,11 @@
             </p>
           </div>
           <div>
-            <p class="chiffre">2</p>
+            <p class="chiffre">3</p>
             <p class="chiffre-txt">
-              types d'organisation, une association et une commune, sur le même
-              logiciel. Sans une ligne de code spécifique.
+              formes d'organisation sur le même modèle : une association, une
+              commune, un groupe de sociétés. Aucune n'a demandé de code écrit
+              pour elle.
             </p>
           </div>
           <div>
@@ -1261,7 +1072,10 @@
         <p class="note">
           Une école garde son autonomie. Une commune obtient sa vue d'ensemble
           sans se substituer aux directions. Le cloisonnement n'est pas une
-          option que l'on active : il est inscrit dans la structure des droits.
+          option que l'on active : il est inscrit dans la structure des droits,
+          et il se vérifie en se connectant. Deux organisations installées sur
+          la même base ne voient pas les mêmes dossiers, et aucun réglage
+          d'écran n'y change quoi que ce soit.
         </p>
       </section>
     </main>
@@ -1302,37 +1116,353 @@
 
       const $ = (id) => document.getElementById(id);
 
-      /* ── LE DESSIN AU DOIGT ───────────────────────────────────────────────────
-   Sur un téléphone, on ne survole rien : on touche. Un tap allume la branche
-   et éteint les autres, exactement comme le curseur sur un ordinateur.
-   Un second tap sur NûrGest ouvre l'application : le premier sert à
-   comprendre, le second à entrer. */
-      document.querySelectorAll(".branche").forEach((branche) => {
-        const activer = (e) => {
-          const dejaActive = branche.classList.contains("active");
-          document
-            .querySelectorAll(".branche")
-            .forEach((b) => b.classList.remove("active"));
-          if (!dejaActive) {
-            branche.classList.add("active");
-          }
-          e.preventDefault();
-        };
-        branche.addEventListener("click", activer);
-        branche.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" || e.key === " ") activer(e);
-        });
-      });
+      /* ══════════════════════════════════════════════════════════════════════════
+       * LE SOCLE EN MOUVEMENT
+       * ──────────────────────────────────────────────────────────────────────────
+       * Une lumière au centre alimente chaque application, et reçoit en retour
+       * la leur. Les grains dorés descendent du socle vers les modules, les
+       * grains ivoire remontent des modules vers le socle. Le sens compte : une
+       * plateforme qui ne recevrait rien serait un serveur, pas un socle.
+       *
+       * DEUX RÉGIMES, ET RIEN ENTRE LES DEUX QU'UNE TRANSITION DOUCE.
+       *   Au repos, le dessin respire à peine : il ne demande rien à l'oeil de
+       *   quelqu'un qui lit le texte à côté. À l'attention (survol, ou toucher
+       *   sur mobile), il rend. C'est la même règle que dans les applications :
+       *   on ne réclame pas l'attention, on la récompense.
+       *
+       * POURQUOI PAS THREE.JS. Six cents kilo-octets pour trois ronds, un anneau
+       * et des points. La projection tient en quatre lignes (pointOrbite,
+       * projeter) et se relit. Une dépendance qu'on ne saurait pas réécrire est
+       * une dette, pas un outil.
+       *
+       * ✎ POUR RENOMMER UNE APPLICATION : change le texte dans MODULES, et rien
+       *    d'autre. Les angles se répartissent tout seuls.
+       * ══════════════════════════════════════════════════════════════════════════ */
+      (() => {
+        "use strict";
 
-      /* Toucher ailleurs éteint tout : une branche qui reste allumée sans raison
-   fait croire à un état, alors qu'il n'y en a pas. */
-      document.addEventListener("click", (e) => {
-        if (!e.target.closest(".branche")) {
-          document
-            .querySelectorAll(".branche")
-            .forEach((b) => b.classList.remove("active"));
+        const canvas = document.getElementById("coeur-canvas");
+        const hote = document.getElementById("noeud");
+        if (!canvas || !hote) return;
+        const ctx = canvas.getContext("2d");
+
+        /* Les couleurs viennent de la charte, pas d'un choix local. */
+        const LUMIERE = [233, 185, 107]; // #e9b96b
+        const IVOIRE = [242, 237, 227]; // #f2ede3
+
+        const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+
+        /* NûrGest reste en haut, comme dans l'ancien dessin : on ne réoriente
+       pas ce que les visiteurs ont déjà appris. */
+        const MODULES = [
+          { nom: "NûrGest", angle: -Math.PI / 2 },
+          { nom: "NûrOps", angle: -Math.PI / 2 + (2 * Math.PI) / 3 },
+          { nom: "NûrPay", angle: -Math.PI / 2 + (4 * Math.PI) / 3 },
+        ];
+
+        const RAYON = 1.0; // rayon de l'orbite, en unités de scène
+        const INCLIN = 0.4; // inclinaison de l'orbite, en radians
+        const FOCALE = 3.2; // plus c'est grand, plus la perspective est douce
+
+        const REPOS = { vitesse: 0.018, debit: 0.55, halo: 0.55 };
+        const EVEIL = { vitesse: 0.23, debit: 3.2, halo: 1.0 };
+
+        let eveil = 0; // 0 = repos, 1 = éveillé
+        let vise = 0;
+        let theta = 0; // rotation courante de l'orbite
+        let W = 0,
+          H = 0,
+          cx = 0,
+          cy = 0,
+          echelle = 0;
+        let dernier = 0,
+          visible = true,
+          anime = false;
+
+        const grains = [];
+
+        /* Qui demande moins de mouvement en obtient. */
+        const moinsDeMouvement = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        );
+
+        /* ── Géométrie ─────────────────────────────────────────────────────── */
+
+        /* Un point de l'orbite, tourné puis incliné. */
+        function pointOrbite(a) {
+          const x = RAYON * Math.cos(a + theta);
+          const z = RAYON * Math.sin(a + theta);
+          return { x, y: -z * Math.sin(INCLIN), z: z * Math.cos(INCLIN) };
         }
-      });
+
+        /* Projection perspective. Rend aussi l'échelle k, qui dimensionne ce
+       qu'on dessine : ce qui est loin est plus petit ET plus pâle. */
+        function projeter(p) {
+          const k = FOCALE / (FOCALE + p.z);
+          return {
+            x: cx + p.x * echelle * k,
+            y: cy + p.y * echelle * k,
+            k,
+            z: p.z,
+          };
+        }
+
+        const melange = (a, b, t) => a + (b - a) * t;
+
+        function dimensionner() {
+          const r = hote.getBoundingClientRect();
+          if (!r.width) return;
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          W = r.width;
+          H = r.height;
+          canvas.width = Math.round(W * dpr);
+          canvas.height = Math.round(H * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          cx = W / 2;
+          cy = H / 2;
+          echelle = Math.min(W, H) * 0.3;
+        }
+
+        /* ── Les grains ────────────────────────────────────────────────────── */
+
+        /* sens = +1 : le socle alimente le module.
+       sens = -1 : le module rend sa lumière au socle. */
+        function semer() {
+          const m = MODULES[(Math.random() * MODULES.length) | 0];
+          const sens = Math.random() < 0.5 ? 1 : -1;
+          grains.push({
+            angle: m.angle,
+            t: sens > 0 ? 0 : 1,
+            sens,
+            vitesse: 0.35 + Math.random() * 0.25,
+            vie: 1,
+          });
+        }
+
+        /* ── Rendu ─────────────────────────────────────────────────────────── */
+
+        function dessiner(dt) {
+          const vitesse = melange(REPOS.vitesse, EVEIL.vitesse, eveil);
+          const halo = melange(REPOS.halo, EVEIL.halo, eveil);
+          theta += vitesse * dt;
+
+          ctx.clearRect(0, 0, W, H);
+
+          const centre = projeter({ x: 0, y: 0, z: 0 });
+          const pts = MODULES.map((m) => ({
+            m,
+            p: projeter(pointOrbite(m.angle)),
+          }));
+
+          /* 1. L'anneau NûrProgress. Il ne s'ajoute pas en quatrième satellite :
+             il PASSE par les trois. Dessiné en premier, donc derrière tout. */
+          ctx.lineWidth = 1;
+          ctx.setLineDash([2, 7]);
+          ctx.lineDashOffset = -theta * 26;
+          for (let i = 0; i < 96; i++) {
+            const p1 = projeter(pointOrbite((i / 96) * Math.PI * 2));
+            const p2 = projeter(pointOrbite(((i + 1) / 96) * Math.PI * 2));
+            /* Ce qui passe derrière s'efface : c'est ce qui donne le volume. */
+            const prof = (p1.k - 0.72) / 0.56;
+            ctx.strokeStyle = rgba(LUMIERE, 0.06 + Math.max(0, prof) * 0.26);
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+          ctx.setLineDash([]);
+
+          /* 2. Les liens, du plus loin au plus proche. */
+          const ordonnes = [...pts].sort((a, b) => b.p.z - a.p.z);
+          for (const { p } of ordonnes) {
+            const prof = (p.k - 0.72) / 0.56;
+            ctx.strokeStyle = rgba(IVOIRE, 0.05 + Math.max(0, prof) * 0.1);
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(centre.x, centre.y);
+            ctx.lineTo(p.x, p.y);
+            ctx.stroke();
+          }
+
+          /* 3. Le halo. Une seule source de lumière, au centre. */
+          const rH = echelle * (0.95 + 0.06 * Math.sin(theta * 1.7)) * halo;
+          const g = ctx.createRadialGradient(
+            centre.x,
+            centre.y,
+            0,
+            centre.x,
+            centre.y,
+            rH,
+          );
+          g.addColorStop(0, rgba(LUMIERE, 0.3 * halo));
+          g.addColorStop(0.45, rgba(LUMIERE, 0.07 * halo));
+          g.addColorStop(1, rgba(LUMIERE, 0));
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(centre.x, centre.y, rH, 0, Math.PI * 2);
+          ctx.fill();
+
+          /* 4. Les grains, sur les liens. */
+          for (const grain of grains) {
+            grain.t += grain.sens * grain.vitesse * dt;
+            if (grain.t < -0.05 || grain.t > 1.05) {
+              grain.vie = 0;
+              continue;
+            }
+            const cible = pointOrbite(grain.angle);
+            const t = Math.max(0, Math.min(1, grain.t));
+            const p = projeter({
+              x: cible.x * t,
+              y: cible.y * t,
+              z: cible.z * t,
+            });
+            /* Il s'efface aux deux bouts : on ne voit jamais apparaître un
+               point, ni disparaître. */
+            const bord = Math.min(t, 1 - t) * 4;
+            const a = Math.min(1, bord) * (0.35 + 0.45 * eveil);
+            const couleur = grain.sens > 0 ? LUMIERE : IVOIRE;
+            ctx.fillStyle = rgba(couleur, a * (grain.sens > 0 ? 1 : 0.55));
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 1.7 * p.k, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          for (let i = grains.length - 1; i >= 0; i--) {
+            if (!grains[i].vie) grains.splice(i, 1);
+          }
+
+          /* 5. Le coeur. */
+          ctx.fillStyle = rgba(LUMIERE, 0.95);
+          ctx.beginPath();
+          ctx.arc(centre.x, centre.y, 5.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = rgba(LUMIERE, 0.42);
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(centre.x, centre.y, 13, 0, Math.PI * 2);
+          ctx.stroke();
+
+          /* 6. Les applications, du plus loin au plus proche. */
+          ctx.font = "600 11px Montserrat, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          for (const { m, p } of ordonnes) {
+            const prof = Math.max(0, Math.min(1, (p.k - 0.72) / 0.56));
+            const r = 22 * p.k;
+
+            ctx.fillStyle = rgba([14, 30, 54], 0.92);
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = rgba(
+              LUMIERE,
+              0.14 + prof * 0.34 + eveil * 0.2,
+            );
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.fillStyle = rgba(IVOIRE, 0.4 + prof * 0.5);
+            ctx.fillText(m.nom, p.x, p.y);
+          }
+
+          /* 7. Le nom de l'anneau, sous le socle. */
+          ctx.font = "600 9.5px Montserrat, sans-serif";
+          ctx.fillStyle = rgba(LUMIERE, 0.32 + eveil * 0.22);
+          ctx.letterSpacing = "0.16em";
+          ctx.fillText("NÛRPROGRESS", cx, cy + echelle * 1.42);
+          ctx.letterSpacing = "0px";
+        }
+
+        /* ── Boucle ────────────────────────────────────────────────────────── */
+
+        let debitReste = 0;
+
+        function boucle(maintenant) {
+          if (!anime) return;
+          const dt = Math.min((maintenant - dernier) / 1000 || 0, 0.05);
+          dernier = maintenant;
+
+          eveil += (vise - eveil) * Math.min(1, dt * 3.2);
+
+          debitReste += melange(REPOS.debit, EVEIL.debit, eveil) * dt;
+          while (debitReste >= 1) {
+            semer();
+            debitReste -= 1;
+          }
+
+          dessiner(dt);
+          requestAnimationFrame(boucle);
+        }
+
+        function demarrer() {
+          if (anime || moinsDeMouvement.matches) return;
+          anime = true;
+          dernier = performance.now();
+          requestAnimationFrame(boucle);
+        }
+        function arreter() {
+          anime = false;
+        }
+
+        /* ── Interactions ──────────────────────────────────────────────────── */
+
+        hote.addEventListener("pointerenter", () => {
+          vise = 1;
+        });
+        hote.addEventListener("pointerleave", () => {
+          vise = 0;
+        });
+        /* Sur mobile il n'y a pas de survol : le toucher réveille, puis ça
+       retombe tout seul. Personne n'a à éteindre ce qu'il a allumé. */
+        hote.addEventListener("pointerdown", () => {
+          vise = 1;
+          clearTimeout(hote._t);
+          hote._t = setTimeout(() => {
+            vise = 0;
+          }, 2600);
+        });
+
+        /* On ne fait pas tourner une animation que personne ne regarde : ni hors
+       écran, ni dans un onglet en arrière-plan. C'est de la batterie. */
+        if ("IntersectionObserver" in window) {
+          new IntersectionObserver(
+            (entrees) => {
+              visible = entrees[0].isIntersecting;
+              visible ? demarrer() : arreter();
+            },
+            { threshold: 0.05 },
+          ).observe(hote);
+        }
+        document.addEventListener("visibilitychange", () => {
+          document.hidden ? arreter() : visible && demarrer();
+        });
+
+        window.addEventListener("resize", () => {
+          dimensionner();
+          if (!anime) dessiner(0);
+        });
+
+        /* ── Départ ────────────────────────────────────────────────────────── */
+
+        dimensionner();
+
+        if (moinsDeMouvement.matches) {
+          /* Une image fixe, correcte, plutôt qu'un mouvement imposé. Elle est
+         dessinée une seule fois : si Montserrat arrive après, les noms des
+         applications resteraient dans la police de secours. On redessine
+         donc quand les polices sont là. */
+          theta = 0.6;
+          for (let i = 0; i < 14; i++) semer();
+          dessiner(0);
+          if (document.fonts) {
+            document.fonts.ready.then(() => {
+              if (!anime) dessiner(0);
+            });
+          }
+        } else {
+          demarrer();
+        }
+      })();
 
       /* ── Le tiroir ────────────────────────────────────────────────────────────
    On ferme à l'échappement et au clic sur le voile : un panneau dont on ne
