@@ -107,6 +107,23 @@
         display: block;
       }
 
+      /* ── UN BOUTON QUI DOIT RESSEMBLER À AUTRE CHOSE ──────────────────────
+     Un <button> natif arrive avec un fond gris, une bordure système et la
+     police du navigateur. Cinq classes neutralisaient cela chacune de leur
+     côté : .porte-demo, .btn-vide, .btn-envoi, .btn-verif, .fermer. C'est la
+     même règle écrite cinq fois, et une sixième allait s'écrire pour la
+     porte d'entrée. Elle vit ici désormais ; les autres ne gardent que ce
+     qui les distingue vraiment.
+     Elle est déclarée avant elles : ce qu'une classe suivante redéfinit
+     (une bordure pour .btn-verif, un fond pour .btn-plein) l'emporte. */
+      .bouton {
+        appearance: none;
+        background: transparent;
+        border: none;
+        font-family: "Montserrat", sans-serif;
+        cursor: pointer;
+      }
+
       .porte {
         display: inline-flex;
         align-items: center;
@@ -198,18 +215,11 @@
         align-items: center;
         gap: 9px;
         padding: 13px 22px;
-        /* appearance:none + background:transparent : un <button> arrive avec un
-       fond gris natif. Sans cela, on écrit en ivoire sur du gris clair. */
-        appearance: none;
-        background: transparent;
-        border: none;
         border-bottom: 1px solid transparent;
         color: var(--ivoire-2);
         text-decoration: none;
-        font-family: "Montserrat", sans-serif;
         font-size: 13px;
         font-weight: 600;
-        cursor: pointer;
         transition:
           color 0.3s,
           border-color 0.3s;
@@ -454,13 +464,9 @@
         font-weight: 300;
       }
       .fermer {
-        appearance: none;
-        background: transparent;
-        border: none;
         color: var(--ivoire-3);
         font-size: 26px;
         line-height: 1;
-        cursor: pointer;
         transition: color 0.3s;
       }
       .fermer:hover {
@@ -478,12 +484,9 @@
         gap: 12px;
       }
 
-      .porte-demo {
-        appearance: none;
-        background: transparent;
-        font-family: "Montserrat", sans-serif;
-        cursor: pointer;
-      }
+      /* .porte-demo ne dit plus qu'une chose, celle que son nom porte : ce
+     bouton-là disparaît sur mobile, où celui du hero suffit. Le reste est
+     dans .bouton. */
 
       /* ── La demande ──────────────────────────────────────────────────────── */
       .demo-grille {
@@ -491,14 +494,77 @@
         grid-template-columns: 1fr 1fr;
         gap: 56px;
       }
-      .demo-intro {
+      /* Le mot d'entrée d'un tiroir. Il s'appelait .demo-intro quand il n'y
+     avait qu'un tiroir ; il y en a deux, le nom aurait menti. */
+      .tiroir-mot {
         font-size: 15px;
         color: var(--ivoire-2);
         margin-bottom: 20px;
       }
-      .demo-intro b {
+      .tiroir-mot b {
         color: var(--ivoire);
         font-weight: 600;
+      }
+      .tiroir-fin {
+        font-size: 12.5px;
+        line-height: 1.7;
+        color: var(--ivoire-3);
+        margin-top: 26px;
+        padding-top: 20px;
+        border-top: 1px solid var(--trait);
+      }
+
+      /* ── LES PORTES ───────────────────────────────────────────────────────
+     Une porte par application, tant qu'il y en a plusieurs. Ce bloc est
+     écrit pour mourir : le jour où les comptes vivront au même endroit, il
+     se réduit à une ligne et disparaît. Autant le dire ici plutôt que de le
+     découvrir dans trois ans. */
+      .entree {
+        display: block;
+        padding: 17px 0;
+        border-bottom: 1px solid var(--trait);
+        text-decoration: none;
+        color: inherit;
+        transition: padding-left 0.35s;
+      }
+      .entrees > :first-child {
+        border-top: 1px solid var(--trait);
+      }
+      a.entree:hover {
+        padding-left: 8px;
+      }
+      .entree-tete {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 5px;
+      }
+      .entree-nom {
+        font-family: "Fraunces", Georgia, serif;
+        font-size: 19px;
+        font-weight: 400;
+        transition: color 0.35s;
+      }
+      a.entree:hover .entree-nom {
+        color: var(--lumiere);
+      }
+      .entree-txt {
+        font-size: 13px;
+        color: var(--ivoire-2);
+      }
+      /* L'adresse est écrite en clair : on doit savoir où l'on va avant de
+     cliquer, surtout quand deux des trois portes ne sont pas sur le même
+     domaine que la vitrine. */
+      .entree-lieu {
+        display: block;
+        margin-top: 7px;
+        font-size: 11px;
+        color: var(--ivoire-3);
+      }
+      /* Une porte qui n'existe pas ne se comporte pas comme une porte. */
+      .entree.close .entree-nom {
+        color: var(--ivoire-3);
       }
       .demo-liste {
         list-style: none;
@@ -554,15 +620,11 @@
       }
       .btn-verif {
         padding: 11px 18px;
-        appearance: none;
-        background: transparent;
         border: 1px solid var(--trait);
         border-radius: 2px;
         color: var(--ivoire-2);
-        font-family: "Montserrat", sans-serif;
         font-size: 13px;
         font-weight: 600;
-        cursor: pointer;
         white-space: nowrap;
         transition:
           border-color 0.3s,
@@ -601,11 +663,8 @@
 
       .btn-envoi {
         margin-top: 20px;
-        border: none;
-        cursor: pointer;
         width: 100%;
         justify-content: center;
-        font-family: "Montserrat", sans-serif;
       }
 
       /* ── Pied ────────────────────────────────────────────────────────────── */
@@ -694,10 +753,14 @@
         </span>
 
         <span style="display: flex; align-items: center; gap: 10px">
-          <button class="porte porte-demo" type="button" id="ouvrir-demo-2">
+          <button
+            class="porte bouton porte-demo"
+            type="button"
+            id="ouvrir-demo-2"
+          >
             Demander une démo
           </button>
-          <a class="porte" href="https://aecs-black.vercel.app/login">
+          <button class="porte bouton" type="button" id="ouvrir-entrer-2">
             Se connecter
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path
@@ -708,7 +771,7 @@
                 stroke-linejoin="round"
               />
             </svg>
-          </a>
+          </button>
         </span>
       </div>
     </header>
@@ -726,9 +789,9 @@
           <h2 class="tiroir-titre">Demander une démonstration</h2>
         </span>
         <button
-          class="fermer"
+          class="fermer bouton"
           type="button"
-          id="fermer-demo"
+          data-fermer
           aria-label="Fermer"
         >
           &times;
@@ -736,9 +799,16 @@
       </div>
 
       <div class="tiroir-corps">
-        <p class="demo-intro">
-          La démonstration ouvre un espace <b>isolé</b>, avec des données
-          fictives, pour <b>quatorze jours</b>. Il se referme tout seul.
+        <!-- ⚠ CE TIROIR OUVRE UNE DÉMONSTRATION DE NûrGest, PAS DE LA
+         PLATEFORME. Le contrôle de SIRET plus bas n'accepte que les
+         communes, associations et établissements d'enseignement, et
+         l'espace généré contient des élèves et des classes. Tant que
+         c'est vrai, il faut le dire ici : un bureau d'études qui saisissait
+         son numéro se voyait répondre qu'il était hors périmètre, sur une
+         page qui lui vend NûrOps trois sections plus haut. -->
+        <p class="tiroir-mot">
+          La démonstration ouvre un espace <b>NûrGest</b> isolé, avec des
+          données fictives, pour <b>quatorze jours</b>. Il se referme tout seul.
         </p>
         <ul class="demo-liste">
           <li>
@@ -747,6 +817,10 @@
           </li>
           <li>Aucune donnée réelle d'élève ne doit y être saisie.</li>
           <li>Chaque demande est validée sous 48 heures.</li>
+          <li>
+            Pour NûrOps, bureaux d'études, entreprises de travaux et groupes, la
+            démonstration se fait avec nous : écrivez-nous.
+          </li>
         </ul>
 
         <form id="form-demo" onsubmit="return false;">
@@ -761,7 +835,7 @@
               placeholder="14 chiffres"
               autocomplete="off"
             />
-            <button type="button" class="btn-verif" id="btn-verif">
+            <button type="button" class="btn-verif bouton" id="btn-verif">
               Vérifier
             </button>
           </div>
@@ -819,12 +893,101 @@
               >
             </label>
 
-            <button type="button" class="btn-plein btn-envoi" id="btn-envoi">
+            <button
+              type="button"
+              class="btn-plein bouton btn-envoi"
+              id="btn-envoi"
+            >
               Envoyer la demande
             </button>
             <p id="retour-envoi" class="retour"></p>
           </div>
         </form>
+      </div>
+    </aside>
+
+    <!-- ══ LE TIROIR D'ENTRÉE ═══════════════════════════════════════════════
+     Nûr n'a pas encore une seule porte : NûrGest et NûrOps ont chacun leurs
+     comptes, dans deux bases distinctes. « Se connecter » et « Ouvrir mon
+     espace » déposaient donc tout le monde sur la connexion d'UNE seule
+     application. Pour un utilisateur de NûrOps, c'était une impasse.
+
+     Le tiroir ne résout pas le problème, il le dit. C'est déjà mieux qu'un
+     lien qui ment. Il est écrit pour disparaître : le jour où les comptes
+     vivront au même endroit, il se réduit à une ligne.
+
+     ✎ POUR AJOUTER OU CHANGER UNE PORTE : copie un bloc <a class="entree">.
+        L'adresse est écrite en clair sous le nom, à mettre à jour avec le
+        href. Une application sans porte prend <span class="entree close">.
+     ══════════════════════════════════════════════════════════════════════ -->
+    <aside class="tiroir" id="tiroir-entrer" aria-hidden="true">
+      <div class="tiroir-tete">
+        <span>
+          <p class="tiroir-sur">Nûr Platform</p>
+          <h2 class="tiroir-titre">Ouvrir mon espace</h2>
+        </span>
+        <button
+          class="fermer bouton"
+          type="button"
+          data-fermer
+          aria-label="Fermer"
+        >
+          &times;
+        </button>
+      </div>
+
+      <div class="tiroir-corps">
+        <p class="tiroir-mot">
+          Nûr n'a pas encore <b>une seule porte</b>. Chaque application garde la
+          sienne, le temps que les comptes vivent au même endroit. Entrez par
+          celle où vous en avez déjà un.
+        </p>
+
+        <div class="entrees">
+          <a class="entree" href="https://www.aecs-yt.fr/login">
+            <span class="entree-tete">
+              <span class="entree-nom">NûrGest</span>
+              <span class="etat prod">En production</span>
+            </span>
+            <span class="entree-txt">
+              Élèves, classes, présences, inscriptions, paiements, patrimoine.
+            </span>
+            <span class="entree-lieu">www.aecs-yt.fr</span>
+          </a>
+
+          <a
+            class="entree"
+            href="https://nurops-portail-metier.vercel.app/login"
+          >
+            <span class="entree-tete">
+              <span class="entree-nom">NûrOps</span>
+              <span class="etat pilote">Pilote</span>
+            </span>
+            <span class="entree-txt">
+              Affaires, études, marchés, chantiers, équipes, matériel,
+              documents.
+            </span>
+            <span class="entree-lieu">nurops-portail-metier.vercel.app</span>
+          </a>
+
+          <span class="entree close">
+            <span class="entree-tete">
+              <span class="entree-nom">NûrPay</span>
+              <span class="etat attente">En préparation</span>
+            </span>
+            <span class="entree-txt">
+              Pas encore de porte. Le chantier réglementaire n'est pas fini, et
+              une paie approximative ne se rattrape pas.
+            </span>
+          </span>
+        </div>
+
+        <p class="tiroir-fin">
+          Vous êtes la même personne des deux côtés. Ce n'est pas encore le même
+          compte : les identités vivent dans deux bases, et les réunir est le
+          chantier en cours. Tant qu'il n'est pas fini, mieux vaut deux portes
+          annoncées qu'une porte qui promet trop.
+        </p>
       </div>
     </aside>
 
@@ -836,25 +999,28 @@
 
           <p class="surtitre">Nûr Platform</p>
 
-          <h1>
-            Un socle.<br />Vos outils.<br /><em>Ce qui doit avancer.</em>
-          </h1>
+          <h1>Un socle.<br />Vos outils.<br /><em>Ce qui doit avancer.</em></h1>
 
           <p class="chapo">
             Les organisations, les personnes, les droits et les flux n'existent
-            qu'une fois. Chaque application vient s'y relier, et sert toutes
-            ses organisations depuis un même déploiement : la vôtre en est
-            cliente, elle n'est pas une copie installée pour elle seule. On
-            ajoute un outil sans refaire les mêmes fondations, et on sait
-            depuis un seul endroit ce qui avance et ce qui attend.
+            qu'une fois. Chaque application vient s'y relier, et sert toutes ses
+            organisations depuis un même déploiement : la vôtre en est cliente,
+            elle n'est pas une copie installée pour elle seule. On ajoute un
+            outil sans refaire les mêmes fondations, et on sait depuis un seul
+            endroit ce qui avance et ce qui attend.
           </p>
 
           <div class="actions">
             <!-- Ce bouton disait « Accéder à NûrGest ». Sur la vitrine d'une
              PLATEFORME, c'était un aveu : tout se résumerait donc à une seule
-             application. « Ouvrir mon espace » est vrai aujourd'hui, et le
-             restera quand la connexion routera chacun vers SES outils. -->
-            <a class="btn-plein" href="https://aecs-black.vercel.app/login">
+             application. Le nom a changé pour « Ouvrir mon espace », mais le
+             lien, lui, menait toujours à la connexion de NûrGest : le texte
+             promettait la plateforme, l'adresse livrait une application. Un
+             utilisateur de NûrOps arrivait sur une porte qui n'était pas la
+             sienne.
+             Il ouvre désormais le tiroir des portes. Le jour où la connexion
+             routera chacun vers SES outils, ce bouton redeviendra un lien. -->
+            <button class="btn-plein bouton" type="button" id="ouvrir-entrer">
               Ouvrir mon espace
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                 <path
@@ -865,8 +1031,8 @@
                   stroke-linejoin="round"
                 />
               </svg>
-            </a>
-            <button class="btn-vide" type="button" id="ouvrir-demo">
+            </button>
+            <button class="btn-vide bouton" type="button" id="ouvrir-demo">
               Demander une démonstration
             </button>
           </div>
@@ -901,7 +1067,11 @@
       <section id="applications">
         <p class="titre-section">Les applications</p>
 
-        <a class="app" href="https://aecs-black.vercel.app/login">
+        <!-- ⚠ Cette adresse était « aecs-black.vercel.app », un alias attribué
+         par Vercel. Il répond aujourd'hui, mais il n'appartient à personne :
+         il se réattribue au gré des déploiements, et le jour où il tombera
+         rien ici ne le signalera. Le domaine possédé est www.aecs-yt.fr. -->
+        <a class="app" href="https://www.aecs-yt.fr/login">
           <span class="app-nom">NûrGest</span>
           <span class="app-desc">
             <b>La gestion.</b> Établissement indépendant, réseau d'écoles,
@@ -912,7 +1082,10 @@
           <span class="etat prod">En production</span>
         </a>
 
-        <a class="app" href="#contact">
+        <!-- NûrOps renvoyait vers #contact alors que sa porte existe et
+         répond. Un utilisateur de SERCORP qui cherchait son espace sur cette
+         page tombait sur une adresse e-mail. -->
+        <a class="app" href="https://nurops-portail-metier.vercel.app/login">
           <span class="app-nom">NûrOps</span>
           <span class="app-desc">
             <b>Les opérations.</b> L'activité réelle, de la première demande
@@ -920,9 +1093,8 @@
             travaux, collectivités : consultations, études, devis, marchés,
             chantiers, équipes, matériel, situations, réception, archivage. Un
             groupe qui porte plusieurs sociétés les tient côte à côte, chacune
-            cloisonnée, sans changer d'outil ni de compte. Chaque organisation
-            y retrouve ses métiers et son vocabulaire, pas ceux de la
-            précédente.
+            cloisonnée, sans changer d'outil ni de compte. Chaque organisation y
+            retrouve ses métiers et son vocabulaire, pas ceux de la précédente.
           </span>
           <span class="etat pilote">Pilote</span>
         </a>
@@ -952,8 +1124,8 @@
             <b>Ce qui doit avancer.</b> Étapes, validations, demandes envoyées,
             retours attendus, blocages. Une organisation ne se demande pas
             seulement ce qu'elle possède, mais ce qu'elle attend, et de qui.
-            Vous savez ce que vous avez envoyé, à qui, ce qui devait revenir,
-            et depuis combien de temps ça ne revient pas.
+            Vous savez ce que vous avez envoyé, à qui, ce qui devait revenir, et
+            depuis combien de temps ça ne revient pas.
           </span>
           <span class="etat pilote">Transversal</span>
         </a>
@@ -968,9 +1140,9 @@
           <div class="brique">
             <h3>Organisations</h3>
             <p>
-              Une commune, une association, un établissement privé, un groupe
-              de sociétés. Une organisation peut en contenir d'autres : c'est
-              la même relation, pas un cas particulier à développer.
+              Une commune, une association, un établissement privé, un groupe de
+              sociétés. Une organisation peut en contenir d'autres : c'est la
+              même relation, pas un cas particulier à développer.
             </p>
           </div>
           <div class="brique">
@@ -1026,9 +1198,9 @@
             <p class="echelle-type">Groupe</p>
             <p class="echelle-nb">N sociétés</p>
             <p class="echelle-txt">
-              Une même maison porte souvent plusieurs personnes morales.
-              Chacune reste cloisonnée, les personnes ne se ressaisissent pas
-              d'une société à l'autre, et la tête de groupe voit l'ensemble
+              Une même maison porte souvent plusieurs personnes morales. Chacune
+              reste cloisonnée, les personnes ne se ressaisissent pas d'une
+              société à l'autre, et la tête de groupe voit l'ensemble
               lorsqu'elle en a le droit.
             </p>
           </div>
@@ -1354,10 +1526,7 @@
             ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
             ctx.fill();
 
-            ctx.strokeStyle = rgba(
-              LUMIERE,
-              0.14 + prof * 0.34 + eveil * 0.2,
-            );
+            ctx.strokeStyle = rgba(LUMIERE, 0.14 + prof * 0.34 + eveil * 0.2);
             ctx.lineWidth = 1;
             ctx.stroke();
 
@@ -1464,31 +1633,71 @@
         }
       })();
 
-      /* ── Le tiroir ────────────────────────────────────────────────────────────
+      /* ── Les tiroirs ──────────────────────────────────────────────────────────
    On ferme à l'échappement et au clic sur le voile : un panneau dont on ne
-   sait pas sortir est un piège, pas une commodité. */
-      const tiroir = $("tiroir");
-      const voile = $("voile");
+   sait pas sortir est un piège, pas une commodité.
 
-      function ouvrirTiroir() {
+   Ce code ne connaissait qu'un tiroir, celui de la démonstration : le nom du
+   panneau et celui du champ à focaliser y étaient écrits en dur. Il y en a
+   deux maintenant. Plutôt que de recopier la mécanique, on la rend générale :
+   un seul voile, une seule touche d'échappement, et le tiroir courant retenu.
+
+   Le focus revient sur le bouton qui a ouvert. Sans cela, quelqu'un qui
+   navigue au clavier se retrouve renvoyé en haut du document à chaque
+   fermeture, et doit refaire tout le chemin. */
+      const voile = $("voile");
+      let tiroirOuvert = null;
+      let rappelFocus = null;
+
+      function ouvrirTiroir(tiroir, declencheur) {
+        if (!tiroir) return;
+        if (tiroirOuvert && tiroirOuvert !== tiroir) fermerTiroir();
+        tiroirOuvert = tiroir;
+        rappelFocus = declencheur || null;
         tiroir.classList.add("ouvert");
         voile.classList.add("ouvert");
         tiroir.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
-        setTimeout(() => $("siret").focus(), 420);
-      }
-      function fermerTiroir() {
-        tiroir.classList.remove("ouvert");
-        voile.classList.remove("ouvert");
-        tiroir.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = "";
+        /* On attend la fin du glissement : focaliser un panneau encore hors
+       de l'écran fait sauter la page. Le premier élément actionnable du
+       tiroir suffit, quel qu'il soit : ici un champ, là un lien. */
+        setTimeout(() => {
+          const premier = tiroir.querySelector(
+            "input, select, textarea, a[href], button:not([data-fermer])",
+          );
+          if (premier) premier.focus();
+        }, 420);
       }
 
-      ["ouvrir-demo", "ouvrir-demo-2"].forEach((id) => {
-        const b = $(id);
-        if (b) b.addEventListener("click", ouvrirTiroir);
+      function fermerTiroir() {
+        if (!tiroirOuvert) return;
+        tiroirOuvert.classList.remove("ouvert");
+        tiroirOuvert.setAttribute("aria-hidden", "true");
+        voile.classList.remove("ouvert");
+        document.body.style.overflow = "";
+        tiroirOuvert = null;
+        if (rappelFocus) {
+          rappelFocus.focus();
+          rappelFocus = null;
+        }
+      }
+
+      /* Quel bouton ouvre quel tiroir. Ajouter une entrée ici suffit. */
+      const OUVREURS = {
+        "ouvrir-demo": "tiroir",
+        "ouvrir-demo-2": "tiroir",
+        "ouvrir-entrer": "tiroir-entrer",
+        "ouvrir-entrer-2": "tiroir-entrer",
+      };
+      Object.entries(OUVREURS).forEach(([bouton, panneau]) => {
+        const b = $(bouton);
+        if (b) b.addEventListener("click", () => ouvrirTiroir($(panneau), b));
       });
-      $("fermer-demo").addEventListener("click", fermerTiroir);
+
+      /* Toute croix ferme, sans qu'il faille l'inscrire une par une. */
+      document.querySelectorAll("[data-fermer]").forEach((b) => {
+        b.addEventListener("click", fermerTiroir);
+      });
       voile.addEventListener("click", fermerTiroir);
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") fermerTiroir();
@@ -1550,13 +1759,22 @@
             e.activite_principale,
           );
 
+          /* « Hors périmètre » ne veut pas dire « hors plateforme ». Ce
+             contrôle qualifie pour la démonstration AUTOMATIQUE de NûrGest,
+             qui provisionne des élèves et des classes. Une entreprise de
+             travaux n'y a rien à faire, mais elle a toute sa place dans
+             NûrOps : le message le disait autrefois comme un refus sec, ce
+             qui envoyait promener exactement les prospects que la page
+             cherche à convaincre. */
           if (type === "autre") {
             dire(
               retour,
               e.nom_complet +
-                " : cette organisation n'entre pas dans le champ de NûrGest " +
-                "(communes, associations et établissements d'enseignement). Écrivez-nous, " +
-                "nous en discuterons.",
+                " : la démonstration automatique est réservée aux communes, " +
+                "associations et établissements d'enseignement, qui relèvent de " +
+                "NûrGest. Si vos métiers sont les affaires, les études ou les " +
+                "chantiers, c'est NûrOps qu'il vous faut : écrivez-nous et nous " +
+                "vous la montrons.",
               false,
             );
             return;
