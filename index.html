@@ -1702,6 +1702,22 @@
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") fermerTiroir();
       });
+
+      /* ── L'ADRESSE ÉCRITE SOUS CHAQUE PORTE ───────────────────────────────
+   Elle annonce où le lien mène. L'écrire à la main sous le href, c'est deux
+   sources pour une même vérité : le jour où le domaine change, on en met une
+   à jour et pas l'autre, et la vitrine affiche alors une adresse qui n'est
+   pas celle où l'on va. C'est exactement le défaut corrigé ailleurs sur
+   cette page ; le réintroduire ici serait sot.
+
+   Elle est donc lue sur le lien lui-même. Le texte reste écrit dans le HTML
+   pour que la page dise quelque chose de juste sans JavaScript, mais c'est
+   le href qui tranche. Changer de domaine se fait en une modification. */
+      document.querySelectorAll("a.entree[href]").forEach((porte) => {
+        const lieu = porte.querySelector(".entree-lieu");
+        if (lieu) lieu.textContent = new URL(porte.href).host;
+      });
+
       const dire = (el, texte, ok) => {
         el.textContent = texte;
         el.className =
