@@ -595,6 +595,17 @@
         color: var(--ivoire-3);
         margin: 18px 0 7px;
       }
+      /* Un champ obligatoire se dit AVANT l'envoi, pas dans le refus qui le
+     suit : le téléphone était exigé sans que rien ne l'annonce. */
+      .requis {
+        color: var(--lumiere);
+        margin-left: 3px;
+      }
+      .legende-requis {
+        margin: 14px 0 0;
+        font-size: 11px;
+        color: var(--ivoire-3);
+      }
       .champ {
         width: 100%;
         padding: 11px 13px;
@@ -844,8 +855,11 @@
         </ul>
 
         <form id="form-demo" onsubmit="return false;">
+          <p class="legende-requis">
+            <span class="requis" aria-hidden="true">*</span> Champ obligatoire
+          </p>
           <label class="etiq" for="siret"
-            >SIRET ou SIREN de l'organisation</label
+            >SIRET ou SIREN de l'organisation<span class="requis" aria-hidden="true">*</span></label
           >
           <div class="ligne-siret">
             <input
@@ -854,6 +868,7 @@
               inputmode="numeric"
               placeholder="14 chiffres"
               autocomplete="off"
+              required
             />
             <button type="button" class="btn-verif bouton" id="btn-verif">
               Vérifier
@@ -864,12 +879,12 @@
           <div id="suite" hidden>
             <div class="duo">
               <span>
-                <label class="etiq" for="prenom">Prénom</label>
-                <input id="prenom" class="champ" autocomplete="given-name" />
+                <label class="etiq" for="prenom">Prénom<span class="requis" aria-hidden="true">*</span></label>
+                <input id="prenom" class="champ" autocomplete="given-name" required />
               </span>
               <span>
-                <label class="etiq" for="nom">Nom</label>
-                <input id="nom" class="champ" autocomplete="family-name" />
+                <label class="etiq" for="nom">Nom<span class="requis" aria-hidden="true">*</span></label>
+                <input id="nom" class="champ" autocomplete="family-name" required />
               </span>
             </div>
 
@@ -881,7 +896,7 @@
             />
 
             <label class="etiq" for="email"
-              >Adresse électronique professionnelle</label
+              >Adresse électronique professionnelle<span class="requis" aria-hidden="true">*</span></label
             >
             <input
               id="email"
@@ -889,15 +904,17 @@
               type="email"
               autocomplete="email"
               placeholder="prenom.nom@organisation.fr"
+              required
             />
 
-            <label class="etiq" for="tel">Téléphone</label>
+            <label class="etiq" for="tel">Téléphone<span class="requis" aria-hidden="true">*</span></label>
             <input
               id="tel"
               class="champ"
               type="tel"
               autocomplete="tel"
               placeholder="0639 00 00 00"
+              required
             />
 
             <label class="etiq" for="message"
