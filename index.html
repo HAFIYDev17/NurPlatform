@@ -606,6 +606,17 @@
         font-size: 11px;
         color: var(--ivoire-3);
       }
+      .aide-champ {
+        margin: 6px 0 0;
+        font-size: 11px;
+        color: var(--ivoire-3);
+      }
+      /* La liste déroulante garde la nuit de la page : sans cela, certains
+     navigateurs ouvrent ses options sur fond blanc, texte ivoire illisible. */
+      select.champ option {
+        background: var(--nuit-2);
+        color: var(--ivoire);
+      }
       .champ {
         width: 100%;
         padding: 11px 13px;
@@ -877,6 +888,27 @@
           <p id="retour-siret" class="retour"></p>
 
           <div id="suite" hidden>
+            <!-- Le type décide de ce qu'on prépare : des groupes et un Hifz pour
+                 une école coranique, PS à GS pour une maternelle. L'annuaire
+                 dit « association », il ne dit pas quelle école elle tient.
+                 Une commune n'a rien à choisir : elle reçoit ses trois écoles. -->
+            <div id="bloc-type">
+              <label class="etiq" for="type-etab"
+                >Type d'établissement<span class="requis" aria-hidden="true">*</span></label
+              >
+              <select id="type-etab" class="champ" required>
+                <option value="" selected disabled>Choisissez</option>
+                <option value="madrassa">École coranique (madrassa)</option>
+                <option value="maternelle">École maternelle</option>
+                <option value="elementaire">École élémentaire</option>
+                <option value="college">Collège</option>
+                <option value="autre">Autre structure éducative</option>
+              </select>
+              <p class="aide-champ">
+                Votre espace sera préparé avec les classes de ce type.
+              </p>
+            </div>
+
             <div class="duo">
               <span>
                 <label class="etiq" for="prenom">Prénom<span class="requis" aria-hidden="true">*</span></label>
@@ -1886,6 +1918,7 @@
               (organisation.commune ? " (" + organisation.commune + ")" : ""),
             true,
           );
+          $("bloc-type").hidden = type === "municipalite";
           $("suite").hidden = false;
         } catch (err) {
           dire(
@@ -1905,6 +1938,13 @@
         const nom = $("nom").value.trim();
         const email = $("email").value.trim();
         const tel = $("tel").value.trim();
+        const commune = organisation.type_detecte === "municipalite";
+        const typeEtab = commune ? null : $("type-etab").value;
+
+        if (!commune && !typeEtab) {
+          dire(retour, "Indiquez le type d'établissement.", false);
+          return;
+        }
 
         /* Le minimum utile : de quoi RAPPELER quelqu'un. Un courriel sans nom ni
      téléphone, c'est une demande qu'on ne peut ni qualifier ni relancer. */
@@ -1942,6 +1982,7 @@
                 p_contact_tel: tel,
                 p_message: $("message").value.trim() || null,
                 p_avec_donnees: $("donnees").checked,
+                p_type_etablissement: typeEtab,
               }),
             },
           );
@@ -1958,11 +1999,11 @@
 
           dire(
             retour,
-            "Demande enregistrée. Vous recevrez votre accès sous 48 heures.",
+            "Demande enregistrée. Vous recevrez votre lien d'accès par courriel sous 48 heures.",
             true,
           );
           $("form-demo")
-            .querySelectorAll("input, textarea, button")
+            .querySelectorAll("input, select, textarea, button")
             .forEach((c) => (c.disabled = true));
         } catch (err) {
           /* Le vrai cul-de-sac : quelqu'un a rempli le formulaire en entier et
