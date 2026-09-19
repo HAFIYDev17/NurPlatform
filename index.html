@@ -844,8 +844,7 @@
          son numéro se voyait répondre qu'il était hors périmètre, sur une
          page qui lui vend NûrOps trois sections plus haut. -->
         <p class="tiroir-mot">
-          La démonstration ouvre un espace <b>NûrGest</b> isolé, avec des
-          données fictives, pour <b>quatorze jours</b>. Il se referme tout seul.
+          La démonstration ouvre un espace <b>NûrGest</b> isolé pour <b>quatorze jours</b>, avec des données fictives ou vide, selon votre choix. Il se referme tout seul.
         </p>
         <ul class="demo-liste">
           <li>
@@ -1976,7 +1975,11 @@
                 p_code_ape: organisation.code_ape,
                 p_commune: organisation.commune,
                 p_type_detecte: organisation.type_detecte,
-                p_contact_nom: prenom + " " + nom,
+                /* Prénom et nom SÉPARÉS (20/09). Les concaténer ici faisait arriver
+                   l'activation avec un prénom vide et le nom complet dans « Nom » : le
+                   prospect devait redécouper son propre nom. Le serveur les garde. */
+                p_contact_prenom: prenom,
+                p_contact_nom: nom,
                 p_contact_fonction: $("fonction").value.trim() || null,
                 p_contact_email: email,
                 p_contact_tel: tel,
