@@ -1,0 +1,10 @@
+Fraunces (fraunces-300.woff, fraunces-600.woff)
+
+Copyright 2020 The Fraunces Project Authors (github.com/undercasetype/Fraunces)
+
+Cette police est distribuée sous la SIL Open Font License, version 1.1.
+Texte de la licence : https://openfontlicense.org/open-font-license-official-text/
+(adresse historique inscrite dans la police : https://scripts.sil.org/OFL)
+
+Les fichiers WOFF sont la conversion sans modification des fichiers TTF statiques
+du kit de marque Nûr (v3-nun) : chaque table est seulement compressée.

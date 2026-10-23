@@ -2,239 +2,111 @@
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Nûr Platform</title>
     <meta
       name="description"
-      content="Un socle. Plusieurs outils. Nûr Platform, édité par HAFIYDev à Mayotte."
+      content="Un socle, vos outils. NûrGest pour les établissements et les communes, NûrOps pour les opérations. Nûr Platform est éditée par HAFIYDEV, à Mayotte."
     />
+    <link rel="canonical" href="https://nurplatform.fr/" />
+    <meta name="theme-color" content="#07182C" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400&display=swap"
-      rel="stylesheet"
+    <!-- L'aperçu d'un lien partagé (messagerie, réseau). -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:url" content="https://nurplatform.fr/" />
+    <meta property="og:title" content="Nûr Platform · Un socle, vos outils" />
+    <meta
+      property="og:description"
+      content="NûrGest pour les établissements et les communes, NûrOps pour les opérations. Un seul socle dessous."
     />
+    <meta property="og:image" content="https://nurplatform.fr/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Les polices sont servies d'ici : aucune requête vers un tiers à l'ouverture. -->
+    <link rel="preload" href="/assets/fraunces-300.woff" as="font" type="font/woff" crossorigin />
+    <link rel="stylesheet" href="/assets/nur.css" />
 
     <style>
       /* ══════════════════════════════════════════════════════════════════════
-   * NÛR PLATFORM
-   * ──────────────────────────────────────────────────────────────────────
-   * L'IDÉE, ET ELLE TIENT EN UN DESSIN
-   *   Nûr veut dire la lumière. Un noeud, c'est ce qui relie.
-   *   Les applications ne sont pas trois produits posés côte à côte : elles
-   *   sont RELIÉES AU MÊME POINT. C'est ce que dit le dessin, et c'est ce
-   *   qui est vrai dans le code (un seul socle : organisations, comptes,
-   *   droits, abonnements).
-   *
-   * CE QUE J'AI ÉVITÉ, VOLONTAIREMENT
-   *   Pas de dégradé violet, pas de verre dépoli, pas de carte qui flotte,
-   *   pas d'icône ronde, pas de promesse creuse. Ce sont les tics d'une page
-   *   générique, et ils sentent le gabarit.
-   *   À la place : de la nuit, une seule source de lumière, des filets fins,
-   *   beaucoup d'air, et une typographie qui respire. La sobriété se
-   *   remarque plus qu'un effet.
-   * ══════════════════════════════════════════════════════════════════════ */
-
-      /* ══════════════════════════════════════════════════════════════════════
-   * ✎ LES RÉGLAGES. Tout se change ici, et nulle part ailleurs.
-   *   --lumiere : la seule couleur chaude de la page. C'est elle qui donne
-   *               le ton. Un bleu ou un vert changerait toute l'identité.
-   *   --nuit    : le fond. Plus clair = moins solennel.
-   * ══════════════════════════════════════════════════════════════════════ */
-      :root {
-        --nuit: #0a1628; /* le fond : une nuit, pas un noir */
-        --nuit-2: #0e1e36;
-        --trait: rgba(232, 216, 186, 0.14);
-        --ivoire: #f2ede3;
-        --ivoire-2: rgba(242, 237, 227, 0.62);
-        --ivoire-3: rgba(242, 237, 227, 0.38);
-        --lumiere: #e9b96b; /* la seule couleur chaude de la page */
-        --lumiere-f: rgba(233, 185, 107, 0.1);
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        background: var(--nuit);
-        color: var(--ivoire);
-        font-family: "Montserrat", system-ui, sans-serif;
-        font-size: 15px;
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased;
-        overflow-x: hidden;
-      }
-
-      .cadre {
-        width: 100%;
-        max-width: 1080px;
-        margin: 0 auto;
-        padding: 0 32px;
-      }
-
-      /* ── L'en-tête : un filet, un nom, une porte ─────────────────────────── */
-      header {
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        background: rgba(10, 22, 40, 0.72);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--trait);
-      }
-      .barre {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 68px;
-      }
-      .marque {
-        display: flex;
-        align-items: center;
-        gap: 11px;
-        font-weight: 700;
-        font-size: 16px;
-        letter-spacing: 0.02em;
-      }
-      .marque svg {
-        display: block;
-      }
-
-      /* ── UN BOUTON QUI DOIT RESSEMBLER À AUTRE CHOSE ──────────────────────
-     Un <button> natif arrive avec un fond gris, une bordure système et la
-     police du navigateur. Cinq classes neutralisaient cela chacune de leur
-     côté : .porte-demo, .btn-vide, .btn-envoi, .btn-verif, .fermer. C'est la
-     même règle écrite cinq fois, et une sixième allait s'écrire pour la
-     porte d'entrée. Elle vit ici désormais ; les autres ne gardent que ce
-     qui les distingue vraiment.
-     Elle est déclarée avant elles : ce qu'une classe suivante redéfinit
-     (une bordure pour .btn-verif, un fond pour .btn-plein) l'emporte. */
-      .bouton {
-        appearance: none;
-        background: transparent;
-        border: none;
-        font-family: "Montserrat", sans-serif;
-        cursor: pointer;
-      }
-
-      .porte {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 9px 18px;
-        border: 1px solid var(--trait);
-        border-radius: 2px; /* presque droit : moins « produit SaaS » */
-        color: var(--ivoire);
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 600;
-        transition:
-          border-color 0.35s,
-          background 0.35s,
-          color 0.35s;
-      }
-      .porte:hover {
-        border-color: var(--lumiere);
-        background: var(--lumiere-f);
-        color: var(--lumiere);
-      }
+       * L'ACCUEIL. Ce qui est commun aux trois pages (couleurs de la charte,
+       * polices, en-tête, boutons, pied) vit dans /assets/nur.css.
+       *
+       * L'idée tient toujours en un dessin : Nûr veut dire la lumière, et les
+       * outils ne sont pas posés côte à côte, ils sont RELIÉS AU MÊME POINT.
+       * La charte v3 lui donne enfin sa forme : le point d'or du nûn est cette
+       * lumière, et chaque outil garde sa nuit (Gest, Ops, Pay).
+       * ══════════════════════════════════════════════════════════════════════ */
 
       /* ── Le hero ─────────────────────────────────────────────────────────── */
       .hero {
         display: grid;
-        grid-template-columns: 1.05fr 0.95fr;
-        gap: 64px;
+        grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.78fr);
+        gap: 56px;
         align-items: center;
-        padding: 112px 0 96px;
+        padding-block: 104px 96px;
       }
-
-      .surtitre {
+      .surtitre,
+      .titre-section {
         font-size: 11px;
         font-weight: 600;
         letter-spacing: 0.22em;
         text-transform: uppercase;
-        color: var(--lumiere);
-        margin-bottom: 26px;
       }
-
-      h1 {
-        font-family:
-          "Fraunces", Georgia, serif; /* une serif : ça ne fait pas « template » */
+      .surtitre {
+        color: var(--or);
+        margin-bottom: 24px;
+      }
+      .hero h1 {
+        font-family: var(--f-titre);
         font-weight: 300;
-        font-size: clamp(38px, 5vw, 60px);
-        line-height: 1.08;
-        letter-spacing: -0.015em;
+        font-size: clamp(40px, 5vw, 60px);
+        line-height: 1.06;
+        letter-spacing: -0.02em;
         margin-bottom: 26px;
       }
-      h1 em {
-        font-style: italic;
-        color: var(--lumiere);
+      .hero h1 span {
+        color: var(--or);
       }
-
       .chapo {
-        font-size: 16px;
+        font-size: 17px;
+        line-height: 1.6;
         color: var(--ivoire-2);
-        max-width: 40ch;
-        margin-bottom: 38px;
+        max-width: 44ch;
+        margin-bottom: 36px;
       }
-
       .actions {
         display: flex;
-        gap: 14px;
         flex-wrap: wrap;
+        gap: 12px;
       }
-
-      .btn-plein {
+      .garanties {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 20px;
+        margin-top: 30px;
+        font-size: 12.5px;
+        color: var(--ivoire-3);
+      }
+      .garanties span {
         display: inline-flex;
         align-items: center;
-        gap: 9px;
-        padding: 13px 26px;
-        background: var(--lumiere);
-        color: var(--nuit);
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 700;
-        border-radius: 2px;
-        transition:
-          transform 0.25s,
-          box-shadow 0.35s;
+        gap: 8px;
       }
-      .btn-plein:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 10px 34px -12px rgba(233, 185, 107, 0.55);
-      }
-      .btn-vide {
-        display: inline-flex;
-        align-items: center;
-        gap: 9px;
-        padding: 13px 22px;
-        border-bottom: 1px solid transparent;
-        color: var(--ivoire-2);
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 600;
-        transition:
-          color 0.3s,
-          border-color 0.3s;
-      }
-      .btn-vide:hover {
-        color: var(--ivoire);
-        border-color: var(--trait);
+      .garanties span::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--or);
+        opacity: 0.8;
       }
 
-      /* ── LE NOEUD : le coeur de la page ────────────────────────────────────
-     Tout le dessin est rendu au trait par le script en bas de page. Il n'y a
-     donc rien à styler ici que le cadre : une surface carrée, et un curseur
-     qui annonce qu'on peut agir dessus. Le reste (couleurs, épaisseurs,
-     profondeur) est décidé image par image, ce qu'aucune feuille de style ne
-     sait faire. */
+      /* Le noeud : tout le dessin est rendu par le script, image par image. */
       .noeud {
         position: relative;
         width: 100%;
@@ -246,107 +118,213 @@
         inset: 0;
         width: 100%;
         height: 100%;
-        display: block;
       }
 
-      /* ── Les applications : des LIGNES, pas des cartes ───────────────────── */
-      section {
-        padding: 96px 0;
+      /* ── Les sections ────────────────────────────────────────────────────── */
+      .bloc {
+        padding-block: 96px;
         border-top: 1px solid var(--trait);
       }
-
       .titre-section {
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
         color: var(--ivoire-3);
+        margin-bottom: 16px;
+      }
+      .bloc h2 {
+        font-family: var(--f-titre);
+        font-weight: 300;
+        font-size: clamp(28px, 3.4vw, 38px);
+        line-height: 1.15;
+        letter-spacing: -0.012em;
+        max-width: 24ch;
+      }
+      .bloc-intro {
+        margin-top: 16px;
+        font-size: 15.5px;
+        color: var(--ivoire-2);
+        max-width: 62ch;
+      }
+      .bloc-tete {
         margin-bottom: 48px;
       }
 
+      /* ── Les applications : des LIGNES, pas des cartes ───────────────────── */
       .app {
         display: grid;
-        grid-template-columns: 150px 1fr 130px;
-        gap: 32px;
-        align-items: baseline;
-        padding: 30px 0;
-        border-bottom: 1px solid var(--trait);
-        text-decoration: none;
-        color: inherit;
-        transition: padding-left 0.4s;
-      }
-      .app:hover {
-        padding-left: 10px;
-      }
-      .app:first-of-type {
+        grid-template-columns: 56px minmax(0, 250px) minmax(0, 1fr) 170px;
+        gap: 28px;
+        align-items: start;
+        padding-block: 34px;
         border-top: 1px solid var(--trait);
       }
-
-      .app-nom {
-        font-family: "Fraunces", Georgia, serif;
-        font-size: 24px;
-        font-weight: 400;
-        transition: color 0.35s;
+      .app:last-child {
+        border-bottom: 1px solid var(--trait);
       }
-      .app:hover .app-nom {
-        color: var(--lumiere);
+      .app-icone {
+        width: 56px;
+        height: 56px;
+        box-shadow: 0 10px 24px -14px rgb(0 0 0 / 0.9);
+        border-radius: 13px;
       }
-
-      .app-desc {
+      .app h3 {
+        font-size: 28px;
+        line-height: 1.1;
+        margin-bottom: 8px;
+      }
+      .app-question {
         font-size: 14px;
-        color: var(--ivoire-2);
-      }
-      .app-desc b {
         color: var(--ivoire);
-        font-weight: 600;
+        max-width: 28ch;
       }
-
-      .etat {
-        font-size: 10.5px;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
+      .app-corps p {
+        font-size: 14.5px;
+        color: var(--ivoire-2);
+        max-width: 60ch;
+      }
+      .puces {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 16px;
+      }
+      .puces li {
+        font-size: 12px;
+        color: var(--ivoire-2);
+        padding: 4px 10px;
+        border: 1px solid var(--trait);
+        border-radius: 999px;
+        background: rgb(242 237 227 / 0.025);
+      }
+      .app-etat {
+        display: grid;
+        gap: 12px;
+        justify-items: end;
         text-align: right;
+      }
+      .etat {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
         white-space: nowrap;
       }
+      .etat::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+      }
       .etat.prod {
-        color: var(--lumiere);
+        color: var(--or);
+      }
+      .etat.prod::before {
+        background: var(--or);
+        box-shadow: 0 0 0 3px rgb(246 188 80 / 0.16);
       }
       .etat.pilote {
         color: var(--ivoire-2);
       }
+      .etat.pilote::before {
+        background: var(--ivoire-2);
+      }
       .etat.attente {
         color: var(--ivoire-3);
       }
+      .etat.attente::before {
+        border: 1px solid var(--ivoire-3);
+      }
+      .porte-app {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--ivoire);
+        text-decoration: none;
+        border-bottom: 1px solid var(--trait-fort);
+        padding-bottom: 2px;
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .porte-app:hover {
+        color: var(--or);
+        border-color: var(--or);
+      }
+      .lieu {
+        font-family: var(--f-code);
+        font-size: 12px;
+      }
+      .sans-porte {
+        font-size: 12.5px;
+        color: var(--ivoire-3);
+      }
 
-      /* ── Le socle : ce qui n'existe qu'une fois ──────────────────────────── */
+      /* NûrProgress n'est pas une quatrième application : on ne l'ouvre pas, on
+         le rencontre dans les autres. Il vient après la liste, en retrait. */
+      .traverse {
+        display: grid;
+        grid-template-columns: 56px minmax(0, 250px) minmax(0, 1fr) 170px;
+        gap: 28px;
+        align-items: start;
+        margin-top: 40px;
+        padding: 26px 0 0;
+      }
+      .anneau {
+        width: 56px;
+        height: 56px;
+      }
+      .traverse h3 {
+        font-size: 22px;
+        line-height: 1.15;
+        margin-bottom: 6px;
+      }
+      .traverse .app-question {
+        color: var(--ivoire-2);
+      }
+      .traverse .app-corps p {
+        font-size: 14px;
+      }
+      .traverse .etat {
+        justify-self: end;
+      }
+
+      /* ── Le socle ────────────────────────────────────────────────────────── */
       .socle {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 1px;
         background: var(--trait);
         border: 1px solid var(--trait);
+        border-radius: 12px;
+        overflow: hidden;
       }
       .brique {
         background: var(--nuit);
-        padding: 30px 26px;
+        padding: 28px 24px 30px;
       }
       .brique h3 {
-        font-size: 13px;
-        font-weight: 700;
-        margin-bottom: 8px;
+        font-family: var(--f-titre);
+        font-weight: 600;
+        font-size: 18px;
+        margin-bottom: 10px;
       }
       .brique p {
-        font-size: 13px;
+        font-size: 13.5px;
         color: var(--ivoire-2);
       }
 
-      /* ── Les échelles : une colonne par forme d'organisation, un filet entre
-     elles. Le filet se pose sur toute colonne qui en suit une autre, et non
-     sur la dernière : en ajouter une quatrième ne demandera rien ici. */
+      .formes {
+        margin-top: 72px;
+      }
+      .formes > .titre-section {
+        margin-bottom: 28px;
+      }
       .echelles {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 48px;
       }
       .echelle {
@@ -355,7 +333,7 @@
       .echelle + .echelle::before {
         content: "";
         position: absolute;
-        left: -28px;
+        left: -24px;
         top: 4px;
         bottom: 4px;
         width: 1px;
@@ -364,57 +342,167 @@
       .echelle-type {
         font-size: 11px;
         font-weight: 600;
-        letter-spacing: 0.18em;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
         color: var(--ivoire-3);
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       }
       .echelle-nb {
-        font-family: "Fraunces", Georgia, serif;
-        font-size: 26px;
+        font-family: var(--f-titre);
+        font-size: 28px;
         font-weight: 300;
-        color: var(--lumiere);
-        margin-bottom: 12px;
+        color: var(--or);
+        margin-bottom: 10px;
       }
       .echelle-txt {
         font-size: 14px;
         color: var(--ivoire-2);
       }
-
-      /* ── La preuve ───────────────────────────────────────────────────────── */
-      .preuve {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 40px;
-      }
-      .chiffre {
-        font-family: "Fraunces", Georgia, serif;
-        font-size: 40px;
-        font-weight: 300;
-        color: var(--lumiere);
-        line-height: 1;
-        margin-bottom: 10px;
-      }
-      .chiffre-txt {
-        font-size: 13px;
-        color: var(--ivoire-2);
-      }
-
       .note {
-        margin-top: 44px;
-        padding-left: 20px;
-        border-left: 1px solid var(--lumiere);
-        font-size: 14px;
+        margin-top: 40px;
+        padding-left: 18px;
+        border-left: 1px solid var(--or);
+        font-size: 14.5px;
         color: var(--ivoire-2);
         max-width: 62ch;
       }
 
-      /* ── Le tiroir de demande ────────────────────────────────────────────── */
+      /* ── La confiance ────────────────────────────────────────────────────── */
+      .confiance {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+        gap: 56px;
+        align-items: start;
+      }
+      .engagements {
+        list-style: none;
+        display: grid;
+        gap: 0;
+      }
+      .engagements li {
+        padding-block: 20px;
+        border-top: 1px solid var(--trait);
+      }
+      .engagements li:last-child {
+        border-bottom: 1px solid var(--trait);
+      }
+      .engagements h3 {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .engagements p {
+        font-size: 14px;
+        color: var(--ivoire-2);
+        max-width: 60ch;
+      }
+
+      /* La règle de l'accès de l'éditeur, montrée comme ce qu'elle est : une
+         fiche, avec ses champs. Ce n'est pas une capture d'écran inventée. */
+      .intervention {
+        position: relative;
+        padding: 28px 28px 26px;
+        border-radius: 14px;
+        background:
+          radial-gradient(120% 80% at 100% 0%, rgb(246 188 80 / 0.1), transparent 60%),
+          var(--nuit-2);
+        border: 1px solid var(--trait-fort);
+        box-shadow:
+          inset 0 1px 0 rgb(255 255 255 / 0.06),
+          0 24px 48px -28px rgb(0 0 0 / 0.9);
+      }
+      .intervention .surtitre {
+        margin-bottom: 12px;
+      }
+      .intervention h3 {
+        font-family: var(--f-titre);
+        font-weight: 300;
+        font-size: 25px;
+        line-height: 1.2;
+        margin-bottom: 10px;
+      }
+      .intervention > p {
+        font-size: 14px;
+        color: var(--ivoire-2);
+        margin-bottom: 20px;
+      }
+      .intervention dl {
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        border-top: 1px solid var(--trait);
+      }
+      .intervention dt,
+      .intervention dd {
+        padding-block: 11px;
+        border-bottom: 1px solid var(--trait);
+        font-size: 13.5px;
+      }
+      .intervention dt {
+        color: var(--ivoire-3);
+        padding-right: 18px;
+      }
+      .intervention dd {
+        color: var(--ivoire);
+      }
+
+      .preuve {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 40px;
+        margin-top: 72px;
+      }
+      .chiffre {
+        font-family: var(--f-titre);
+        font-size: 44px;
+        font-weight: 300;
+        line-height: 1;
+        color: var(--or);
+        margin-bottom: 12px;
+      }
+      .chiffre-txt {
+        font-size: 14px;
+        color: var(--ivoire-2);
+        max-width: 32ch;
+      }
+
+      /* ── L'appel final ───────────────────────────────────────────────────── */
+      .appel {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 32px;
+        align-items: center;
+        padding: 44px 44px;
+        margin-block: 8px 96px;
+        border-radius: 16px;
+        background:
+          radial-gradient(90% 140% at 0% 0%, rgb(246 188 80 / 0.12), transparent 55%),
+          linear-gradient(180deg, var(--nuit-3), var(--nuit-2));
+        border: 1px solid var(--trait-fort);
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+      }
+      .appel h2 {
+        font-family: var(--f-titre);
+        font-weight: 300;
+        font-size: clamp(26px, 3vw, 34px);
+        line-height: 1.15;
+        margin-bottom: 10px;
+      }
+      .appel p {
+        font-size: 15px;
+        color: var(--ivoire-2);
+        max-width: 56ch;
+      }
+      .appel .actions {
+        justify-content: flex-end;
+      }
+
+      /* ══ LES TIROIRS ══════════════════════════════════════════════════════ */
       .voile {
         position: fixed;
         inset: 0;
         z-index: 40;
-        background: rgba(4, 10, 20, 0.72);
+        background: rgba(3, 10, 20, 0.7);
+        backdrop-filter: blur(2px);
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.35s;
@@ -423,83 +511,79 @@
         opacity: 1;
         pointer-events: auto;
       }
-
       .tiroir {
         position: fixed;
         top: 0;
         right: 0;
         bottom: 0;
         z-index: 50;
-        width: min(460px, 100vw);
+        width: min(480px, 100vw);
         background: var(--nuit);
-        border-left: 1px solid var(--trait);
+        border-left: 1px solid var(--trait-fort);
+        box-shadow: -30px 0 60px -30px rgb(0 0 0 / 0.8);
         transform: translateX(100%);
-        transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1);
+        visibility: hidden;
+        transition:
+          transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1),
+          visibility 0s linear 0.42s;
         display: flex;
         flex-direction: column;
       }
       .tiroir.ouvert {
         transform: translateX(0);
+        visibility: visible;
+        transition:
+          transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1),
+          visibility 0s;
       }
-
       .tiroir-tete {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
         gap: 16px;
-        padding: 26px 30px 20px;
+        padding: 24px 28px 18px;
+        padding-top: calc(24px + env(safe-area-inset-top, 0px));
         border-bottom: 1px solid var(--trait);
       }
       .tiroir-sur {
-        font-size: 10px;
+        font-size: 10.5px;
         font-weight: 600;
         letter-spacing: 0.22em;
         text-transform: uppercase;
-        color: var(--lumiere);
+        color: var(--or);
         margin-bottom: 8px;
       }
       .tiroir-titre {
-        font-family: "Fraunces", Georgia, serif;
-        font-size: 22px;
+        font-family: var(--f-titre);
+        font-size: 24px;
         font-weight: 300;
       }
       .fermer {
-        color: var(--ivoire-3);
-        font-size: 26px;
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        color: var(--ivoire-2);
+        font-size: 24px;
         line-height: 1;
-        transition: color 0.3s;
+        transition:
+          color 0.2s,
+          background-color 0.2s;
       }
       .fermer:hover {
-        color: var(--lumiere);
+        color: var(--or);
+        background: rgb(242 237 227 / 0.06);
       }
-
       .tiroir-corps {
-        padding: 24px 30px 40px;
+        padding: 22px 28px 40px;
+        padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
         overflow-y: auto;
       }
-
-      .duo {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-      }
-
-      /* .porte-demo ne dit plus qu'une chose, celle que son nom porte : ce
-     bouton-là disparaît sur mobile, où celui du hero suffit. Le reste est
-     dans .bouton. */
-
-      /* ── La demande ──────────────────────────────────────────────────────── */
-      .demo-grille {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 56px;
-      }
-      /* Le mot d'entrée d'un tiroir. Il s'appelait .demo-intro quand il n'y
-     avait qu'un tiroir ; il y en a deux, le nom aurait menti. */
       .tiroir-mot {
         font-size: 15px;
         color: var(--ivoire-2);
-        margin-bottom: 20px;
+        margin-bottom: 18px;
       }
       .tiroir-mot b {
         color: var(--ivoire);
@@ -509,69 +593,16 @@
         font-size: 12.5px;
         line-height: 1.7;
         color: var(--ivoire-3);
-        margin-top: 26px;
-        padding-top: 20px;
+        margin-top: 24px;
+        padding-top: 18px;
         border-top: 1px solid var(--trait);
-      }
-
-      /* ── LES PORTES ───────────────────────────────────────────────────────
-     Une porte par application, tant qu'il y en a plusieurs. Ce bloc est
-     écrit pour mourir : le jour où les comptes vivront au même endroit, il
-     se réduit à une ligne et disparaît. Autant le dire ici plutôt que de le
-     découvrir dans trois ans. */
-      .entree {
-        display: block;
-        padding: 17px 0;
-        border-bottom: 1px solid var(--trait);
-        text-decoration: none;
-        color: inherit;
-        transition: padding-left 0.35s;
-      }
-      .entrees > :first-child {
-        border-top: 1px solid var(--trait);
-      }
-      a.entree:hover {
-        padding-left: 8px;
-      }
-      .entree-tete {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 14px;
-        margin-bottom: 5px;
-      }
-      .entree-nom {
-        font-family: "Fraunces", Georgia, serif;
-        font-size: 19px;
-        font-weight: 400;
-        transition: color 0.35s;
-      }
-      a.entree:hover .entree-nom {
-        color: var(--lumiere);
-      }
-      .entree-txt {
-        font-size: 13px;
-        color: var(--ivoire-2);
-      }
-      /* L'adresse est écrite en clair : on doit savoir où l'on va avant de
-     cliquer, surtout quand deux des trois portes ne sont pas sur le même
-     domaine que la vitrine. */
-      .entree-lieu {
-        display: block;
-        margin-top: 7px;
-        font-size: 11px;
-        color: var(--ivoire-3);
-      }
-      /* Une porte qui n'existe pas ne se comporte pas comme une porte. */
-      .entree.close .entree-nom {
-        color: var(--ivoire-3);
       }
       .demo-liste {
         list-style: none;
       }
       .demo-liste li {
         font-size: 13px;
-        color: var(--ivoire-3);
+        color: var(--ivoire-2);
         padding: 9px 0 9px 18px;
         border-top: 1px solid var(--trait);
         position: relative;
@@ -580,12 +611,67 @@
         content: "";
         position: absolute;
         left: 0;
-        top: 17px;
-        width: 5px;
+        top: 18px;
+        width: 6px;
         height: 1px;
-        background: var(--lumiere);
+        background: var(--or);
       }
 
+      /* Les portes : une par application, tant qu'il y en a plusieurs. */
+      .entrees {
+        display: grid;
+        gap: 10px;
+      }
+      .entree {
+        display: grid;
+        grid-template-columns: 44px minmax(0, 1fr);
+        gap: 14px;
+        align-items: start;
+        padding: 14px;
+        border: 1px solid var(--trait);
+        border-radius: 12px;
+        background: rgb(242 237 227 / 0.02);
+        text-decoration: none;
+        color: inherit;
+        transition:
+          border-color 0.2s,
+          background-color 0.2s;
+      }
+      a.entree:hover {
+        border-color: var(--trait-fort);
+        background: rgb(242 237 227 / 0.05);
+      }
+      .entree img {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+      }
+      .entree-tete {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 4px;
+      }
+      .entree-nom {
+        font-size: 20px;
+        line-height: 1.2;
+      }
+      .entree-txt {
+        display: block;
+        font-size: 13px;
+        color: var(--ivoire-2);
+      }
+      .entree .lieu {
+        display: block;
+        margin-top: 6px;
+        color: var(--ivoire-3);
+      }
+      .entree.close {
+        opacity: 0.62;
+      }
+
+      /* Le formulaire. */
       .etiq {
         display: block;
         font-size: 11px;
@@ -595,80 +681,68 @@
         color: var(--ivoire-3);
         margin: 18px 0 7px;
       }
-      /* Un champ obligatoire se dit AVANT l'envoi, pas dans le refus qui le
-     suit : le téléphone était exigé sans que rien ne l'annonce. */
       .requis {
-        color: var(--lumiere);
+        color: var(--or);
         margin-left: 3px;
       }
       .legende-requis {
-        margin: 14px 0 0;
-        font-size: 11px;
+        margin: 16px 0 0;
+        font-size: 11.5px;
         color: var(--ivoire-3);
       }
       .aide-champ {
         margin: 6px 0 0;
-        font-size: 11px;
+        font-size: 11.5px;
         color: var(--ivoire-3);
-      }
-      /* La liste déroulante garde la nuit de la page : sans cela, certains
-     navigateurs ouvrent ses options sur fond blanc, texte ivoire illisible. */
-      select.champ option {
-        background: var(--nuit-2);
-        color: var(--ivoire);
       }
       .champ {
         width: 100%;
         padding: 11px 13px;
         background: var(--nuit-2);
-        border: 1px solid var(--trait);
-        border-radius: 2px;
+        border: 1px solid var(--trait-fort);
+        border-radius: 8px;
         color: var(--ivoire);
-        font-family: "Montserrat", sans-serif;
-        font-size: 14px;
+        font-family: var(--f-texte);
+        font-size: 15px;
         outline: none;
-        transition: border-color 0.3s;
+        box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.25);
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
       }
       .champ:focus {
-        border-color: var(--lumiere);
+        border-color: var(--or);
+        box-shadow:
+          inset 0 1px 2px rgb(0 0 0 / 0.25),
+          0 0 0 3px rgb(246 188 80 / 0.16);
       }
       .champ::placeholder {
-        color: rgba(242, 237, 227, 0.28);
+        color: rgba(242, 237, 227, 0.32);
       }
-
+      select.champ option {
+        background: var(--nuit-2);
+        color: var(--ivoire);
+      }
+      .duo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
       .ligne-siret {
         display: flex;
         gap: 8px;
       }
-      .btn-verif {
-        padding: 11px 18px;
-        border: 1px solid var(--trait);
-        border-radius: 2px;
-        color: var(--ivoire-2);
-        font-size: 13px;
-        font-weight: 600;
-        white-space: nowrap;
-        transition:
-          border-color 0.3s,
-          color 0.3s;
-      }
-      .btn-verif:hover {
-        border-color: var(--lumiere);
-        color: var(--lumiere);
-      }
-
       .retour {
         font-size: 13px;
         margin-top: 10px;
         min-height: 18px;
       }
       .retour.ok {
-        color: var(--lumiere);
+        color: var(--or);
       }
       .retour.non {
-        color: #e88a6b;
+        color: var(--alerte);
       }
-
       .coche {
         display: flex;
         gap: 10px;
@@ -680,159 +754,155 @@
       }
       .coche input {
         margin-top: 3px;
-        accent-color: var(--lumiere);
+        accent-color: var(--or);
       }
-
       .btn-envoi {
-        margin-top: 20px;
+        margin-top: 22px;
         width: 100%;
-        justify-content: center;
       }
-
-      /* ── Pied ────────────────────────────────────────────────────────────── */
-      footer {
-        border-top: 1px solid var(--trait);
-        padding: 40px 0 56px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 16px;
-        font-size: 12px;
+      .tiroir-loi {
+        margin-top: 14px;
+        font-size: 11.5px;
+        line-height: 1.6;
         color: var(--ivoire-3);
       }
-      /* Un lien posé dans une phrase. Sans style, il arrive en bleu souligné
-     du navigateur, ce qui n'a rien à faire ici. La règle du pied de page
-     disait déjà exactement cela : on l'élargit au lieu de la recopier. */
-      footer a,
-      .lien-mot {
-        color: var(--ivoire-2);
-        text-decoration: none;
-        border-bottom: 1px solid var(--trait);
-        transition:
-          color 0.3s,
-          border-color 0.3s;
-      }
-      footer a:hover,
-      .lien-mot:hover {
-        color: var(--lumiere);
-        border-color: var(--lumiere);
-      }
-      /* Le pied de page n'a pas besoin du soulignement : l'adresse y est déjà
-     seule sur sa ligne, rien ne la confond avec du texte courant. */
-      footer a {
-        border-bottom-color: transparent;
-      }
 
-      /* ── Mobile ──────────────────────────────────────────────────────────── */
-      @media (max-width: 860px) {
-        .cadre {
-          padding: 0 22px;
+      /* ── Le téléphone ────────────────────────────────────────────────────── */
+      @media (max-width: 960px) {
+        .app,
+        .traverse {
+          grid-template-columns: 48px minmax(0, 1fr);
+          gap: 16px 18px;
         }
-        .tiroir {
-          width: 100vw;
+        .app-icone,
+        .anneau {
+          width: 48px;
+          height: 48px;
+          border-radius: 11px;
         }
-        .porte-demo {
-          display: none;
-        } /* le bouton du hero suffit sur mobile */
-        .hero {
-          grid-template-columns: 1fr;
-          gap: 52px;
-          padding: 68px 0 72px;
+        .app-corps,
+        .app-etat {
+          grid-column: 1 / -1;
         }
-        .noeud {
-          order: -1;
-          max-width: 320px;
-          margin: 0 auto;
-        }
-        .app {
-          grid-template-columns: 1fr;
-          gap: 8px;
-        }
-        .etat {
+        .app-etat {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
           text-align: left;
         }
+        .traverse .etat {
+          grid-column: 1 / -1;
+          justify-self: start;
+        }
+        .socle {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .confiance {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+      }
+      @media (max-width: 720px) {
+        .porte-demo {
+          display: none; /* le bouton du hero suffit sur un téléphone */
+        }
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 8px;
+          padding-block: 48px 56px;
+        }
+        .noeud {
+          max-width: 300px;
+          margin-inline: auto;
+        }
+        .chapo {
+          font-size: 16px;
+        }
+        .actions .bouton,
+        .actions .bouton-verre {
+          flex: 1 1 100%;
+        }
+        .bloc {
+          padding-block: 64px;
+        }
+        .bloc-tete {
+          margin-bottom: 32px;
+        }
+        .app h3 {
+          font-size: 25px;
+        }
         .socle,
-        .preuve,
         .echelles,
-        .demo-grille {
+        .preuve {
           grid-template-columns: 1fr;
         }
         .echelles {
-          gap: 36px;
+          gap: 30px;
         }
         .echelle + .echelle::before {
           display: none;
         }
         .preuve {
-          gap: 30px;
+          gap: 28px;
+          margin-top: 56px;
+        }
+        .appel {
+          grid-template-columns: 1fr;
+          padding: 30px 22px;
+          margin-bottom: 64px;
+        }
+        .appel .actions {
+          justify-content: stretch;
+        }
+        .duo {
+          grid-template-columns: 1fr;
+          gap: 0;
         }
       }
 
-      /* On respecte ceux qui ne veulent pas d'animation. Le socle lit lui-même
-     ce réglage et rend alors une image fixe : rien à neutraliser ici. */
+      @media (prefers-reduced-motion: reduce) {
+        .tiroir,
+        .tiroir.ouvert,
+        .voile {
+          transition: none;
+        }
+      }
     </style>
   </head>
 
   <body>
-    <header>
-      <div class="cadre barre">
-        <span class="marque">
-          <!-- Le noeud, en petit : la marque EST le dessin. -->
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="3" fill="#E9B96B" />
-            <circle cx="10" cy="10" r="6.2" stroke="rgba(232,216,186,0.3)" />
-            <circle cx="10" cy="2.6" r="1.5" fill="rgba(242,237,227,0.75)" />
-            <circle cx="16.4" cy="13.7" r="1.5" fill="rgba(242,237,227,0.75)" />
-            <circle cx="3.6" cy="13.7" r="1.5" fill="rgba(242,237,227,0.75)" />
-          </svg>
-          Nûr
-        </span>
-
-        <span style="display: flex; align-items: center; gap: 10px">
-          <button
-            class="porte bouton porte-demo"
-            type="button"
-            id="ouvrir-demo-2"
-          >
-            Demander une démo
-          </button>
-          <button class="porte bouton" type="button" id="ouvrir-entrer-2">
-            Se connecter
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path
-                d="M2 6h8M6.5 2.5L10 6l-3.5 3.5"
-                stroke="currentColor"
-                stroke-width="1.3"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
-        </span>
+    <header class="entete">
+      <div class="cadre">
+        <a class="logo" href="/" aria-label="Nûr Platform, accueil">
+          <img src="/assets/nurplatform-nuit.svg" alt="Nûr Platform" width="136" height="26" />
+        </a>
+        <nav class="menu" aria-label="Sections de la page">
+          <a href="#applications">Applications</a>
+          <a href="#socle">Le socle</a>
+          <a href="#confiance">Confiance</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="entete-gestes">
+          <button class="bouton-verre petit" type="button" id="ouvrir-entrer-2">Se connecter</button>
+          <button class="bouton petit porte-demo" type="button" id="ouvrir-demo-2">Demander une démo</button>
+        </div>
       </div>
     </header>
 
     <!-- ══ LE PANNEAU DE DEMANDE ══════════════════════════════════════════════
      Un panneau plutôt qu'une section : la page reste une VITRINE, et la
-     demande est une PARENTHÈSE. On ne mélange pas le discours et le
-     formulaire ; on ouvre un tiroir, on le referme. ═══════════════════════ -->
+     demande est une PARENTHÈSE. On ouvre un tiroir, on le referme.
+     Il s'ouvre aussi depuis une autre page : /#demo. ═══════════════════════ -->
     <div class="voile" id="voile"></div>
 
-    <aside class="tiroir" id="tiroir" aria-hidden="true">
+    <aside class="tiroir" id="tiroir" aria-hidden="true" aria-labelledby="titre-demo">
       <div class="tiroir-tete">
         <span>
           <p class="tiroir-sur">Nûr Platform</p>
-          <h2 class="tiroir-titre">Demander une démonstration</h2>
+          <h2 class="tiroir-titre" id="titre-demo">Demander une démonstration</h2>
         </span>
-        <button
-          class="fermer bouton"
-          type="button"
-          data-fermer
-          aria-label="Fermer"
-        >
-          &times;
-        </button>
+        <button class="fermer" type="button" data-fermer aria-label="Fermer">&times;</button>
       </div>
 
       <div class="tiroir-corps">
@@ -840,57 +910,38 @@
          PLATEFORME. Le contrôle de SIRET plus bas n'accepte que les
          communes, associations et établissements d'enseignement, et
          l'espace généré contient des élèves et des classes. Tant que
-         c'est vrai, il faut le dire ici : un bureau d'études qui saisissait
-         son numéro se voyait répondre qu'il était hors périmètre, sur une
-         page qui lui vend NûrOps trois sections plus haut. -->
+         c'est vrai, il faut le dire ici. -->
         <p class="tiroir-mot">
-          La démonstration ouvre un espace <b>NûrGest</b> isolé pour <b>quatorze jours</b>, avec des données fictives ou vide, selon votre choix. Il se referme tout seul.
+          La démonstration ouvre un espace <b>NûrGest</b> isolé pour <b>quatorze jours</b>, avec des données
+          fictives ou vide, selon votre choix. Il se referme tout seul.
         </p>
         <ul class="demo-liste">
-          <li>
-            Réservée aux collectivités, associations et établissements
-            d'enseignement.
-          </li>
+          <li>Réservée aux collectivités, associations et établissements d'enseignement.</li>
           <li>Aucune donnée réelle d'élève ne doit y être saisie.</li>
           <li>Chaque demande est validée sous 48 heures.</li>
-          <!-- ✎ L'adresse n'est PAS recopiée ici. Le script pose le mailto sur
-           tout lien marqué data-courriel, en le lisant sur le pied de page.
-           Le repli pointe vers le pied de page, qui porte l'adresse en
-           clair : sans JavaScript le lien mène quand même quelque part. -->
+          <!-- ✎ L'adresse n'est PAS recopiée ici : le script pose le mailto sur
+           tout lien marqué data-courriel, en le lisant sur le pied de page. -->
           <li>
-            Pour NûrOps, bureaux d'études, entreprises de travaux et groupes, la
-            démonstration se fait avec nous :
-            <a class="lien-mot" data-courriel href="#contact">écrivez-nous</a>.
+            Pour NûrOps, bureaux d'études, entreprises de travaux et groupes, la démonstration se fait avec
+            nous : <a class="lien" data-courriel href="#contact">écrivez-nous</a>.
           </li>
         </ul>
 
         <form id="form-demo" onsubmit="return false;">
-          <p class="legende-requis">
-            <span class="requis" aria-hidden="true">*</span> Champ obligatoire
-          </p>
+          <p class="legende-requis"><span class="requis" aria-hidden="true">*</span> Champ obligatoire</p>
           <label class="etiq" for="siret"
             >SIRET ou SIREN de l'organisation<span class="requis" aria-hidden="true">*</span></label
           >
           <div class="ligne-siret">
-            <input
-              id="siret"
-              class="champ"
-              inputmode="numeric"
-              placeholder="14 chiffres"
-              autocomplete="off"
-              required
-            />
-            <button type="button" class="btn-verif bouton" id="btn-verif">
-              Vérifier
-            </button>
+            <input id="siret" class="champ" inputmode="numeric" placeholder="14 chiffres" autocomplete="off" required />
+            <button type="button" class="bouton-verre" id="btn-verif">Vérifier</button>
           </div>
-          <p id="retour-siret" class="retour"></p>
+          <p id="retour-siret" class="retour" aria-live="polite"></p>
 
           <div id="suite" hidden>
-            <!-- Le type décide de ce qu'on prépare : des groupes et un Hifz pour
-                 une école coranique, PS à GS pour une maternelle. L'annuaire
-                 dit « association », il ne dit pas quelle école elle tient.
-                 Une commune n'a rien à choisir : elle reçoit ses trois écoles. -->
+            <!-- Le type décide de ce qu'on prépare. L'annuaire dit « association »,
+                 il ne dit pas quelle école elle tient. Une commune n'a rien à
+                 choisir : elle reçoit ses trois écoles. -->
             <div id="bloc-type">
               <label class="etiq" for="type-etab"
                 >Type d'établissement<span class="requis" aria-hidden="true">*</span></label
@@ -903,9 +954,7 @@
                 <option value="college">Collège</option>
                 <option value="autre">Autre structure éducative</option>
               </select>
-              <p class="aide-champ">
-                Votre espace sera préparé avec les classes de ce type.
-              </p>
+              <p class="aide-champ">Votre espace sera préparé avec les classes de ce type.</p>
             </div>
 
             <div class="duo">
@@ -920,11 +969,7 @@
             </div>
 
             <label class="etiq" for="fonction">Fonction</label>
-            <input
-              id="fonction"
-              class="champ"
-              placeholder="Responsable de l'éducation, directeur, DGS..."
-            />
+            <input id="fonction" class="champ" placeholder="Responsable de l'éducation, directeur, DGS..." />
 
             <label class="etiq" for="email"
               >Adresse électronique professionnelle<span class="requis" aria-hidden="true">*</span></label
@@ -939,36 +984,26 @@
             />
 
             <label class="etiq" for="tel">Téléphone<span class="requis" aria-hidden="true">*</span></label>
-            <input
-              id="tel"
-              class="champ"
-              type="tel"
-              autocomplete="tel"
-              placeholder="0639 00 00 00"
-              required
-            />
+            <input id="tel" class="champ" type="tel" autocomplete="tel" placeholder="0639 00 00 00" required />
 
-            <label class="etiq" for="message"
-              >Ce que vous souhaitez voir (facultatif)</label
-            >
+            <label class="etiq" for="message">Ce que vous souhaitez voir (facultatif)</label>
             <textarea id="message" class="champ" rows="2"></textarea>
 
             <label class="coche">
               <input type="checkbox" id="donnees" checked />
               <span
-                >Générer un jeu de données de démonstration (élèves, classes,
-                incidents). Sinon, l'espace sera vide.</span
+                >Générer un jeu de données de démonstration (élèves, classes, incidents). Sinon, l'espace sera
+                vide.</span
               >
             </label>
 
-            <button
-              type="button"
-              class="btn-plein bouton btn-envoi"
-              id="btn-envoi"
-            >
-              Envoyer la demande
-            </button>
-            <p id="retour-envoi" class="retour"></p>
+            <button type="button" class="bouton btn-envoi" id="btn-envoi">Envoyer la demande</button>
+            <p id="retour-envoi" class="retour" aria-live="polite"></p>
+            <!-- L'information se donne là où l'on saisit, pas seulement en bas de page. -->
+            <p class="tiroir-loi">
+              Vos coordonnées servent à traiter cette demande et à vous recontacter, rien d'autre.
+              <a class="lien" href="/confidentialite#demonstration">Ce que nous en faisons</a>.
+            </p>
           </div>
         </form>
       </div>
@@ -976,121 +1011,92 @@
 
     <!-- ══ LE TIROIR D'ENTRÉE ═══════════════════════════════════════════════
      Nûr n'a pas encore une seule porte : NûrGest et NûrOps ont chacun leurs
-     comptes, dans deux bases distinctes. « Se connecter » et « Ouvrir mon
-     espace » déposaient donc tout le monde sur la connexion d'UNE seule
-     application. Pour un utilisateur de NûrOps, c'était une impasse.
-
-     Le tiroir ne résout pas le problème, il le dit. C'est déjà mieux qu'un
-     lien qui ment. Il est écrit pour disparaître : le jour où les comptes
-     vivront au même endroit, il se réduit à une ligne.
+     comptes, dans deux bases distinctes. Le tiroir ne résout pas le problème,
+     il le dit. Il est écrit pour disparaître : le jour où les comptes vivront
+     au même endroit, il se réduit à une ligne.
 
      ✎ POUR AJOUTER OU CHANGER UNE PORTE : copie un bloc <a class="entree">.
-        L'adresse est écrite en clair sous le nom, à mettre à jour avec le
-        href. Une application sans porte prend <span class="entree close">.
+        L'adresse affichée (.lieu) est relue sur le href par le script. Une
+        application sans porte prend <span class="entree close">.
      ══════════════════════════════════════════════════════════════════════ -->
-    <aside class="tiroir" id="tiroir-entrer" aria-hidden="true">
+    <aside class="tiroir" id="tiroir-entrer" aria-hidden="true" aria-labelledby="titre-entrer">
       <div class="tiroir-tete">
         <span>
           <p class="tiroir-sur">Nûr Platform</p>
-          <h2 class="tiroir-titre">Ouvrir mon espace</h2>
+          <h2 class="tiroir-titre" id="titre-entrer">Ouvrir mon espace</h2>
         </span>
-        <button
-          class="fermer bouton"
-          type="button"
-          data-fermer
-          aria-label="Fermer"
-        >
-          &times;
-        </button>
+        <button class="fermer" type="button" data-fermer aria-label="Fermer">&times;</button>
       </div>
 
       <div class="tiroir-corps">
         <p class="tiroir-mot">
-          Nûr n'a pas encore <b>une seule porte</b>. Chaque application garde la
-          sienne, le temps que les comptes vivent au même endroit. Entrez par
-          celle où vous en avez déjà un.
+          Chaque application garde encore <b>sa propre porte</b>. Entrez par celle où vous avez déjà un compte.
         </p>
 
         <div class="entrees">
           <a class="entree" href="https://app.nurgest.fr/login?retour=nur">
-            <span class="entree-tete">
-              <span class="entree-nom">NûrGest</span>
-              <span class="etat prod">En production</span>
+            <img src="/assets/nurgest-icone.svg" alt="" width="44" height="44" />
+            <span>
+              <span class="entree-tete">
+                <span class="entree-nom nom-outil"><b>Nûr</b>Gest</span>
+                <span class="etat prod">En production</span>
+              </span>
+              <span class="entree-txt">Élèves, classes, présences, inscriptions, paiements, patrimoine.</span>
+              <span class="lieu">app.nurgest.fr</span>
             </span>
-            <span class="entree-txt">
-              Élèves, classes, présences, inscriptions, paiements, patrimoine.
-            </span>
-            <span class="entree-lieu">app.nurgest.fr</span>
           </a>
 
-          <a
-            class="entree"
-            href="https://app.nurops.fr/login"
-          >
-            <span class="entree-tete">
-              <span class="entree-nom">NûrOps</span>
-              <span class="etat pilote">Pilote</span>
+          <a class="entree" href="https://app.nurops.fr/login">
+            <img src="/assets/nurops-icone.svg" alt="" width="44" height="44" />
+            <span>
+              <span class="entree-tete">
+                <span class="entree-nom nom-outil"><b>Nûr</b>Ops</span>
+                <span class="etat pilote">Pilote</span>
+              </span>
+              <span class="entree-txt">Affaires, études, marchés, chantiers, équipes, matériel, documents.</span>
+              <span class="lieu">app.nurops.fr</span>
             </span>
-            <span class="entree-txt">
-              Affaires, études, marchés, chantiers, équipes, matériel,
-              documents.
-            </span>
-            <span class="entree-lieu">app.nurops.fr</span>
           </a>
 
           <span class="entree close">
-            <span class="entree-tete">
-              <span class="entree-nom">NûrPay</span>
-              <span class="etat attente">En préparation</span>
-            </span>
-            <span class="entree-txt">
-              Pas encore de porte. Le chantier réglementaire n'est pas fini, et
-              une paie approximative ne se rattrape pas.
+            <img src="/assets/nurpay-icone.svg" alt="" width="44" height="44" />
+            <span>
+              <span class="entree-tete">
+                <span class="entree-nom nom-outil"><b>Nûr</b>Pay</span>
+                <span class="etat attente">En préparation</span>
+              </span>
+              <span class="entree-txt">Pas encore de porte : une paie approximative ne se rattrape pas.</span>
             </span>
           </span>
         </div>
 
         <p class="tiroir-fin">
-          Vous êtes la même personne des deux côtés. Ce n'est pas encore le même
-          compte : les identités vivent dans deux bases, et les réunir est le
-          chantier en cours. Tant qu'il n'est pas fini, mieux vaut deux portes
-          annoncées qu'une porte qui promet trop.
+          Vous êtes la même personne des deux côtés, pas encore le même compte : les identités vivent dans deux
+          bases, et les réunir est le chantier en cours. Mieux vaut deux portes annoncées qu'une porte qui
+          promet trop.
         </p>
       </div>
     </aside>
 
-    <main class="cadre">
+    <main>
       <!-- ══ HERO ══════════════════════════════════════════════════════════ -->
-      <div class="hero">
+      <section class="hero cadre">
         <div>
           <!-- ✎✎✎ TEXTES MODIFIABLES : tout ce qui suit se change librement ✎✎✎ -->
-
           <p class="surtitre">Nûr Platform</p>
-
-          <h1>Un socle.<br />Vos outils.<br /><em>Ce qui doit avancer.</em></h1>
-
+          <h1>Un socle.<br />Vos outils.<br /><span>Ce qui doit avancer.</span></h1>
           <p class="chapo">
-            Les organisations, les personnes, les droits et les flux n'existent
-            qu'une fois. Chaque application vient s'y relier, et sert toutes ses
-            organisations depuis un même déploiement : la vôtre en est cliente,
-            elle n'est pas une copie installée pour elle seule. On ajoute un
-            outil sans refaire les mêmes fondations, et on sait depuis un seul
-            endroit ce qui avance et ce qui attend.
+            Les organisations, les personnes et les droits n'existent qu'une fois. Chaque outil s'y relie : on
+            en ajoute un sans refaire les fondations, et chacun ne voit que ce qui le regarde.
           </p>
-
           <div class="actions">
-            <!-- Ce bouton disait « Accéder à NûrGest ». Sur la vitrine d'une
-             PLATEFORME, c'était un aveu : tout se résumerait donc à une seule
-             application. Le nom a changé pour « Ouvrir mon espace », mais le
-             lien, lui, menait toujours à la connexion de NûrGest : le texte
-             promettait la plateforme, l'adresse livrait une application. Un
-             utilisateur de NûrOps arrivait sur une porte qui n'était pas la
-             sienne.
-             Il ouvre désormais le tiroir des portes. Le jour où la connexion
-             routera chacun vers SES outils, ce bouton redeviendra un lien. -->
-            <button class="btn-plein bouton" type="button" id="ouvrir-entrer">
+            <button class="bouton" type="button" id="ouvrir-demo">Demander une démonstration</button>
+            <!-- Il ouvre le tiroir des portes : un utilisateur de NûrOps n'a rien
+                 à faire sur la connexion de NûrGest. Le jour où la connexion
+                 routera chacun vers SES outils, il redeviendra un lien. -->
+            <button class="bouton-verre" type="button" id="ouvrir-entrer">
               Ouvrir mon espace
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                 <path
                   d="M2 6h8M6.5 2.5L10 6l-3.5 3.5"
                   stroke="currentColor"
@@ -1100,244 +1106,344 @@
                 />
               </svg>
             </button>
-            <button class="btn-vide bouton" type="button" id="ouvrir-demo">
-              Demander une démonstration
-            </button>
           </div>
+          <p class="garanties">
+            <span>Données hébergées dans l'Union européenne</span>
+            <span>Aucun traceur sur ce site</span>
+          </p>
         </div>
 
         <!-- ══ LE NOEUD ══════════════════════════════════════════════════════
-         Trois applications, un seul point. Une lumière au centre alimente
-         chaque application, et reçoit en retour la leur : les grains dorés
-         descendent du socle, les grains ivoire y remontent. C'est la thèse
-         de la plateforme, et elle se lit dans le mouvement.
-
-         Le dessin est rendu au trait sur un canevas, en perspective, sans
-         aucune bibliothèque : trois cents lignes lisibles valent mieux
-         qu'un moteur 3D de six cents kilo-octets pour trois ronds et un
-         anneau. Au repos il respire à peine ; il s'anime quand on s'y
-         intéresse, et il s'arrête tout seul dès qu'il sort de l'écran.
+         Trois outils, un seul point. Chacun est dessiné avec SON icône (sa nuit,
+         le nûn, le point d'or) ; la lumière du centre alimente chacun et reçoit
+         en retour la sienne. Rendu au trait sur un canevas, sans bibliothèque.
          ══════════════════════════════════════════════════════════════════ -->
         <div
           class="noeud"
           id="noeud"
           role="img"
-          aria-label="Le socle Nûr et les trois applications qui s'y relient, traversées par l'anneau NûrProgress"
+          aria-label="Le socle Nûr et les trois outils qui s'y relient, NûrGest, NûrOps et NûrPay, traversés par l'anneau NûrProgress"
         >
           <canvas id="coeur-canvas"></canvas>
         </div>
-      </div>
-
-      <!-- ══ LES APPLICATIONS ══════════════════════════════════════════════ -->
-      <!-- ✎ LES APPLICATIONS. Pour en ajouter une, copie un bloc <a class="app">
-       entier. Pour changer un état : classe "prod" (ambre), "pilote" (clair)
-       ou "attente" (gris). -->
-      <section id="applications">
-        <p class="titre-section">Les applications</p>
-
-            <!-- ⚠ Cette adresse fut d'abord un alias attribué par Vercel, puis le
-                 domaine d'un CLIENT. Les deux étaient fautifs, et le second surtout :
-                 la vitrine de l'éditeur ne nomme aucun client, pas même dans un
-                 commentaire, car cette source part chez le visiteur. -->
-        <a class="app" href="https://app.nurgest.fr/login?retour=nur">
-          <span class="app-nom">NûrGest</span>
-          <span class="app-desc">
-            <b>La gestion.</b> Établissement indépendant, réseau d'écoles,
-            collectivité : la même plateforme, avec un périmètre qui suit la
-            structure de l'organisation. Élèves, classes, présences,
-            inscriptions, paiements, patrimoine.
-          </span>
-          <span class="etat prod">En production</span>
-        </a>
-
-        <!-- NûrOps renvoyait vers #contact alors que sa porte existe et
-             répond. Quelqu'un qui cherchait son espace sur cette page
-             tombait sur une adresse e-mail. -->
-        <a class="app" href="https://app.nurops.fr/login">
-          <span class="app-nom">NûrOps</span>
-          <span class="app-desc">
-            <b>Les opérations.</b> L'activité réelle, de la première demande
-            jusqu'à la clôture du dossier. Bureaux d'études, entreprises de
-            travaux, collectivités : consultations, études, devis, marchés,
-            chantiers, équipes, matériel, situations, réception, archivage. Un
-            groupe qui porte plusieurs sociétés les tient côte à côte, chacune
-            cloisonnée, sans changer d'outil ni de compte. Chaque organisation y
-            retrouve ses métiers et son vocabulaire, pas ceux de la précédente.
-          </span>
-          <span class="etat pilote">Pilote</span>
-        </a>
-
-        <a class="app" href="#contact">
-          <span class="app-nom">NûrPay</span>
-          <span class="app-desc">
-            <b>La paie.</b> Ressources humaines et rémunérations. Chantier
-            réglementaire en cours : il sortira quand il sera juste, pas avant.
-          </span>
-          <span class="etat attente">En préparation</span>
-        </a>
       </section>
 
-      <!-- ══ CE QUI LES TRAVERSE ═══════════════════════════════════════════
-       ✎ NûrProgress n'est pas une quatrième application, et l'annoncer comme
-       telle serait un contresens : on ne l'ouvre pas, on le rencontre. Il vit
-       DANS les autres. D'où une section à part, après la liste, et non une
-       quatrième ligne dedans, qui l'aurait mis au même rang que ce qu'il
-       traverse. -->
-      <section>
-        <p class="titre-section">Ce qui les traverse</p>
+      <!-- ══ LES APPLICATIONS ══════════════════════════════════════════════
+       ✎ Pour en ajouter une, copie un bloc <article class="app"> entier. État :
+       classe "prod" (or), "pilote" (clair) ou "attente" (creux).
+       ⚠ La vitrine de l'éditeur ne nomme aucun client, pas même dans un
+       commentaire : cette source part chez le visiteur. -->
+      <section class="bloc cadre" id="applications">
+        <div class="bloc-tete">
+          <p class="titre-section">Les applications</p>
+          <h2>Un outil par métier, un seul socle dessous.</h2>
+        </div>
 
-        <a class="app" href="#contact">
-          <span class="app-nom">NûrProgress</span>
-          <span class="app-desc">
-            <b>Ce qui doit avancer.</b> Étapes, validations, demandes envoyées,
-            retours attendus, blocages. Une organisation ne se demande pas
-            seulement ce qu'elle possède, mais ce qu'elle attend, et de qui.
-            Vous savez ce que vous avez envoyé, à qui, ce qui devait revenir, et
-            depuis combien de temps ça ne revient pas.
-          </span>
+        <div class="apps">
+          <article class="app">
+            <img class="app-icone" src="/assets/nurgest-icone.svg" alt="" width="56" height="56" />
+            <div>
+              <h3 class="nom-outil"><b>Nûr</b>Gest</h3>
+              <p class="app-question">La gestion d'un établissement, d'un réseau, d'une commune.</p>
+            </div>
+            <div class="app-corps">
+              <p>
+                Une école, un réseau d'écoles ou une collectivité : le même outil, dont le périmètre suit la
+                structure de l'organisation. Chacun y retrouve ses mots, pas ceux du voisin.
+              </p>
+              <ul class="puces" aria-label="Ce que couvre NûrGest">
+                <li>Élèves et familles</li>
+                <li>Présences</li>
+                <li>Inscriptions</li>
+                <li>Paiements</li>
+                <li>Documents et bulletins</li>
+                <li>Patrimoine</li>
+                <li>Personnel</li>
+                <li>Boutique</li>
+                <li>Site de l'établissement</li>
+              </ul>
+            </div>
+            <div class="app-etat">
+              <span class="etat prod">En production</span>
+              <a class="porte-app" href="https://app.nurgest.fr/login?retour=nur"
+                >Ouvrir <span class="lieu">app.nurgest.fr</span></a
+              >
+            </div>
+          </article>
+
+          <article class="app">
+            <img class="app-icone" src="/assets/nurops-icone.svg" alt="" width="56" height="56" />
+            <div>
+              <h3 class="nom-outil"><b>Nûr</b>Ops</h3>
+              <p class="app-question">Les opérations, de la première demande à la clôture du dossier.</p>
+            </div>
+            <div class="app-corps">
+              <p>
+                Bureaux d'études, entreprises de travaux, collectivités. Un groupe qui porte plusieurs sociétés
+                les tient côte à côte, chacune cloisonnée, sans changer d'outil ni de compte.
+              </p>
+              <ul class="puces" aria-label="Ce que couvre NûrOps">
+                <li>Affaires</li>
+                <li>Études</li>
+                <li>Devis et marchés</li>
+                <li>Chantiers</li>
+                <li>Équipes</li>
+                <li>Matériel</li>
+                <li>Réception</li>
+                <li>Archivage</li>
+              </ul>
+            </div>
+            <div class="app-etat">
+              <span class="etat pilote">Pilote</span>
+              <a class="porte-app" href="https://app.nurops.fr/login">Ouvrir <span class="lieu">app.nurops.fr</span></a>
+            </div>
+          </article>
+
+          <article class="app">
+            <img class="app-icone" src="/assets/nurpay-icone.svg" alt="" width="56" height="56" />
+            <div>
+              <h3 class="nom-outil"><b>Nûr</b>Pay</h3>
+              <p class="app-question">La paie et les ressources humaines.</p>
+            </div>
+            <div class="app-corps">
+              <p>
+                Chantier réglementaire en cours. Une paie approximative ne se rattrape pas : elle sortira quand
+                elle sera juste, pas avant.
+              </p>
+            </div>
+            <div class="app-etat">
+              <span class="etat attente">En préparation</span>
+              <span class="sans-porte">Pas encore ouverte</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="traverse">
+          <svg class="anneau" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+            <circle cx="28" cy="28" r="22" stroke="#F6BC50" stroke-opacity="0.55" stroke-dasharray="2 5" stroke-linecap="round" />
+            <circle cx="28" cy="28" r="4" fill="#F6BC50" />
+          </svg>
+          <div>
+            <h3 class="nom-outil"><b>Nûr</b>Progress</h3>
+            <p class="app-question">Ce qui les traverse : ce qui doit avancer.</p>
+          </div>
+          <div class="app-corps">
+            <p>
+              Étapes, validations, demandes envoyées, retours attendus. Vous savez ce que vous avez envoyé, à
+              qui, ce qui devait revenir, et depuis combien de temps ça ne revient pas.
+            </p>
+          </div>
           <span class="etat pilote">Transversal</span>
-        </a>
+        </div>
       </section>
 
       <!-- ══ LE SOCLE ══════════════════════════════════════════════════════ -->
-      <!-- ✎ LE SOCLE : trois briques. -->
-      <section>
-        <p class="titre-section">Ce qui n'existe qu'une fois</p>
+      <section class="bloc cadre" id="socle">
+        <div class="bloc-tete">
+          <p class="titre-section">Ce qui n'existe qu'une fois</p>
+          <h2>Le socle porte ce que tous les outils partagent.</h2>
+          <p class="bloc-intro">
+            Une seule plateforme sert toutes les organisations : la vôtre en est cliente, elle n'est pas une
+            copie installée pour elle seule. Ce qui est corrigé ou ajouté l'est pour toutes.
+          </p>
+        </div>
 
         <div class="socle">
           <div class="brique">
             <h3>Organisations</h3>
             <p>
-              Une commune, une association, un établissement privé, un groupe de
-              sociétés. Une organisation peut en contenir d'autres : c'est la
-              même relation, pas un cas particulier à développer.
+              Une commune, une association, un établissement, un groupe de sociétés. Une organisation peut en
+              contenir d'autres : c'est la même relation, pas un cas particulier.
             </p>
           </div>
           <div class="brique">
-            <h3>Comptes et droits</h3>
+            <h3>Personnes</h3>
             <p>
-              Une adresse, une personne. Elle appartient à plusieurs
-              organisations et y tient des rôles différents sans jamais avoir à
-              s'y recréer un compte. Chacun ne voit que son périmètre, et la
-              règle vit dans la base, pas dans un menu.
+              Un élève, un parent, un intervenant existent sans compte. Le compte vient quand la personne doit
+              se connecter, pas avant.
+            </p>
+          </div>
+          <div class="brique">
+            <h3>Droits</h3>
+            <p>
+              Un rôle, une portée. On tient des rôles différents dans plusieurs organisations sans se recréer de
+              compte, et la règle vit dans la base, pas dans un menu.
             </p>
           </div>
           <div class="brique">
             <h3>Abonnements</h3>
-            <p>
-              Une application, une offre, des options. C'est l'offre qui ouvre
-              le droit, pas une case à cocher.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ══ LA PREUVE ═════════════════════════════════════════════════════ -->
-      <!-- ✎ LE PÉRIMÈTRE. La réserve la plus juste qu'on m'ait faite : NûrGest
-       n'est pas « un logiciel pour les écoles ». C'est le MÊME logiciel, dont
-       le périmètre s'élargit avec l'organisation. Le dire est une chose ; le
-       MONTRER en est une autre.
-       La troisième colonne, le groupe, a été ajoutée quand elle est devenue
-       vraie et pas avant : un groupe qui porte plusieurs sociétés est entré
-       sur le socle sans qu'une ligne soit écrite pour lui. -->
-      <section>
-        <p class="titre-section">Le même socle, trois formes</p>
-
-        <div class="echelles">
-          <div class="echelle">
-            <p class="echelle-type">Association</p>
-            <p class="echelle-nb">1 établissement</p>
-            <p class="echelle-txt">
-              Élèves, classes, inscriptions, paiements. La gestion complète
-              d'une école, par ceux qui la font tourner.
-            </p>
-          </div>
-
-          <div class="echelle">
-            <p class="echelle-type">Municipalité</p>
-            <p class="echelle-nb">N établissements</p>
-            <p class="echelle-txt">
-              Chaque école garde son autonomie. La commune ajoute un niveau
-              au-dessus : vue consolidée, patrimoine, arbitrages budgétaires.
-            </p>
-          </div>
-
-          <div class="echelle">
-            <p class="echelle-type">Groupe</p>
-            <p class="echelle-nb">N sociétés</p>
-            <p class="echelle-txt">
-              Une même maison porte souvent plusieurs personnes morales. Chacune
-              reste cloisonnée, les personnes ne se ressaisissent pas d'une
-              société à l'autre, et la tête de groupe voit l'ensemble
-              lorsqu'elle en a le droit.
-            </p>
+            <p>Une application, une offre, des options. C'est l'offre qui ouvre le droit, pas une case à cocher.</p>
           </div>
         </div>
 
-        <p class="note">
-          Passer de l'une à l'autre n'est pas un autre produit, ni un autre
-          contrat de développement. C'est un paramétrage.
-        </p>
+        <!-- La troisième forme, le groupe, a été ajoutée quand elle est devenue
+             vraie et pas avant : un groupe de sociétés est entré sur le socle
+             sans qu'une ligne soit écrite pour lui. -->
+        <div class="formes">
+          <p class="titre-section">Le même socle, trois formes</p>
+          <div class="echelles">
+            <div class="echelle">
+              <p class="echelle-type">Association</p>
+              <p class="echelle-nb">1 établissement</p>
+              <p class="echelle-txt">
+                Élèves, classes, inscriptions, paiements : la gestion complète d'une école, par ceux qui la font
+                tourner.
+              </p>
+            </div>
+            <div class="echelle">
+              <p class="echelle-type">Commune</p>
+              <p class="echelle-nb">N établissements</p>
+              <p class="echelle-txt">
+                Chaque école garde son autonomie. La commune ajoute un niveau au-dessus : vue d'ensemble,
+                patrimoine, arbitrages.
+              </p>
+            </div>
+            <div class="echelle">
+              <p class="echelle-type">Groupe</p>
+              <p class="echelle-nb">N sociétés</p>
+              <p class="echelle-txt">
+                Chaque société reste cloisonnée, les personnes ne se ressaisissent pas de l'une à l'autre, et la
+                tête de groupe voit l'ensemble lorsqu'elle en a le droit.
+              </p>
+            </div>
+          </div>
+          <p class="note">
+            Passer de l'une à l'autre n'est ni un autre produit, ni un autre contrat de développement : c'est un
+            paramétrage.
+          </p>
+        </div>
       </section>
 
-      <!-- ✎ LA PREUVE : trois chiffres, et la phrase de conclusion. -->
-      <section>
-        <p class="titre-section">Ce n'est pas une maquette</p>
+      <!-- ══ LA CONFIANCE ══════════════════════════════════════════════════
+       ✎ Chaque phrase ici se vérifie dans la base ou dans un contrat. Une
+       promesse qu'on ne sait pas montrer n'a rien à faire sur cette page. -->
+      <section class="bloc cadre" id="confiance">
+        <div class="bloc-tete">
+          <p class="titre-section">Confiance</p>
+          <h2>Le cloisonnement se vérifie au serveur, pas à l'écran.</h2>
+        </div>
 
+        <div class="confiance">
+          <ul class="engagements">
+            <li>
+              <h3>Chacun son périmètre</h3>
+              <p>
+                Deux organisations installées sur la même plateforme ne voient pas les mêmes dossiers. Chaque
+                lecture est contrôlée par la base ; aucun réglage d'écran n'y change quoi que ce soit.
+              </p>
+            </li>
+            <li>
+              <h3>Le bon niveau d'information</h3>
+              <p>
+                Une commune pilote des effectifs, l'école connaît des personnes : un agent municipal ne voit pas
+                les élèves. La frontière est inscrite dans la base.
+              </p>
+            </li>
+            <li>
+              <h3>Hébergé dans l'Union européenne</h3>
+              <p>Les données des applications sont hébergées dans l'Union européenne, celles de NûrGest en France.</p>
+            </li>
+            <li>
+              <h3>Aucun traceur</h3>
+              <p>Ce site ne dépose aucun cookie, ne mesure pas l'audience et ne charge rien chez un tiers.</p>
+            </li>
+            <li>
+              <h3>Assuré</h3>
+              <p>
+                HAFIYDEV est assurée en responsabilité civile professionnelle pour l'édition de logiciels en
+                ligne.
+              </p>
+            </li>
+          </ul>
+
+          <div class="intervention">
+            <p class="surtitre">L'accès de l'éditeur, dans NûrGest</p>
+            <h3>L'éditeur n'a pas de passe-partout.</h3>
+            <p>Pour intervenir sur vos données, HAFIYDEV ouvre un accès, et cet accès a toujours :</p>
+            <dl>
+              <dt>Un motif</dt>
+              <dd>écrit avant d'entrer</dd>
+              <dt>Une durée</dt>
+              <dd>trente jours au plus</dd>
+              <dt>Une trace</dt>
+              <dd>inscrite au journal</dd>
+              <dt>Vos responsables</dt>
+              <dd>prévenus, et libres de le fermer</dd>
+            </dl>
+          </div>
+        </div>
+
+        <!-- ✎ LA PREUVE : trois chiffres. Aucun client nommé. -->
         <div class="preuve">
           <div>
             <p class="chiffre">1</p>
-            <p class="chiffre-txt">
-              établissement en production, avec de vrais élèves, de vraies
-              familles, de vrais paiements.
-            </p>
+            <p class="chiffre-txt">association en production : de vrais élèves, de vraies familles, de vrais paiements.</p>
+          </div>
+          <div>
+            <p class="chiffre">1</p>
+            <p class="chiffre-txt">commune qui suit le patrimoine de ses écoles avec son service technique.</p>
           </div>
           <div>
             <p class="chiffre">3</p>
             <p class="chiffre-txt">
-              formes d'organisation sur le même modèle : une association, une
-              commune, un groupe de sociétés. Aucune n'a demandé de code écrit
-              pour elle.
-            </p>
-          </div>
-          <div>
-            <p class="chiffre">UE</p>
-            <p class="chiffre-txt">
-              hébergement dans l'Union européenne. Données d'élèves mineurs
-              traitées selon le RGPD.
+              formes d'organisation sur le même modèle. Aucune n'a demandé de code écrit pour elle.
             </p>
           </div>
         </div>
-
-        <p class="note">
-          Une école garde son autonomie. Une commune obtient sa vue d'ensemble
-          sans se substituer aux directions. Le cloisonnement n'est pas une
-          option que l'on active : il est inscrit dans la structure des droits,
-          et il se vérifie en se connectant. Deux organisations installées sur
-          la même base ne voient pas les mêmes dossiers, et aucun réglage
-          d'écran n'y change quoi que ce soit.
-        </p>
       </section>
+
+      <!-- ══ L'APPEL ═══════════════════════════════════════════════════════ -->
+      <div class="cadre">
+        <section class="appel" aria-labelledby="titre-appel">
+          <div>
+            <h2 id="titre-appel">Voyez-le sur votre cas.</h2>
+            <p>
+              La démonstration de NûrGest ouvre un espace isolé pour quatorze jours. Pour NûrOps, nous vous la
+              montrons nous-mêmes.
+            </p>
+          </div>
+          <div class="actions">
+            <button class="bouton" type="button" id="ouvrir-demo-3">Demander une démonstration</button>
+            <a class="bouton-verre" data-courriel href="#contact">Nous écrire</a>
+          </div>
+        </section>
+      </div>
     </main>
 
-    <!-- ✎ LE PIED DE PAGE : ton nom, ton adresse.
-
-     ⚠ ADRESSE PROVISOIRE. Elle disait contact@hafiydev.com, et le domaine
-     hafiydev.com n'était pas enregistré : ni serveur de noms, ni MX, et le
-     registre du .com répondait qu'il n'existait pas. Tout ce qui invitait à
-     écrire sur cette page tombait donc dans le vide, y compris le dernier
-     recours affiché quand l'envoi du formulaire échoue.
-
-     ✎ C'EST ICI, ET NULLE PART AILLEURS, QU'ON CHANGE L'ADRESSE. Le script
-        la relit sur ce lien pour la glisser dans les messages d'erreur : une
-        seule modification suffit, le jour où le nom de domaine sera pris. -->
-    <footer class="cadre" id="contact">
-      <span>Nûr Platform, édité par HAFIYDev. Mayotte.</span>
-      <span>
-        <a id="courriel" href="mailto:contact@hafiydev.fr">
-          contact@hafiydev.fr
-        </a>
-      </span>
+    <!-- ✎ LE PIED DE PAGE.
+     C'EST ICI, ET NULLE PART AILLEURS, QU'ON CHANGE L'ADRESSE DE CONTACT. Le
+     script la relit sur le lien #courriel pour la glisser dans les messages
+     d'erreur et sur tout lien data-courriel : une seule modification suffit. -->
+    <footer class="pied" id="contact">
+      <div class="cadre">
+        <div class="pied-grille">
+          <div class="pied-marque">
+            <img src="/assets/nurplatform-nuit.svg" alt="Nûr Platform" width="126" height="24" />
+            <p>Nûr Platform est éditée par HAFIYDEV, à Sada, Mayotte.</p>
+            <p style="margin-top: 10px">
+              <a class="lien" id="courriel" href="mailto:contact@hafiydev.fr">contact@hafiydev.fr</a>
+            </p>
+          </div>
+          <div>
+            <p class="pied-titre">Applications</p>
+            <ul>
+              <li><a href="https://app.nurgest.fr/login?retour=nur">NûrGest</a></li>
+              <li><a href="https://app.nurops.fr/login">NûrOps</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="pied-titre">Informations</p>
+            <ul>
+              <li><a href="/mentions-legales">Mentions légales</a></li>
+              <li><a href="/confidentialite">Confidentialité</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pied-bas">
+          <span>© 2026 HAFIYDEV</span>
+          <span>Conçu et développé à Mayotte.</span>
+        </div>
+      </div>
     </footer>
 
     <script>
@@ -1349,16 +1455,12 @@
        *
        * ⚠️ CE QU'ELLE FAIT, ET CE QU'ELLE NE FAIT PAS
        *   Elle QUALIFIE : elle écarte automatiquement une organisation qui n'est ni
-       *   une commune, ni une association, ni un établissement d'enseignement. Les
-       *   curieux du dimanche s'arrêtent là.
-       *
+       *   une commune, ni une association, ni un établissement d'enseignement.
        *   Elle N'AUTHENTIFIE PAS. Le SIRET d'une mairie est PUBLIC : n'importe qui
-       *   peut le saisir. Confondre les deux serait une faute de raisonnement.
-       *   La vraie porte reste humaine : l'éditeur approuve, ou non.
+       *   peut le saisir. La vraie porte reste humaine : l'éditeur approuve, ou non.
        *
-       * ✎ À CONFIGURER : mets ici l'URL et la clé publique (anon) de ton projet
-       *    Supabase. La clé « anon » est PRÉVUE pour être publique : elle ne donne
-       *    accès qu'à ce que la RLS autorise, c'est-à-dire ici une seule fonction.
+       * La clé « anon » est PRÉVUE pour être publique : elle ne donne accès qu'à ce
+       * que la base autorise, c'est-à-dire ici une seule fonction.
        * ══════════════════════════════════════════════════════════════════════════ */
       const SUPABASE_URL = "https://eurjhseysppbrfvduzry.supabase.co";
       const SUPABASE_ANON =
@@ -1371,24 +1473,16 @@
       /* ══════════════════════════════════════════════════════════════════════════
        * LE SOCLE EN MOUVEMENT
        * ──────────────────────────────────────────────────────────────────────────
-       * Une lumière au centre alimente chaque application, et reçoit en retour
-       * la leur. Les grains dorés descendent du socle vers les modules, les
-       * grains ivoire remontent des modules vers le socle. Le sens compte : une
-       * plateforme qui ne recevrait rien serait un serveur, pas un socle.
+       * Une lumière au centre alimente chaque outil, et reçoit en retour la sienne.
+       * Les grains d'or descendent du socle vers les outils, les grains ivoire
+       * remontent. Chaque outil est dessiné avec SON icône de la charte : sa nuit,
+       * le nûn blanc, le point d'or. Le glyphe est le chemin du kit, lu tel quel.
        *
-       * DEUX RÉGIMES, ET RIEN ENTRE LES DEUX QU'UNE TRANSITION DOUCE.
-       *   Au repos, le dessin respire à peine : il ne demande rien à l'oeil de
-       *   quelqu'un qui lit le texte à côté. À l'attention (survol, ou toucher
-       *   sur mobile), il rend. C'est la même règle que dans les applications :
-       *   on ne réclame pas l'attention, on la récompense.
+       * Au repos, le dessin respire à peine ; à l'attention (survol, toucher), il
+       * rend. On ne réclame pas l'attention, on la récompense. Il s'arrête hors de
+       * l'écran, et se fige pour qui demande moins de mouvement.
        *
-       * POURQUOI PAS THREE.JS. Six cents kilo-octets pour trois ronds, un anneau
-       * et des points. La projection tient en quatre lignes (pointOrbite,
-       * projeter) et se relit. Une dépendance qu'on ne saurait pas réécrire est
-       * une dette, pas un outil.
-       *
-       * ✎ POUR RENOMMER UNE APPLICATION : change le texte dans MODULES, et rien
-       *    d'autre. Les angles se répartissent tout seuls.
+       * ✎ POUR RENOMMER UN OUTIL : change le texte dans MODULES, et rien d'autre.
        * ══════════════════════════════════════════════════════════════════════════ */
       (() => {
         "use strict";
@@ -1399,29 +1493,31 @@
         const ctx = canvas.getContext("2d");
 
         /* Les couleurs viennent de la charte, pas d'un choix local. */
-        const LUMIERE = [233, 185, 107]; // #e9b96b
-        const IVOIRE = [242, 237, 227]; // #f2ede3
-
+        const LUMIERE = [246, 188, 80]; // #F6BC50, le point du nûn
+        const IVOIRE = [242, 237, 227];
         const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
 
-        /* NûrGest reste en haut, comme dans l'ancien dessin : on ne réoriente
-       pas ce que les visiteurs ont déjà appris. */
+        /* Le nûn du kit v3 : le trait et le point, sur la grille de 1 000. */
+        const NUN = typeof Path2D === "function"
+          ? new Path2D("M250 330C250 679.6 362.5 790 500 790C637.5 790 750 679.6 750 330")
+          : null;
+
         const MODULES = [
-          { nom: "NûrGest", angle: -Math.PI / 2 },
-          { nom: "NûrOps", angle: -Math.PI / 2 + (2 * Math.PI) / 3 },
-          { nom: "NûrPay", angle: -Math.PI / 2 + (4 * Math.PI) / 3 },
+          { nom: "NûrGest", nuit: [10, 38, 76], angle: -Math.PI / 2 },
+          { nom: "NûrOps", nuit: [20, 65, 95], angle: -Math.PI / 2 + (2 * Math.PI) / 3 },
+          { nom: "NûrPay", nuit: [14, 59, 51], angle: -Math.PI / 2 + (4 * Math.PI) / 3 },
         ];
 
-        const RAYON = 1.0; // rayon de l'orbite, en unités de scène
-        const INCLIN = 0.4; // inclinaison de l'orbite, en radians
-        const FOCALE = 3.2; // plus c'est grand, plus la perspective est douce
+        const RAYON = 1.0;
+        const INCLIN = 0.4;
+        const FOCALE = 3.2;
 
         const REPOS = { vitesse: 0.018, debit: 0.55, halo: 0.55 };
         const EVEIL = { vitesse: 0.23, debit: 3.2, halo: 1.0 };
 
-        let eveil = 0; // 0 = repos, 1 = éveillé
+        let eveil = 0;
         let vise = 0;
-        let theta = 0; // rotation courante de l'orbite
+        let theta = 0;
         let W = 0,
           H = 0,
           cx = 0,
@@ -1432,31 +1528,18 @@
           anime = false;
 
         const grains = [];
+        const moinsDeMouvement = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-        /* Qui demande moins de mouvement en obtient. */
-        const moinsDeMouvement = window.matchMedia(
-          "(prefers-reduced-motion: reduce)",
-        );
-
-        /* ── Géométrie ─────────────────────────────────────────────────────── */
-
-        /* Un point de l'orbite, tourné puis incliné. */
         function pointOrbite(a) {
           const x = RAYON * Math.cos(a + theta);
           const z = RAYON * Math.sin(a + theta);
           return { x, y: -z * Math.sin(INCLIN), z: z * Math.cos(INCLIN) };
         }
 
-        /* Projection perspective. Rend aussi l'échelle k, qui dimensionne ce
-       qu'on dessine : ce qui est loin est plus petit ET plus pâle. */
+        /* Ce qui est loin est plus petit ET plus pâle. */
         function projeter(p) {
           const k = FOCALE / (FOCALE + p.z);
-          return {
-            x: cx + p.x * echelle * k,
-            y: cy + p.y * echelle * k,
-            k,
-            z: p.z,
-          };
+          return { x: cx + p.x * echelle * k, y: cy + p.y * echelle * k, k, z: p.z };
         }
 
         const melange = (a, b, t) => a + (b - a) * t;
@@ -1472,26 +1555,62 @@
           ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
           cx = W / 2;
           cy = H / 2;
-          echelle = Math.min(W, H) * 0.3;
+          echelle = Math.min(W, H) * 0.36;
         }
 
-        /* ── Les grains ────────────────────────────────────────────────────── */
-
-        /* sens = +1 : le socle alimente le module.
-       sens = -1 : le module rend sa lumière au socle. */
         function semer() {
           const m = MODULES[(Math.random() * MODULES.length) | 0];
           const sens = Math.random() < 0.5 ? 1 : -1;
-          grains.push({
-            angle: m.angle,
-            t: sens > 0 ? 0 : 1,
-            sens,
-            vitesse: 0.35 + Math.random() * 0.25,
-            vie: 1,
-          });
+          grains.push({ angle: m.angle, t: sens > 0 ? 0 : 1, sens, vitesse: 0.35 + Math.random() * 0.25, vie: 1 });
         }
 
-        /* ── Rendu ─────────────────────────────────────────────────────────── */
+        function carreArrondi(x, y, s, r) {
+          ctx.beginPath();
+          if (ctx.roundRect) {
+            ctx.roundRect(x, y, s, s, r);
+            return;
+          }
+          ctx.moveTo(x + r, y);
+          ctx.arcTo(x + s, y, x + s, y + s, r);
+          ctx.arcTo(x + s, y + s, x, y + s, r);
+          ctx.arcTo(x, y + s, x, y, r);
+          ctx.arcTo(x, y, x + s, y, r);
+          ctx.closePath();
+        }
+
+        /* L'icône d'un outil, comme dans le kit : tuile de 1 024 au rayon de
+           22 %, glyphe à 75 % décalé de (286,83 ; 204,8). */
+        function tuile(m, x, y, s, prof) {
+          ctx.save();
+          ctx.globalAlpha = 0.55 + prof * 0.45;
+          ctx.translate(x - s / 2, y - s / 2);
+          ctx.shadowColor = "rgba(0,0,0,0.55)";
+          ctx.shadowBlur = 18;
+          ctx.shadowOffsetY = 8;
+          carreArrondi(0, 0, s, s * 0.22);
+          ctx.fillStyle = rgba(m.nuit, 1);
+          ctx.fill();
+          ctx.shadowColor = "transparent";
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = rgba(LUMIERE, 0.14 + prof * 0.26 + eveil * 0.16);
+          ctx.stroke();
+          const k = s / 1024;
+          ctx.scale(k, k);
+          ctx.translate(286.83, 204.8);
+          ctx.scale(0.75, 0.75);
+          ctx.translate(-200, -76);
+          if (NUN) {
+            ctx.lineWidth = 100;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = "#ffffff";
+            ctx.stroke(NUN);
+          }
+          ctx.beginPath();
+          ctx.arc(500, 150, 74, 0, Math.PI * 2);
+          ctx.fillStyle = rgba(LUMIERE, 1);
+          ctx.fill();
+          ctx.restore();
+        }
 
         function dessiner(dt) {
           const vitesse = melange(REPOS.vitesse, EVEIL.vitesse, eveil);
@@ -1501,22 +1620,17 @@
           ctx.clearRect(0, 0, W, H);
 
           const centre = projeter({ x: 0, y: 0, z: 0 });
-          const pts = MODULES.map((m) => ({
-            m,
-            p: projeter(pointOrbite(m.angle)),
-          }));
+          const pts = MODULES.map((m) => ({ m, p: projeter(pointOrbite(m.angle)) }));
 
-          /* 1. L'anneau NûrProgress. Il ne s'ajoute pas en quatrième satellite :
-             il PASSE par les trois. Dessiné en premier, donc derrière tout. */
+          /* 1. L'anneau NûrProgress : il PASSE par les trois, derrière tout. */
           ctx.lineWidth = 1;
           ctx.setLineDash([2, 7]);
           ctx.lineDashOffset = -theta * 26;
           for (let i = 0; i < 96; i++) {
             const p1 = projeter(pointOrbite((i / 96) * Math.PI * 2));
             const p2 = projeter(pointOrbite(((i + 1) / 96) * Math.PI * 2));
-            /* Ce qui passe derrière s'efface : c'est ce qui donne le volume. */
             const prof = (p1.k - 0.72) / 0.56;
-            ctx.strokeStyle = rgba(LUMIERE, 0.06 + Math.max(0, prof) * 0.26);
+            ctx.strokeStyle = rgba(LUMIERE, 0.07 + Math.max(0, prof) * 0.28);
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
@@ -1528,7 +1642,7 @@
           const ordonnes = [...pts].sort((a, b) => b.p.z - a.p.z);
           for (const { p } of ordonnes) {
             const prof = (p.k - 0.72) / 0.56;
-            ctx.strokeStyle = rgba(IVOIRE, 0.05 + Math.max(0, prof) * 0.1);
+            ctx.strokeStyle = rgba(IVOIRE, 0.06 + Math.max(0, prof) * 0.1);
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(centre.x, centre.y);
@@ -1536,16 +1650,9 @@
             ctx.stroke();
           }
 
-          /* 3. Le halo. Une seule source de lumière, au centre. */
+          /* 3. Le halo : une seule source de lumière, au centre. */
           const rH = echelle * (0.95 + 0.06 * Math.sin(theta * 1.7)) * halo;
-          const g = ctx.createRadialGradient(
-            centre.x,
-            centre.y,
-            0,
-            centre.x,
-            centre.y,
-            rH,
-          );
+          const g = ctx.createRadialGradient(centre.x, centre.y, 0, centre.x, centre.y, rH);
           g.addColorStop(0, rgba(LUMIERE, 0.3 * halo));
           g.addColorStop(0.45, rgba(LUMIERE, 0.07 * halo));
           g.addColorStop(1, rgba(LUMIERE, 0));
@@ -1554,7 +1661,7 @@
           ctx.arc(centre.x, centre.y, rH, 0, Math.PI * 2);
           ctx.fill();
 
-          /* 4. Les grains, sur les liens. */
+          /* 4. Les grains, sur les liens ; ils s'effacent aux deux bouts. */
           for (const grain of grains) {
             grain.t += grain.sens * grain.vitesse * dt;
             if (grain.t < -0.05 || grain.t > 1.05) {
@@ -1563,13 +1670,7 @@
             }
             const cible = pointOrbite(grain.angle);
             const t = Math.max(0, Math.min(1, grain.t));
-            const p = projeter({
-              x: cible.x * t,
-              y: cible.y * t,
-              z: cible.z * t,
-            });
-            /* Il s'efface aux deux bouts : on ne voit jamais apparaître un
-               point, ni disparaître. */
+            const p = projeter({ x: cible.x * t, y: cible.y * t, z: cible.z * t });
             const bord = Math.min(t, 1 - t) * 4;
             const a = Math.min(1, bord) * (0.35 + 0.45 * eveil);
             const couleur = grain.sens > 0 ? LUMIERE : IVOIRE;
@@ -1582,47 +1683,38 @@
             if (!grains[i].vie) grains.splice(i, 1);
           }
 
-          /* 5. Le coeur. */
+          /* 5. Le coeur : le point d'or, la lumière. */
           ctx.fillStyle = rgba(LUMIERE, 0.95);
           ctx.beginPath();
-          ctx.arc(centre.x, centre.y, 5.5, 0, Math.PI * 2);
+          ctx.arc(centre.x, centre.y, 6, 0, Math.PI * 2);
           ctx.fill();
-          ctx.strokeStyle = rgba(LUMIERE, 0.42);
+          ctx.strokeStyle = rgba(LUMIERE, 0.4);
           ctx.lineWidth = 1;
           ctx.beginPath();
-          ctx.arc(centre.x, centre.y, 13, 0, Math.PI * 2);
+          ctx.arc(centre.x, centre.y, 14, 0, Math.PI * 2);
           ctx.stroke();
 
-          /* 6. Les applications, du plus loin au plus proche. */
-          ctx.font = "600 11px Montserrat, sans-serif";
+          /* 6. Les outils, du plus loin au plus proche, chacun avec son icône. */
+          const cote = Math.max(30, echelle * 0.36);
           ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
+          ctx.textBaseline = "top";
           for (const { m, p } of ordonnes) {
             const prof = Math.max(0, Math.min(1, (p.k - 0.72) / 0.56));
-            const r = 22 * p.k;
-
-            ctx.fillStyle = rgba([14, 30, 54], 0.92);
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.strokeStyle = rgba(LUMIERE, 0.14 + prof * 0.34 + eveil * 0.2);
-            ctx.lineWidth = 1;
-            ctx.stroke();
-
-            ctx.fillStyle = rgba(IVOIRE, 0.4 + prof * 0.5);
-            ctx.fillText(m.nom, p.x, p.y);
+            const s = cote * p.k;
+            tuile(m, p.x, p.y, s, prof);
+            ctx.font = `600 ${Math.round(11.5 * p.k * 10) / 10}px Fraunces, Georgia, serif`;
+            ctx.fillStyle = rgba(IVOIRE, 0.42 + prof * 0.5);
+            ctx.fillText(m.nom, p.x, p.y + s / 2 + 7);
           }
 
           /* 7. Le nom de l'anneau, sous le socle. */
-          ctx.font = "600 9.5px Montserrat, sans-serif";
-          ctx.fillStyle = rgba(LUMIERE, 0.32 + eveil * 0.22);
-          ctx.letterSpacing = "0.16em";
-          ctx.fillText("NÛRPROGRESS", cx, cy + echelle * 1.42);
-          ctx.letterSpacing = "0px";
+          ctx.textBaseline = "middle";
+          ctx.font = "600 9.5px -apple-system, 'Segoe UI', system-ui, sans-serif";
+          ctx.fillStyle = rgba(LUMIERE, 0.38 + eveil * 0.22);
+          if ("letterSpacing" in ctx) ctx.letterSpacing = "0.16em";
+          ctx.fillText("NÛRPROGRESS", cx, cy + echelle * 1.25);
+          if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
         }
-
-        /* ── Boucle ────────────────────────────────────────────────────────── */
 
         let debitReste = 0;
 
@@ -1630,15 +1722,12 @@
           if (!anime) return;
           const dt = Math.min((maintenant - dernier) / 1000 || 0, 0.05);
           dernier = maintenant;
-
           eveil += (vise - eveil) * Math.min(1, dt * 3.2);
-
           debitReste += melange(REPOS.debit, EVEIL.debit, eveil) * dt;
           while (debitReste >= 1) {
             semer();
             debitReste -= 1;
           }
-
           dessiner(dt);
           requestAnimationFrame(boucle);
         }
@@ -1653,16 +1742,14 @@
           anime = false;
         }
 
-        /* ── Interactions ──────────────────────────────────────────────────── */
-
         hote.addEventListener("pointerenter", () => {
           vise = 1;
         });
         hote.addEventListener("pointerleave", () => {
           vise = 0;
         });
-        /* Sur mobile il n'y a pas de survol : le toucher réveille, puis ça
-       retombe tout seul. Personne n'a à éteindre ce qu'il a allumé. */
+        /* Sur un téléphone il n'y a pas de survol : le toucher réveille, puis ça
+           retombe tout seul. */
         hote.addEventListener("pointerdown", () => {
           vise = 1;
           clearTimeout(hote._t);
@@ -1671,8 +1758,6 @@
           }, 2600);
         });
 
-        /* On ne fait pas tourner une animation que personne ne regarde : ni hors
-       écran, ni dans un onglet en arrière-plan. C'est de la batterie. */
         if ("IntersectionObserver" in window) {
           new IntersectionObserver(
             (entrees) => {
@@ -1691,40 +1776,25 @@
           if (!anime) dessiner(0);
         });
 
-        /* ── Départ ────────────────────────────────────────────────────────── */
-
         dimensionner();
-
-        if (moinsDeMouvement.matches) {
-          /* Une image fixe, correcte, plutôt qu'un mouvement imposé. Elle est
-         dessinée une seule fois : si Montserrat arrive après, les noms des
-         applications resteraient dans la police de secours. On redessine
-         donc quand les polices sont là. */
-          theta = 0.6;
-          for (let i = 0; i < 14; i++) semer();
-          dessiner(0);
-          if (document.fonts) {
-            document.fonts.ready.then(() => {
-              if (!anime) dessiner(0);
-            });
-          }
-        } else {
-          demarrer();
+        /* Une image juste dès le premier instant, même avant l'animation, et
+           redessinée quand Fraunces est arrivée (sinon les noms resteraient
+           dans la police de secours sur l'image fixe). */
+        theta = 0.6;
+        for (let i = 0; i < 14; i++) semer();
+        dessiner(0);
+        if (document.fonts) {
+          document.fonts.ready.then(() => {
+            if (!anime) dessiner(0);
+          });
         }
+        if (!moinsDeMouvement.matches) demarrer();
       })();
 
       /* ── Les tiroirs ──────────────────────────────────────────────────────────
-   On ferme à l'échappement et au clic sur le voile : un panneau dont on ne
-   sait pas sortir est un piège, pas une commodité.
-
-   Ce code ne connaissait qu'un tiroir, celui de la démonstration : le nom du
-   panneau et celui du champ à focaliser y étaient écrits en dur. Il y en a
-   deux maintenant. Plutôt que de recopier la mécanique, on la rend générale :
-   un seul voile, une seule touche d'échappement, et le tiroir courant retenu.
-
-   Le focus revient sur le bouton qui a ouvert. Sans cela, quelqu'un qui
-   navigue au clavier se retrouve renvoyé en haut du document à chaque
-   fermeture, et doit refaire tout le chemin. */
+         On ferme à l'échappement et au clic sur le voile : un panneau dont on ne
+         sait pas sortir est un piège. Un seul voile, le tiroir courant retenu, et
+         le focus revient sur le bouton qui a ouvert. */
       const voile = $("voile");
       let tiroirOuvert = null;
       let rappelFocus = null;
@@ -1738,14 +1808,11 @@
         voile.classList.add("ouvert");
         tiroir.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
-        /* On attend la fin du glissement : focaliser un panneau encore hors
-       de l'écran fait sauter la page. Le premier élément actionnable du
-       tiroir suffit, quel qu'il soit : ici un champ, là un lien. */
+        /* On attend la fin du glissement : focaliser un panneau encore hors de
+           l'écran fait sauter la page. */
         setTimeout(() => {
-          const premier = tiroir.querySelector(
-            "input, select, textarea, a[href], button:not([data-fermer])",
-          );
-          if (premier) premier.focus();
+          const premier = tiroir.querySelector("input, select, textarea, a[href], button:not([data-fermer])");
+          if (premier) premier.focus({ preventScroll: true });
         }, 420);
       }
 
@@ -1766,6 +1833,7 @@
       const OUVREURS = {
         "ouvrir-demo": "tiroir",
         "ouvrir-demo-2": "tiroir",
+        "ouvrir-demo-3": "tiroir",
         "ouvrir-entrer": "tiroir-entrer",
         "ouvrir-entrer-2": "tiroir-entrer",
       };
@@ -1774,7 +1842,6 @@
         if (b) b.addEventListener("click", () => ouvrirTiroir($(panneau), b));
       });
 
-      /* Toute croix ferme, sans qu'il faille l'inscrire une par une. */
       document.querySelectorAll("[data-fermer]").forEach((b) => {
         b.addEventListener("click", fermerTiroir);
       });
@@ -1783,37 +1850,26 @@
         if (e.key === "Escape") fermerTiroir();
       });
 
-      /* ── L'ADRESSE ÉCRITE SOUS CHAQUE PORTE ───────────────────────────────
-   Elle annonce où le lien mène. L'écrire à la main sous le href, c'est deux
-   sources pour une même vérité : le jour où le domaine change, on en met une
-   à jour et pas l'autre, et la vitrine affiche alors une adresse qui n'est
-   pas celle où l'on va. C'est exactement le défaut corrigé ailleurs sur
-   cette page ; le réintroduire ici serait sot.
+      /* Une autre page peut ouvrir un tiroir : /#demo, /#espace. */
+      const ANCRES = { "#demo": "tiroir", "#espace": "tiroir-entrer" };
+      if (ANCRES[location.hash]) ouvrirTiroir($(ANCRES[location.hash]));
 
-   Elle est donc lue sur le lien lui-même. Le texte reste écrit dans le HTML
-   pour que la page dise quelque chose de juste sans JavaScript, mais c'est
-   le href qui tranche. Changer de domaine se fait en une modification. */
-      document.querySelectorAll("a.entree[href]").forEach((porte) => {
-        const lieu = porte.querySelector(".entree-lieu");
-        if (lieu) lieu.textContent = new URL(porte.href).host;
+      /* ── L'ADRESSE ÉCRITE SOUS CHAQUE PORTE ───────────────────────────────
+         Elle annonce où le lien mène, et elle est LUE sur le lien lui-même :
+         l'écrire à la main sous le href ferait deux sources pour une vérité.
+         Le texte reste dans le HTML pour que la page dise juste sans script. */
+      document.querySelectorAll(".lieu").forEach((lieu) => {
+        const porte = lieu.closest("a[href]");
+        if (porte) lieu.textContent = new URL(porte.href).host;
       });
 
       /* ── L'ADRESSE OÙ L'ON PEUT ÉCRIRE ────────────────────────────────────
-   Même règle que pour les portes : une seule source. C'est le lien du pied
-   de page qui fait foi, et le href plutôt que le texte affiché, parce que
-   c'est lui qui décide où part le courrier.
-   Les messages d'échec la citent. Dire « écrivez-nous » à quelqu'un dont
-   l'envoi vient de rater, sans lui donner l'adresse, c'est le renvoyer
-   chercher en bas de page ce qu'on aurait pu lui tendre. */
+         Une seule source : le lien #courriel du pied de page, et son href plutôt
+         que son texte. Les messages d'échec la citent. */
       const lienCourriel = $("courriel");
-      const COURRIEL = lienCourriel
-        ? lienCourriel.href.replace(/^mailto:/, "")
-        : "";
+      const COURRIEL = lienCourriel ? lienCourriel.href.replace(/^mailto:/, "") : "";
       const ecrivezNous = COURRIEL ? " Écrivez-nous : " + COURRIEL : "";
 
-      /* Tout lien marqué data-courriel ouvre le courrier. Son href écrit dans
-     le HTML mène au pied de page : c'est le repli si le script ne tourne
-     pas, et il reste juste puisque l'adresse y est affichée. */
       if (COURRIEL) {
         document.querySelectorAll("[data-courriel]").forEach((a) => {
           a.href = "mailto:" + COURRIEL;
@@ -1822,17 +1878,15 @@
 
       const dire = (el, texte, ok) => {
         el.textContent = texte;
-        el.className =
-          "retour " + (ok === true ? "ok" : ok === false ? "non" : "");
+        el.className = "retour " + (ok === true ? "ok" : ok === false ? "non" : "");
       };
 
       /* Le type d'organisation, déduit de la nature juridique (INSEE) et de
-   l'activité (code NAF). C'est ce qui décide si NûrGest la concerne. */
+         l'activité (code NAF). C'est ce qui décide si NûrGest la concerne. */
       function typeOrganisation(nature, naf) {
         const n = String(nature || "");
         const a = String(naf || "");
-        if (n.startsWith("71") || n.startsWith("72") || n.startsWith("73"))
-          return "municipalite";
+        if (n.startsWith("71") || n.startsWith("72") || n.startsWith("73")) return "municipalite";
         if (n.startsWith("92")) return "association";
         if (a.startsWith("85")) return "ecole_privee";
         return "autre";
@@ -1859,11 +1913,7 @@
 
         try {
           const siren = brut.slice(0, 9);
-          const r = await fetch(
-            "https://recherche-entreprises.api.gouv.fr/search?q=" +
-              siren +
-              "&per_page=1",
-          );
+          const r = await fetch("https://recherche-entreprises.api.gouv.fr/search?q=" + siren + "&per_page=1");
           const data = await r.json();
           const e = (data.results || [])[0];
 
@@ -1872,18 +1922,11 @@
             return;
           }
 
-          const type = typeOrganisation(
-            e.nature_juridique,
-            e.activite_principale,
-          );
+          const type = typeOrganisation(e.nature_juridique, e.activite_principale);
 
-          /* « Hors périmètre » ne veut pas dire « hors plateforme ». Ce
-             contrôle qualifie pour la démonstration AUTOMATIQUE de NûrGest,
-             qui provisionne des élèves et des classes. Une entreprise de
-             travaux n'y a rien à faire, mais elle a toute sa place dans
-             NûrOps : le message le disait autrefois comme un refus sec, ce
-             qui envoyait promener exactement les prospects que la page
-             cherche à convaincre. */
+          /* « Hors périmètre » ne veut pas dire « hors plateforme » : ce contrôle
+             qualifie pour la démonstration AUTOMATIQUE de NûrGest. Une entreprise
+             de travaux a toute sa place dans NûrOps. */
           if (type === "autre") {
             dire(
               retour,
@@ -1900,8 +1943,7 @@
           }
 
           organisation = {
-            siret:
-              brut.length === 14 ? brut : (e.siege && e.siege.siret) || brut,
+            siret: brut.length === 14 ? brut : (e.siege && e.siege.siret) || brut,
             raison_sociale: e.nom_complet,
             categorie_juridique: e.nature_juridique,
             code_ape: e.activite_principale,
@@ -1911,21 +1953,13 @@
 
           dire(
             retour,
-            e.nom_complet +
-              " - " +
-              LIBELLES[type] +
-              (organisation.commune ? " (" + organisation.commune + ")" : ""),
+            e.nom_complet + " - " + LIBELLES[type] + (organisation.commune ? " (" + organisation.commune + ")" : ""),
             true,
           );
           $("bloc-type").hidden = type === "municipalite";
           $("suite").hidden = false;
         } catch (err) {
-          dire(
-            retour,
-            "L'annuaire est momentanément indisponible. Réessayez." +
-              ecrivezNous,
-            false,
-          );
+          dire(retour, "L'annuaire est momentanément indisponible. Réessayez." + ecrivezNous, false);
         }
       });
 
@@ -1945,50 +1979,40 @@
           return;
         }
 
-        /* Le minimum utile : de quoi RAPPELER quelqu'un. Un courriel sans nom ni
-     téléphone, c'est une demande qu'on ne peut ni qualifier ni relancer. */
+        /* Le minimum utile : de quoi RAPPELER quelqu'un. */
         if (!prenom || !nom || !email || !tel) {
-          dire(
-            retour,
-            "Nom, prénom, adresse professionnelle et téléphone sont nécessaires.",
-            false,
-          );
+          dire(retour, "Nom, prénom, adresse professionnelle et téléphone sont nécessaires.", false);
           return;
         }
 
         dire(retour, "Envoi...");
 
         try {
-          const r = await fetch(
-            SUPABASE_URL + "/rest/v1/rpc/deposer_demande_demo",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                apikey: SUPABASE_ANON,
-                Authorization: "Bearer " + SUPABASE_ANON,
-              },
-              body: JSON.stringify({
-                p_siret: organisation.siret,
-                p_raison_sociale: organisation.raison_sociale,
-                p_categorie_juridique: organisation.categorie_juridique,
-                p_code_ape: organisation.code_ape,
-                p_commune: organisation.commune,
-                p_type_detecte: organisation.type_detecte,
-                /* Prénom et nom SÉPARÉS (20/09). Les concaténer ici faisait arriver
-                   l'activation avec un prénom vide et le nom complet dans « Nom » : le
-                   prospect devait redécouper son propre nom. Le serveur les garde. */
-                p_contact_prenom: prenom,
-                p_contact_nom: nom,
-                p_contact_fonction: $("fonction").value.trim() || null,
-                p_contact_email: email,
-                p_contact_tel: tel,
-                p_message: $("message").value.trim() || null,
-                p_avec_donnees: $("donnees").checked,
-                p_type_etablissement: typeEtab,
-              }),
+          const r = await fetch(SUPABASE_URL + "/rest/v1/rpc/deposer_demande_demo", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              apikey: SUPABASE_ANON,
+              Authorization: "Bearer " + SUPABASE_ANON,
             },
-          );
+            body: JSON.stringify({
+              p_siret: organisation.siret,
+              p_raison_sociale: organisation.raison_sociale,
+              p_categorie_juridique: organisation.categorie_juridique,
+              p_code_ape: organisation.code_ape,
+              p_commune: organisation.commune,
+              p_type_detecte: organisation.type_detecte,
+              /* Prénom et nom SÉPARÉS (20/09) : le serveur les garde. */
+              p_contact_prenom: prenom,
+              p_contact_nom: nom,
+              p_contact_fonction: $("fonction").value.trim() || null,
+              p_contact_email: email,
+              p_contact_tel: tel,
+              p_message: $("message").value.trim() || null,
+              p_avec_donnees: $("donnees").checked,
+              p_type_etablissement: typeEtab,
+            }),
+          });
 
           const texte = await r.text();
           if (!r.ok) {
@@ -2000,24 +2024,17 @@
             return;
           }
 
-          dire(
-            retour,
-            "Demande enregistrée. Vous recevrez votre lien d'accès par courriel sous 48 heures.",
-            true,
-          );
+          dire(retour, "Demande enregistrée. Vous recevrez votre lien d'accès par courriel sous 48 heures.", true);
           $("form-demo")
             .querySelectorAll("input, select, textarea, button")
             .forEach((c) => (c.disabled = true));
         } catch (err) {
-          /* Le vrai cul-de-sac : quelqu'un a rempli le formulaire en entier et
-         l'envoi a raté. C'est le seul moment où l'adresse doit être sous
-         les yeux, pas en bas de page. */
+          /* Le vrai cul-de-sac : le formulaire est rempli et l'envoi a raté.
+             C'est le seul moment où l'adresse doit être sous les yeux. */
           dire(
             retour,
             "Envoi impossible, et votre demande n'est pas partie." +
-              (COURRIEL
-                ? " Écrivez-nous directement : " + COURRIEL
-                : " Réessayez dans un instant."),
+              (COURRIEL ? " Écrivez-nous directement : " + COURRIEL : " Réessayez dans un instant."),
             false,
           );
         }

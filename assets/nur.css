@@ -1,0 +1,495 @@
+/* ══════════════════════════════════════════════════════════════════════════
+ * NÛR PLATFORM, LA FEUILLE COMMUNE (accueil, mentions légales, confidentialité)
+ * ──────────────────────────────────────────────────────────────────────────
+ * La charte v3 « le nûn » : une nuit, une seule lumière (l'or du point), des
+ * filets fins. Les couleurs viennent du kit (Nur-Branding/v3-nun), pas d'un
+ * choix local :
+ *   or        #F6BC50  le point du nûn, la seule couleur chaude
+ *   nuit      #07182C  la tuile de NûrPlatform, le fond de la page
+ *   NûrGest   #0A264C · NûrOps #14415F · NûrPay #0E3B33  (une nuit par outil)
+ *
+ * AUCUNE POLICE N'EST DEMANDÉE À UN TIERS. Fraunces est servie d'ici (WOFF,
+ * licence OFL jointe) ; le texte courant prend la police du système, comme
+ * dans NûrGest. Ouvrir la page n'envoie donc l'adresse IP du visiteur à
+ * personne d'autre que l'hébergeur du site.
+ * ══════════════════════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fraunces-300.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fraunces-600.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --nuit: #07182c;
+  --nuit-2: #0b213c; /* une surface posée sur la nuit : tiroir, champ */
+  --nuit-3: #0f2a4a;
+  --gest: #0a264c;
+  --ops: #14415f;
+  --pay: #0e3b33;
+  --trait: rgba(232, 216, 186, 0.13);
+  --trait-fort: rgba(232, 216, 186, 0.24);
+  --ivoire: #f2ede3;
+  --ivoire-2: rgba(242, 237, 227, 0.72);
+  --ivoire-3: rgba(242, 237, 227, 0.52);
+  --or: #f6bc50;
+  --or-clair: #f9ca72;
+  --or-f: rgba(246, 188, 80, 0.1);
+  --alerte: #f0957a;
+
+  --f-titre: "Fraunces", Georgia, "Times New Roman", serif;
+  --f-texte: -apple-system, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  --f-code: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+
+  --rayon: 9px;
+  --gouttiere: 32px;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px; /* une ancre ne passe pas sous l'en-tête collant */
+}
+
+body {
+  background: var(--nuit);
+  color: var(--ivoire);
+  font-family: var(--f-texte);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 2px solid var(--or);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.cadre {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: var(--gouttiere);
+}
+
+/* Le mot « Nûr » d'un nom d'outil s'écrit comme dans le logotype : Nûr en
+   gras, le reste en maigre. Le logotype tracé du kit fait foi ; ceci n'en est
+   que la transcription en texte, pour les noms qui ne sont pas des logos. */
+.nom-outil {
+  font-family: var(--f-titre);
+  font-weight: 300;
+  letter-spacing: -0.005em;
+}
+.nom-outil b {
+  font-weight: 600;
+}
+
+/* ── L'en-tête ───────────────────────────────────────────────────────────── */
+.entete {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(7, 24, 44, 0.82);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--trait);
+}
+.entete .cadre {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 68px;
+}
+.logo {
+  display: block;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+.logo img {
+  height: 26px;
+  width: auto;
+}
+.menu {
+  display: flex;
+  gap: 26px;
+  margin-left: auto;
+  font-size: 13.5px;
+}
+.menu a {
+  color: var(--ivoire-2);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.menu a:hover {
+  color: var(--ivoire);
+}
+.entete-gestes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.menu + .entete-gestes {
+  margin-left: 6px;
+}
+.logo + .entete-gestes {
+  margin-left: auto;
+}
+
+/* ══ LES BOUTONS ═════════════════════════════════════════════════════════════
+ * Doctrine du 23/10, la même dans tous les outils : un filet de lumière en
+ * haut, un filet d'ombre en bas, une lueur sombre courte dessous ; à l'appui
+ * la lumière s'éteint, l'ombre passe dedans et le bouton descend d'un pixel.
+ * Au survol on éclaircit, on ne soulève pas. Pas de 3D sur du 2D.
+ *   .bouton        plein, l'or : le geste principal
+ *   .bouton-verre  sur la nuit : le geste secondaire
+ * ═══════════════════════════════════════════════════════════════════════════ */
+button {
+  appearance: none;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.bouton,
+.bouton-verre {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px 22px;
+  border-radius: var(--rayon);
+  font-family: var(--f-texte);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 0.07s ease-out,
+    box-shadow 0.12s ease-out,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+.bouton svg,
+.bouton-verre svg {
+  flex-shrink: 0;
+}
+.bouton {
+  background-color: var(--or);
+  color: #0a1a2e;
+  background-image: linear-gradient(180deg, rgb(255 255 255 / 0.2) 0%, rgb(255 255 255 / 0) 55%, rgb(0 0 0 / 0.06) 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.38),
+    inset 0 -1px 0 rgb(0 0 0 / 0.22),
+    0 1px 1px rgb(0 0 0 / 0.25),
+    0 6px 16px -8px rgb(0 0 0 / 0.7);
+}
+.bouton:hover {
+  background-color: var(--or-clair);
+}
+.bouton:active:not(:disabled) {
+  transform: translateY(1px);
+  background-image: linear-gradient(180deg, rgb(0 0 0 / 0.12) 0%, rgb(0 0 0 / 0) 70%);
+  box-shadow:
+    inset 0 2px 4px rgb(0 0 0 / 0.28),
+    inset 0 -1px 0 rgb(255 255 255 / 0.08);
+}
+.bouton-verre {
+  background-color: rgb(242 237 227 / 0.05);
+  color: var(--ivoire);
+  border: 1px solid rgb(242 237 227 / 0.14);
+  background-image: linear-gradient(180deg, rgb(255 255 255 / 0.1) 0%, rgb(255 255 255 / 0.01) 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.14),
+    inset 0 -1px 0 rgb(0 0 0 / 0.3),
+    0 6px 16px -9px rgb(0 0 0 / 0.75);
+}
+.bouton-verre:hover {
+  background-color: rgb(242 237 227 / 0.09);
+  border-color: rgb(242 237 227 / 0.22);
+}
+.bouton-verre:active:not(:disabled) {
+  transform: translateY(1px);
+  background-image: none;
+  box-shadow: inset 0 2px 5px rgb(0 0 0 / 0.4);
+}
+.bouton:disabled,
+.bouton-verre:disabled {
+  opacity: 0.55;
+  cursor: default;
+  box-shadow: none;
+}
+.bouton.petit,
+.bouton-verre.petit {
+  padding: 9px 16px;
+  font-size: 13px;
+}
+
+/* Un lien posé dans une phrase : jamais le bleu souligné du navigateur. */
+.lien {
+  color: var(--ivoire);
+  text-decoration: none;
+  border-bottom: 1px solid var(--trait-fort);
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+.lien:hover {
+  color: var(--or);
+  border-color: var(--or);
+}
+
+/* ── Le pied de page ─────────────────────────────────────────────────────── */
+.pied {
+  border-top: 1px solid var(--trait);
+  padding-block: 56px 40px;
+  font-size: 13px;
+  color: var(--ivoire-3);
+}
+.pied-grille {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px;
+}
+.pied-marque img {
+  height: 24px;
+  width: auto;
+  margin-bottom: 16px;
+}
+.pied-marque p {
+  max-width: 34ch;
+}
+.pied-titre {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ivoire-3);
+  margin-bottom: 14px;
+}
+.pied ul {
+  list-style: none;
+  display: grid;
+  gap: 9px;
+}
+.pied ul a {
+  color: var(--ivoire-2);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.pied ul a:hover {
+  color: var(--or);
+}
+.pied-bas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 44px;
+  padding-top: 22px;
+  border-top: 1px solid var(--trait);
+  font-size: 12px;
+}
+
+/* ── Les pages de texte (mentions légales, confidentialité) ──────────────── */
+.page-texte {
+  padding-block: 72px 96px;
+}
+.page-texte .surtitre {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--or);
+  margin-bottom: 18px;
+}
+.page-texte h1 {
+  font-family: var(--f-titre);
+  font-weight: 300;
+  font-size: clamp(34px, 5vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin-bottom: 18px;
+}
+.page-texte .chapo {
+  font-size: 16.5px;
+  color: var(--ivoire-2);
+  max-width: 62ch;
+}
+.page-texte .maj {
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--ivoire-3);
+}
+.texte {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 56px;
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--trait);
+}
+.sommaire {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  font-size: 13px;
+}
+.sommaire a {
+  color: var(--ivoire-3);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.sommaire a:hover {
+  color: var(--ivoire);
+}
+.texte article {
+  max-width: 68ch;
+}
+.texte section + section {
+  margin-top: 44px;
+  padding-top: 36px;
+  border-top: 1px solid var(--trait);
+}
+.texte h2 {
+  font-family: var(--f-titre);
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 1.3;
+  margin-bottom: 14px;
+}
+.texte h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 22px 0 8px;
+}
+.texte p,
+.texte li {
+  color: var(--ivoire-2);
+}
+.texte p + p {
+  margin-top: 10px;
+}
+.texte ul {
+  margin: 10px 0 0 18px;
+  display: grid;
+  gap: 6px;
+}
+.texte strong {
+  color: var(--ivoire);
+  font-weight: 600;
+}
+.fiche {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 8px 22px;
+  margin-top: 6px;
+  font-size: 14px;
+}
+.fiche dt {
+  color: var(--ivoire-3);
+}
+.fiche dd {
+  color: var(--ivoire);
+  overflow-wrap: anywhere;
+}
+
+/* ── Le téléphone ────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .menu {
+    display: none;
+  }
+  /* Le menu caché reste un voisin pour le sélecteur : sans ceci, les
+     boutons se colleraient au logo au lieu de partir à droite. */
+  .menu + .entete-gestes {
+    margin-left: auto;
+  }
+  .texte {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .sommaire {
+    position: static;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+@media (max-width: 720px) {
+  :root {
+    --gouttiere: 20px;
+  }
+  .entete .cadre {
+    gap: 14px;
+  }
+  .logo img {
+    height: 22px;
+  }
+  .pied-grille {
+    grid-template-columns: 1fr 1fr;
+  }
+  .pied-marque {
+    grid-column: 1 / -1;
+  }
+  .fiche {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .fiche dd + dt {
+    margin-top: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .bouton,
+  .bouton-verre {
+    transition: none;
+  }
+  .bouton:active,
+  .bouton-verre:active {
+    transform: none;
+  }
+}
