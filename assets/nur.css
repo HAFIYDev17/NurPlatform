@@ -334,13 +334,22 @@ button {
 .page-texte {
   padding-block: 72px 96px;
 }
-.page-texte .surtitre {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--or);
+/* Le fil d'Ariane : il dit où l'on est, et ramène à l'accueil en un geste. */
+.fil {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ivoire-3);
   margin-bottom: 18px;
+}
+.fil a {
+  color: var(--ivoire-2);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.fil a:hover {
+  color: var(--or);
 }
 .page-texte h1 {
   font-family: var(--f-titre);
